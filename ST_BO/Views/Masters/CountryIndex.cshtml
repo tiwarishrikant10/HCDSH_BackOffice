@@ -1,0 +1,201 @@
+﻿@using ST_BO.Models;
+@model ST_BO.Models.COUNTRY
+
+<!-- START JUMBOTRON -->
+<div class="card-block">
+    <h4 class="card-title"><label>   @ViewBag.Title</label></h4>
+</div>
+<!-- END JUMBOTRON -->
+<!-- START CONTAINER FLUID -->
+<div class="container-fixed-lg">
+    <div class="view bg-white">
+        <div class="buttonss">
+            <div class="col-md-12" style="margin-top:10px;">
+                <button id="editCourseModal" data-target="#modalSlideLeft" data-toggle="modal" class="btn btn-complete add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="view-port">
+        <div class="view bg-white">
+            <div class="card card-default">
+                <div class="card-block sub-box table-responsive filtr-srch">
+                    <table id="example" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Country Name</th>
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade slide-right sta-ts" id="modalSlideLeft" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <div class="container-xs-height full-height">
+                        <div class="row-xs-height">
+                            <div class="modal-body col-xs-height col-middle">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card-box">
+
+                                            @using (Html.BeginForm("CountryCreateEdit", "Masters", FormMethod.Post, new { id = "frmcountryEdit", @class = "edit-contact" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <h5 class="text-primary "> <span class="semi-bold">Country</span></h5>
+                                                <br>
+                                                <div class="">
+                                                    <div class="">
+                                                        <form id="form-personal" role="form" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Country name</label>
+
+                                                                        @Html.TextBoxFor(m => m.CountryName, new { @class = "form-control", id = "country_name", placeholder = "Country Name", pattern = @RegExConst.General, required = "required", title = "Enter Country Name", @isExist = "true" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" id="DivIsActive" style="display:none">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Enable</label>
+                                                                        <input type="checkbox" class=" form-control" name="is_active" id="is_active" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            @Html.HiddenFor(m => m.CountryId)
+                                                            <button type="button" id="postBtn" onclick="btnSave()" class="btn btn-complete">Submit</button>
+                                                            <button class="btn btn-white btn-cons " data-dismiss="modal" data-toggle="quickview" aria-hidden="true">cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+<!-- BEGIN VENDOR JS -->
+<!-- END VENDOR JS -->
+<!-- END PAGE LEVEL JS -->
+<script type="text/javascript">
+        $(function () {
+            $('#frmcountryEdit').validate();
+            $("#modalSlideLeft").on("hidden.bs.modal", function () {
+                $('#country_name').val('')
+                $('#country_id').val('')
+            });
+
+        })
+        function country_name_isExist() {
+            StUtil.IsExist({
+                ctrlId: 'country_name',
+                controllerName: 'Json',
+                actionName: 'IsCountryNameExist',
+                parmVal: $('#country_name').val() + ',' + $('#CountryId').val(),//saprated comma
+            });
+        }
+        function postBtnAfterCall() {
+            $('#DivIsActive').hide();
+            BindDataTable();
+            $('#modalSlideLeft').modal('toggle');
+            $('#country_name').val('')
+            $('#country_id').val('')
+        }
+
+        function btnSave() {
+            StUtil.PostFrom({
+                ctrlId: 'postBtn',
+                formId: 'frmcountryEdit',
+                parmIds: 'CountryId,CountryName,IsActive',
+                parmVals: $('#CountryId').val() + ',' + $('#country_name').val() + ',' + $('#is_active').is(':checked'),
+                jsonObj: 'country',
+                controllerName: 'Masters',
+                actionName: 'CountryCreateEdit',
+
+            })
+        }
+
+        function editCountry(id) {
+            StUtil.EditForm({
+                ctrlId: 'postBtn',
+                formId: 'frmcountryEdit',
+                parmVals: id,
+                controllerName: 'Masters',
+                actionName: 'CountryEdit',
+            })
+            $('#modalSlideLeft').modal('toggle');
+            $('#DivIsActive').show();
+        }
+
+        function BindDataTable() {
+            var table = $('#example').DataTable();
+            table.destroy();
+            $('#example').DataTable({
+                dom: 'lBfrtip',
+                "initComplete": function (settings, json) {
+
+                    $('input[type="search"]').attr('placeholder', 'Search')
+                },
+
+                buttons: ['csv',
+                   'copy',
+                   'excel',
+                   'print',
+                ],
+                "ajax": {
+                    type: "POST",
+                    url: '@Url.Action("CountryList", "Masters")',
+                    datatype: "json",
+                    data: { id: "0" },
+                    dataSrc: ""
+                },
+                columns: [
+                   { data: "country_name", name: "country_name", autoWidth: true },
+                    {
+                        data: "is_active",
+                        "render": function (value) {
+                            return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                        }
+                    },
+                    {
+                        data: "country_id",
+                        "render": function (data, type, row) {
+                            return "<div class='action-btn '><a style='cursor:pointer' onclick='editCountry(" + row.country_id + ")' ><i class='fa fa-pencil'></i>    </a></div> "
+                        }
+                    },
+                ],
+            });
+        }
+        $(document).ready(function () {
+            BindDataTable();
+        });
+        $(function () {
+            $("#exp_rt").click(function () {
+                $(".dt-buttons").toggleClass('dis-none');
+            });
+        });
+</script>
+
+
+

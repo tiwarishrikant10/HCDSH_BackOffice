@@ -1,0 +1,268 @@
+﻿@using DeveloperCRM.Base.Models;
+@model IEnumerable<DeveloperCRM.Models.report_action>
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+
+            <div class="col-md-2 floting padding-0">
+                <div class="form-group filter-search">
+
+                    <label>Report Action</label>
+
+                </div>
+            </div>
+
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class=" container-fixed-lg">
+    <div class="view bg-white">
+        <div class="buttonss">
+            <div class="col-md-12" style="margin-top:10px;">
+                <button id="editCourseModal" data-target="#modalSlideLeft" data-toggle="modal" class="btn btn-complete add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+                <div class="dropdown hidden-md-down edit-contact morre-btn" style="display:inline-block;">
+                    <button class="profile-dropdown-toggle btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </button>
+                    @*<div class="dropdown-menu profile-dropdown drop-right-icon" role="menu">
+                            <a href="#" class="dropdown-item"> Add Lead</a>
+                            <a href="#" class="dropdown-item">Import Leads</a>
+                        </div>*@
+                </div>
+                @*<button class="btn btn-complete m-l-3" id="filtr" data-toggle="quickview" data-toggle-element="#quickview"><i class="fs-14 pg-centeralign"></i></button>*@
+            </div>
+        </div>
+    </div>
+    <div class="card card-default">
+
+
+        <div class="card-block">
+            <table id="example" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Report Name</th>
+                        <th>Report Type</th>
+                        <th>Report Controller</th>
+                        <th>Report Action</th>
+                        <th>ids</th>
+                        <th>div body class</th>
+                        <th>Partial</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade slide-right sta-ts" id="modalSlideLeft" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <div class="container-xs-height full-height">
+                        <div class="row-xs-height">
+                            <div class="modal-body col-xs-height col-middle">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card-box">
+
+                                            @using (Html.BeginForm("StateCreateEdit", "Company", FormMethod.Post, new { id = "frmFacilityEdit", @class = "edit-contact" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <h5 class="text-primary "> <span class="semi-bold">Report Action</span></h5>
+                                                <br>
+                                                <div class="card card-transparent">
+                                                    <div class="">
+                                                        <input type="hidden" id="report_action_id" name="report_action_id" />
+                                                        <input type="hidden" id="company_id" name="company_id" value="@ViewBag.company_id" />
+                                                        <input type="hidden" id="created_by" name="created_by" />
+                                                        <input type="hidden" id="created_date" name="created_date" />
+                                                        <input type="hidden" id="updated_by" name="updated_by" />
+                                                        <input type="hidden" id="updated_date" name="updated_date" />
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Reports</label>
+                                                                    @Html.DropDownList("report_id", ViewBag.Report as SelectList, "Please Select", new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Report Type</label>
+                                                                    @Html.DropDownList("report_type_id", ViewBag.ReportType as SelectList, "Please Select", new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Controller</label>
+                                                                    @Html.TextBox("report_controller", null, new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>ids</label>
+                                                                    @Html.TextBox("ids", null, new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>div body class</label>
+                                                                    @Html.TextBox("div_body_class", null, new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Action</label>
+                                                                    @Html.TextBox("report_action1", null, new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>partial</label>
+                                                                    @Html.TextBox("partial", null, new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" id="DivIsActive" style="display:none">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Enable</label>
+                                                                    <input type="checkbox" class=" form-control" name="is_active" id="is_active" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <button type="button" id="postBtn" onclick="btnSave()" class="btn btn-complete">Submit</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- BEGIN VENDOR JS -->
+<!-- END VENDOR JS -->
+<!-- END PAGE LEVEL JS -->
+<script>
+    function editReportModule(id) {
+        ////
+        StUtil.EditForm({
+            ctrlId: 'postBtn',
+            formId: 'frmFacilityEdit',
+            parmVals: id,
+            controllerName: 'Company',
+            actionName: 'ReportActionEdit',
+        })
+        $('#modalSlideLeft').modal('toggle');
+        $('#DivIsActive').show();
+    }
+    function btnSave() {
+        debugger;
+        StUtil.PostFrom({
+            ctrlId: 'postBtn',
+            formId: 'frmFacilityEdit',
+            parmIds: 'report_action_id,report_id,report_type_id,report_controller,report_action1,partial,ids,div_body_class,company_id,created_date,created_by,updated_by,updated_date,is_active',
+            parmVals: $('#report_action_id').val() + ',' + $('#report_id').val() + ',' + $('#report_type_id').val() + ',' + $('#report_controller').val() + ',' + $('#report_action1').val() + ',' + $('#partial').val() + ',' + $('#ids').val() + ',' + $('#div_body_class').val() + ',' + $('#company_id').val() + ',' + $('#created_date').val() + ',' + $('#created_by').val() + ',' + $('#updated_date').val()
+            + ',' + $('#updated_by').val()+ ',' + $('#is_active').is(':checked'),
+            jsonObj: 'reportaction',
+            controllerName: 'Company',
+            actionName: 'ReportActionCreateEdit',
+
+        })       
+        BindDataTableReport();
+        $('#report_action_id').val(null)
+        $('#report_id').val(null)
+        $('#report_type_id').val(null)
+        $('#report_controller').val(null)
+        $('#report_action1').val(null)
+        $('#partial').val(null)
+        $('#ids').val(null)
+        $('#div_body_class').val(null)
+        $('#is_active').val(null)
+    }
+</script>
+<script>
+    $(function () {
+        $('#report_id').select2()
+        $('#report_type_id').select2()
+    });
+</script>
+<script>
+    function BindDataTableReport() {
+        debugger;
+        var table = $('#example').DataTable();
+        var cmp = $('#company_id').val();
+        var reportId = @ViewBag.ReportId;
+        table.destroy();
+        $('#example').DataTable({
+            dom: 'lBfrtip',
+            "initComplete": function (settings, json) {
+
+                $('input[type="search"]').attr('placeholder', 'Search')
+            },
+
+            buttons: ['csv',
+                'copy',
+                'excel',
+                'print',
+            ],
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("GetReportActionlist", "Json")',
+                datatype: "json",
+                data: { report_Id: reportId, companyid: cmp},
+                dataSrc: ""
+            },
+            columns: [
+                { data: "report_name", name: "report_name", autoWidth: true },
+                { data: "report_type_name", name: "report_type_name", autoWidth: true },
+                { data: "report_controller", name: "report_controller", autoWidth: true },
+                { data: "report_action1", name: "report_action1", autoWidth: true },
+                { data: "ids", name: "ids", autoWidth: true },
+                { data: "div_body_class", name: "div_body_class", autoWidth: true },
+                { data: "partial", name: "partial", autoWidth: true },
+                {
+                    data: "is_active",
+                    "render": function (value) {
+                        return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                    }
+                },
+                {
+                    data: "report_action_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn '> <a style='cursor:pointer' onclick='editReportModule(" + row.report_action_id + ")' ><i class='fa fa-edit'></i> </a></div> "
+                    }
+                },
+            ],
+        });
+    }
+    $(document).ready(function () {
+        debugger;
+        BindDataTableReport();
+    });
+</script>

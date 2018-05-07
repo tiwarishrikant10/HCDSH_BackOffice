@@ -1,0 +1,63 @@
+﻿@using Newtonsoft.Json;
+@{
+    Layout = null;
+}
+
+
+<script>
+    $(document).ready(function () {
+
+        bindJSTree();
+    });
+
+    function bindJSTree() {
+        // $.jstree
+        var idVal = '@ViewBag.role_id' + ',' + '@ViewBag.CompanyId';
+        var controllerName = 'Role';
+        var actionName = 'GetCompanyMenuByRoleId';
+        $.ajaxSetup({ async: false });
+        $.post(base.getUrl(controllerName, actionName), { ids: idVal }, function (data) {
+            treeUtil.processTree({ ctrlId: 'divTreeMenus', data: data, isPlugins: true });
+        });
+    }
+
+    function submitClicked() {
+        ////
+        var changes = treeUtil.getValue('divTreeMenus');
+        var len = base.getLength(changes);
+        if (len > 0) {
+            $.post(base.getUrl('Role', 'SaveCompanyRoleMenu'), { id: changes, ids: '@ViewBag.role_id' + ',' + '@ViewBag.CompanyId' },
+            function (data) {
+                base.showMessage('Menu assigned successfully', 'success', 'Bar', 'top', 5000);
+                //   base.showMessage('Menu assigned successfully', 'Success');
+
+                bindJSTree();
+            });
+        } else {
+            alert('there is no change !!');
+        }
+        return false;
+    }
+</script>
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.Hidden("hdnRoleID", ViewBag.role_id as object)
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <div id="divTreeMenus"></div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <input name="btnSave" id="btnSave" type="button" class="btn btn-complete w-md waves-effect waves-light" value="Save" onclick="return submitClicked();" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

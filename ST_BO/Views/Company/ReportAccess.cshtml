@@ -1,0 +1,279 @@
+﻿@using DeveloperCRM.Base.Models;
+@model IEnumerable<DeveloperCRM.Models.report_access>
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+
+            <div class="col-md-2 floting padding-0">
+                <div class="form-group filter-search">
+
+                    <label>Report Access</label>
+
+                </div>
+            </div>
+
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class=" container-fixed-lg">
+    <div class="view bg-white">
+        <div class="buttonss">
+            <div class="col-md-12" style="margin-top:10px;">
+                <button id="editCourseModal" data-target="#modalSlideLeft" data-toggle="modal" class="btn btn-complete add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+                <div class="dropdown hidden-md-down edit-contact morre-btn" style="display:inline-block;">
+                    <button class="profile-dropdown-toggle btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </button>
+                    @*<div class="dropdown-menu profile-dropdown drop-right-icon" role="menu">
+                            <a href="#" class="dropdown-item"> Add Lead</a>
+                            <a href="#" class="dropdown-item">Import Leads</a>
+                        </div>*@
+                </div>
+                @*<button class="btn btn-complete m-l-3" id="filtr" data-toggle="quickview" data-toggle-element="#quickview"><i class="fs-14 pg-centeralign"></i></button>*@
+            </div>
+        </div>
+    </div>
+    <div class="view-port">
+        <div class="view bg-white">
+            <div class="card card-default">
+                <div class="card-block sub-box table-responsive filtr-srch">
+                    <table id="example" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Report</th>
+                                <th>User</th>
+                                <th>Report action</th>
+                                <th>display order</th>
+                                <th>is dashboard</th>
+                                <th>is report</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        @*<tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>@item.report.report_name</td>
+                                    <td>@item.user.user_name</td>
+                                    <td>@item.report_action.report_action1</td>
+                                    <td>@item.dispaly_order</td>
+                                    <td>@item.is_dashboard</td>
+                                    <td>@item.is_report</td>
+                                    <td>
+                                        <div class="action-btn">
+                                            <a href="#" onclick="editReportModule(@item.report_access_id)"><i class="fa fa-key" aria-hidden="true"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>*@
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade slide-right sta-ts" id="modalSlideLeft" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <div class="container-xs-height full-height">
+                        <div class="row-xs-height">
+                            <div class="modal-body col-xs-height col-middle p-0">
+                                <div class="row">
+                                    <div class="col-lg-12 p-0">
+                                        <div class="card-box">
+
+                                            @using (Html.BeginForm("StateCreateEdit", "Company", FormMethod.Post, new { id = "frmFacilityEdit", @class = "edit-contact" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <h5 class="text-primary "> <span class="semi-bold">Report Access</span></h5>
+
+                                                <div class="card card-transparent">
+                                                    <div class="p-l-10 p-r-10">
+                                                        <input type="hidden" id="report_access_id" name="report_access_id" />
+                                                        <input type="hidden" id="company_id" name="company_id" value="@ViewBag.company_id" />
+                                                        <input type="hidden" id="created_by" name="created_by" />
+                                                        <input type="hidden" id="created_date" name="created_date" />
+                                                        <input type="hidden" id="updated_by" name="updated_by" />
+                                                        <input type="hidden" id="updated_date" name="updated_date" />
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Reports</label>
+                                                                    @Html.DropDownList("report_id", ViewBag.Report as SelectList, "Please Select", new { @class = "form-control", required = "required" })
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>User</label>
+                                                                    @Html.DropDownList("user_id", ViewBag.users as SelectList, "Please Select", new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Report action</label>
+                                                                    @Html.DropDownList("report_action_id", ViewBag.report_action as SelectList, "Please Select", new { @class = "form-control", required = "required" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>dispaly order</label>
+                                                                    @Html.TextBox("dispaly_order", null, new { @class = "form-control", required = "required", type = "number" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>is dashboard</label>
+                                                                    <input type="checkbox" class=" form-control" name="is_dashboard" id="is_dashboard" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>is report</label>
+                                                                    <input type="checkbox" class=" form-control" name="is_report" id="is_report" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" id="DivIsActive" style="display:none">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Enable</label>
+                                                                    <input type="checkbox" class=" form-control" name="is_active" id="is_active" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <button type="button" id="postBtn" onclick="btnSave()" class="btn btn-complete">Submit</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- BEGIN VENDOR JS -->
+<!-- END VENDOR JS -->
+<!-- END PAGE LEVEL JS -->
+
+
+
+<script>
+            function editReportModule(id) {
+                debugger;
+                StUtil.EditForm({
+                    ctrlId: 'postBtn',
+                    formId: 'frmFacilityEdit',
+                    parmVals: id,
+                    controllerName: 'Company',
+                    actionName: 'ReportAccessEdit',
+                    loadList: 'report_access_id,report_id,user_id,report_action_id,dispaly_order,is_dashboard,is_active,is_report,created_date,created_by,company_id'
+                })
+                $('#modalSlideLeft').modal('toggle');
+                $('#DivIsActive').show();
+                $('#report_id').change();
+                $('#user_id').change();
+                $('#report_action_id').change();
+
+            }
+            function btnSave() {
+                debugger;
+                StUtil.PostFrom({
+                    ctrlId: 'postBtn',
+                    formId: 'frmFacilityEdit',
+                    parmIds: 'report_access_id,report_id,user_id,report_action_id,dispaly_order,company_id,is_dashboard,created_date,created_by,updated_date,updated_by,is_active,is_report',
+                    parmVals: $('#report_access_id').val() + ',' + $('#report_id').val() + ',' + $('#user_id').val() + ',' + $('#report_action_id').val() + ',' + $('#dispaly_order').val() + ',' + $('#company_id').val() + ',' + $('#is_dashboard').is(':checked') + ',' + $('#created_date').val() + ',' + $('#created_by').val() + ',' + $('#updated_date').val()
+                    + ',' + $('#updated_by').val() + ',' + $('#is_active').is(':checked') + ',' + $('#is_report').is(':checked'),
+                    jsonObj: 'reportaccess',
+                    controllerName: 'Company',
+                    actionName: 'ReportAccessCreateEdit',
+
+                })
+                BindDataTable();
+            }
+</script>
+<script>
+            $(function () {
+                $('#report_id').select2()
+                $('#user_id').select2()
+                $('#report_action_id').select2()
+            });
+</script>
+<script>
+    function BindDataTable() {
+        debugger;
+        var table = $('#example').DataTable();
+        var CompanyId = $('#company_id').val();
+        var id = @ViewBag.ReportId;
+        table.destroy();
+        $('#example').DataTable({
+            dom: 'lBfrtip',
+            "initComplete": function (settings, json) {
+
+                $('input[type="search"]').attr('placeholder', 'Search')
+            },
+
+            buttons: ['csv',
+                'copy',
+                'excel',
+                'print',
+            ],
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("ReportAccessList", "Json")',
+                datatype: "json",
+                data: { id: id, CompanyId: CompanyId},
+                dataSrc: ""
+            },
+            columns: [
+                { data: "report_name", name: "report_name", autoWidth: true },
+                { data: "user_name", name: "user_name", autoWidth: true },
+                { data: "report_action1", name: "report_action1", autoWidth: true },
+                { data: "dispaly_order", name: "dispaly_order", autoWidth: true },
+                { data: "is_dashboard", name: "is_dashboard", autoWidth: true },
+                { data: "is_report", name: "is_report", autoWidth: true },
+                {
+                    data: "is_active",
+                    "render": function (value) {
+                        return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                    }
+                },
+                {
+                    data: "report_access_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn '> <a style='cursor:pointer' onclick='editReportModule(" + row.report_access_id + ")' ><i class='fa fa-pencil'></i> </a></div> "
+                    }
+                },
+            ],
+        });
+    }
+    $(document).ready(function () {
+        debugger;
+        BindDataTable();
+    });
+</script>

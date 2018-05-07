@@ -1,0 +1,103 @@
+﻿@{
+    Layout = null;
+
+    ViewBag.Title = "Login";
+}
+<style>
+    .form-group input.error, .form-group textarea.error {
+        border-bottom: 1px solid #f55753 !important;
+    }
+
+    .form-group label.error {
+        display: inline-block;
+        position: absolute;
+        border-top: 1px solid #fb3f3d;
+        z-index: 999999;
+        width: 0%;
+        left: 0;
+        height: 1px;
+        color: transparent !important;
+        bottom: 0;
+    }
+
+    .form-group select.error + span {
+        display: none !important;
+    }
+    body {
+        background: #54555c url(image.png) repeat-x top;
+        font-size: 12pt;
+        font-family: Trebuchet MS;
+        margin: 0;
+        padding: 0;
+        color: #323343;
+    }
+</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ST Technology - Base Project</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/assets/css/core.css">
+    <link rel="stylesheet" href="~/Content/assets/css/components.css">
+    <link rel="stylesheet" href="~/Content/assets/icons/fontawesome/styles.min.css">
+    <script type="text/javascript" src="~/Content/lib/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/lib/js/tether.min.js"></script>
+    <script type="text/javascript" src="~/Content/lib/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/app.min.js"></script>
+    <script src="~/Content/assets/js/jquery-validation/js/jquery.validate.min.js"></script>
+
+</head>
+<body>
+
+    <div class="page-container">
+       
+            <div class="content h-100">
+                <div class="row h-100">
+                    <div class="col-lg-12">
+                        <div class="login card auth-box mx-auto my-auto">
+                            <div class="card-block text-center">
+                                <div class="user-icon">
+                                    <i class="fa fa-user-circle"></i>
+                                </div>
+                                <h4 class="text-light">Login</h4>
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "form-signin", autocomplete = "off", @class = "edit-contact p-l-0 p-r-0 m-t-25" }))
+{
+                                <div class="user-details">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">
+                                                <i class="fa fa-user-o"></i>
+                                            </span>
+                                            <input type="text" required id="LoginID" name="LoginID" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">
+                                                <i class="fa fa-key"></i>
+                                            </span>
+                                            <input type="password"required class="form-control" id="password" name="password" autocomplete="off" placeholder="Password" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" onclick="return $('#form-signin').valid();" class="btn btn-primary btn-lg btn-block">LOGIN</button>
+}
+                                <div class="user-links">
+                                    <a href="#" class="pull-left">Forgot Password?</a>
+                                    <a href="#" class="pull-right">Register</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- PAGE CONTENT -->
+        <!-- /PAGE CONTENT -->
+    </div>
+</body>
+</html>

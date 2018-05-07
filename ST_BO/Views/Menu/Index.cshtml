@@ -1,0 +1,138 @@
+﻿
+
+
+<div class="card-block">
+    <h4 class="card-title">Role</h4>
+</div>
+
+
+<div class="view bg-white">
+    <div class="buttonss">
+        <div class="col-md-12" style="margin-top:10px;">
+            <div class="box-header">
+                <a href="@Url.Action("CreateEdit", "Menu")" class="btn btn-complete w-md waves-effect waves-light"><i class="fa fa-plus-circle"></i> Create</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="view-port">
+    <div class="view bg-white">
+        <div class="card card-default">
+            <div class="card-block sub-box table-responsive filtr-srch">
+                
+                <div>
+                <table class="table table-striped" id="tableWithExportOptions">
+                    <thead>
+                        <tr>
+                            <th>Menu Name</th>
+                            <th>Parent Menu</th>
+                            <th>Controller</th>
+                            <th>Action</th>
+                            <th>Icon</th>
+                            <th>Sequence</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    function BindMenuList() {
+
+        //Buttons examples
+        var table = $('#tableWithExportOptions').DataTable(
+            {
+                "initComplete": function (settings, json) {
+
+                    $('input[type="search"]').attr('placeholder', 'Search')
+                },
+                dom: 'lBfrtip',
+                buttons: [
+    {
+        extend: 'csv',
+        footer: true,
+
+    },
+    {
+        extend: 'excel',
+        footer: true,
+
+
+    },
+    {
+        extend: 'pdf',
+        footer: true,
+
+    },
+    {
+        extend: 'print',
+        footer: true,
+    }
+                ],
+                "ajax": {
+                    type: "POST",
+                    url: '@Url.Action("ListMenu", "Menu")',
+                    datatype: "json",
+                    data: { id: "" },
+                    dataSrc: ""
+                },
+                columns: [
+                   { data: "menu_name", name: "menu_name", autoWidth: true },
+                    { data: "menu_parent_name", name: "menu_parent_name", autoWidth: true },
+                    { data: "controller_name", name: "controller_name", autoWidth: true },
+                    { data: "action_name", name: "action_name", autoWidth: true },
+                    { data: "icon", name: "icon", autoWidth: true },
+                    { data: "sequence_order", name: "sequence_order", autoWidth: true },
+                    {
+                        data: "is_active",
+                        "render": function (value) {
+                            return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                        }
+                    },
+                    {
+                        data: "menu_id",
+                        "render": function (value) {
+                            return "<div class='action-btn'><a href='/Menu/CreateEdit/" + value + "' ><i class='fa fa-edit'></i></a> </div>"
+                        }
+                    },
+                ],
+                // lengthChange: false,
+                // buttons: ['copy', 'excel', 'pdf']
+            }
+
+            );
+
+        //var table = $('#datatable-buttons').DataTable({
+        //    lengthChange: false,
+        //    buttons: ['copy', 'excel', 'pdf']
+        //});
+
+        // table.buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+
+
+    }
+    $(document).ready(function () {
+        BindMenuList();
+    });
+    $(function () {
+        $("#exp_rt").click(function () {
+            $(".dt-buttons").toggleClass('dis-none');
+        });
+    });
+</script>
+
+
+

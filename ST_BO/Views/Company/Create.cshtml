@@ -1,0 +1,188 @@
+﻿@using ST_BO.Models;
+@model ST_BO.Models.COMPANY
+@{
+    string Is_view = Model.CompanyId > 0 ? "block" : "none";
+}
+<script>
+    $(function () {
+        $('#frmAddCompany').validate();
+    })
+    $(document).ready(function () {
+        $('#country_id').change(function () {
+            fillState();
+        });
+    })
+    function GetCityByState() {
+        StUtil.Cascading({
+            ctrlId: 'CityId',
+            clearId: '',
+            clearCaption: 'Please Select',
+            controllerName: 'Json',
+            actionName: 'GetCityByState',
+            parmVal: $('#state_id').val(),
+        });
+    }
+    function fillState() {
+        var idVal = $('#country_id').val();
+        var controllerName = 'json';
+        var actionName = 'GetStateByCountry';
+        if (idVal != '') {
+            $.post(base.getUrl(controllerName, actionName), { id: idVal }, function (data) {
+                $('#state_id').empty();
+                $('#state_id').append($('<option />').val('').text('Please Select'));
+                $.each(data, function () {
+                    $('#state_id').append($('<option />').val(this.Value).text(this.Text));
+                });
+            });
+        }
+        else {
+            $('#state_id').empty();
+            $('#state_id').append($('<option />').val('').text('Please Select'));
+        }
+    }
+    function EmailId_isExist() {
+        StUtil.IsExist({
+            ctrlId: 'EmailId',
+            controllerName: 'Json',
+            actionName: 'IsRegEmailIdExist',
+            parmVal: $('#EmailId').val() + ',' + '2',//saprated comma 2 = Admin
+        });
+    }
+    function login_id_isExist() {
+        StUtil.IsExist({
+            ctrlId: 'login_id',
+            controllerName: 'Json',
+            actionName: 'IsLoginIDExist',
+            parmVal: $('#login_id').val()
+        });
+    }
+</script>
+<div class="container-fixed-lg">
+    <div class="inner m-b-25" style="background-color:#fff; width:100%;height: 48px;padding: 6px;">
+        <div class="col-md-2 floting padding-0">
+            <div class="form-group filter-search">
+                <label>Create Company</label>
+            </div>
+        </div>
+        @*<div class="pull-right">
+                <button class="btn btn-complete add-btn" id="editCourseModal" data-target="#modalSlideLeft" data-toggle="modal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+                <div class="dropdown hidden-md-down edit-contact morre-btn" style="display:inline-block;">
+                    <button class="profile-dropdown-toggle btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu profile-dropdown drop-right-icon" role="menu">
+                        <a href="#" class="dropdown-item" data-target="#modalSlideLeft" data-toggle="modal"> Add Project</a>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+            <div class="row ss-box">
+                <div class="col-lg-12 p-0">
+                    <div class="card-box bg-wht">
+                        @using (Html.BeginForm("AddCompany", "Company", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddCompany", @class= "edit-contact p-l-15 p-r-15 zindx-0" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="card card-transparent p-t-15 p-b-15">
+                                <div class="card-block sub-box">
+                                    <form id="form-personal" role="form" autocomplete="off" class="edit-contact">
+                                        <div class="row">
+                                            <div class="col-md-4 p-l-10">
+                                                <div class="form-group">
+                                                    @Html.HiddenFor(m => m.CompanyId)
+                                                    <label>Company Name</label>
+                                                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", id = "CompanyName", placeholder = "Company Name", pattern = @RegExConst.General, required = "required", title = "Enter Business Name", @isExist = "true" })
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Phone No</label>
+                                                    @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control", id = "ContactNumber", placeholder = "Phone", pattern = @RegExConst.NumbersOnly, required = "required", title = "Enter Phone" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    @Html.DropDownList("country_id", ViewBag.country_id as List<SelectListItem>, "Please Select", new { @class = "form-control", required = "required" })
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>State</label>
+                                                    @Html.DropDownList("state_id", ViewBag.state_id as List<SelectListItem>, "Please Select", new {onchange="GetCityByState()", @class = "form-control", required = "required" })
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>City</label>
+                                                    @Html.DropDownList("CityId", ViewBag.CityId as List<SelectListItem>, "Please Select", new { name = "CityId", @class = "form-control", required = "required" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    @Html.TextBoxFor(m => m.CompanyAddress, new { @class = "form-control", id = "address", placeholder = "Address", pattern = @RegExConst.General, required = "required", title = "Enter Address" })
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Contact Person</label>
+                                                    @Html.TextBoxFor(m => m.ContactPerson, new { @class = "form-control", id = "ContactPerson", placeholder = "Contact Person", pattern = @RegExConst.CharacterAndSpaceOnly, required = "required", title = "Enter Zip" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Email Id</label>
+                                                    @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", id = "EmailId", placeholder = "EmailId", pattern = @RegExConst.EmailAddress, title = "Enter Email Id" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>GSTN</label>
+                                                    @Html.TextBoxFor(m => m.GSTN, new { @class = "form-control", id = "GSTN", placeholder = "GSTN", pattern = @RegExConst.NumbersAnddecimalOnly, title = "Enter GSTN" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>CTS Number</label>
+                                                    @Html.TextBoxFor(m => m.CTSNumber, new { @class = "form-control", id = "CTSNumber", placeholder = "CTS Number", pattern = @RegExConst.NumbersOnly, title = "Enter CTS Number" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>PAN Number</label>
+                                                    @Html.TextBoxFor(m => m.PAN, new { @class = "form-control", id = "PAN", placeholder = "PAN Number", title = "Enter PAN Number" })
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Company LOGO</label>
+                                                    <input type="file" id="company_logo"required class="form-control" name="company_logo" />
+                                                </div>
+                                            </div>
+                                            <div style="display:@Is_view">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>@Html.CheckBoxFor(m => m.IsActive, new { type = "checkbox" }) Enable</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-complete">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+ 

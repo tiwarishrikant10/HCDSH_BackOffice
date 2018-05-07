@@ -1,0 +1,45 @@
+﻿@using ST_BO.Models
+@{
+    int loop = 0;
+    List<TreeNode> AllList = Session[UserInfo.MenuList.ToString()] as List<TreeNode>;
+
+    List<TreeNode> listParent = AllList.Where(tn => string.IsNullOrEmpty(tn.ParentId)).ToList();
+}
+
+
+<!-- BEGIN SIDEBAR MENU HEADER-->
+<div id="sidebar-main" class="sidebar sidebar-default">
+    <div class="sidebar-content">
+        <ul class="navigation">
+            @foreach (var p in listParent)
+            {
+                List<TreeNode> listChild = AllList.Where(tn => tn.ParentId == p.Id).ToList();
+
+                string cssClassName = loop == 0 ? "m-t-30" : "";
+
+                if (listChild.Count == 0)
+                {
+                    <li>
+                        <a href="@p.Url"><i class="@p.Icon"></i>  <span> @p.Name </span></a> 
+                    </li>
+
+                }
+                else
+                {
+                    <li>
+                        <a href="javascript:;"><i class="@p.Icon"></i> <span>@p.Name</span></a>
+                        <ul class="sub-menu">
+                            @foreach (var c in listChild)
+                            {
+
+                                <li class=""><a href="@c.Url"> @c.Name</a></li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                loop = loop + 1;
+            }
+            </ul>
+    </div>
+</div>

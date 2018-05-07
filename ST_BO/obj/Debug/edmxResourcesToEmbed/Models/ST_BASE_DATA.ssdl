@@ -1,0 +1,1295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ST_BASE_DATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ACADEMIC_LEVEL">
+    <Key>
+      <PropertyRef Name="AcademicLevelId" />
+    </Key>
+    <Property Name="AcademicLevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AcademicLevelName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="APP_ERROR_LOG">
+    <Key>
+      <PropertyRef Name="ErrorLogId" />
+    </Key>
+    <Property Name="ErrorLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ErrorMessage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Created_Date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="APPLICATION_CONFIGURATION">
+    <Key>
+      <PropertyRef Name="ApplicationConfigurationId" />
+    </Key>
+    <Property Name="ApplicationConfigurationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicationConfigurationName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ApplicationConfigurationValue" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AREA">
+    <Key>
+      <PropertyRef Name="AreaId" />
+    </Key>
+    <Property Name="AreaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BANNER">
+    <Key>
+      <PropertyRef Name="BannerId" />
+    </Key>
+    <Property Name="BannerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BannerText" Type="nvarchar(max)" />
+    <Property Name="BannerImage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Button1Text" Type="nvarchar(max)" />
+    <Property Name="Button1Url" Type="nvarchar(max)" />
+    <Property Name="Button1IsShow" Type="bit" />
+    <Property Name="Button2Text" Type="nvarchar(max)" />
+    <Property Name="Button2Url" Type="nvarchar(max)" />
+    <Property Name="Button2IsShow" Type="bit" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsDefult" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CITY">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StateId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COMPANY">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContactNumber" Type="nvarchar(max)" />
+    <Property Name="CompanyAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="GSTN" Type="nvarchar" MaxLength="50" />
+    <Property Name="CTSNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="PAN" Type="nvarchar" MaxLength="50" />
+    <Property Name="LogoImage" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CallCentreNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ComplaintNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContactPerson" Type="nvarchar(max)" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="WebSite" Type="nvarchar" MaxLength="100" />
+    <Property Name="ParentId" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTENT">
+    <Key>
+      <PropertyRef Name="ContentId" />
+    </Key>
+    <Property Name="ContentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContentHeading" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Help" Type="nvarchar(max)" />
+    <Property Name="MenuCategoryId" Type="int" Nullable="false" />
+    <Property Name="ContentDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="VideoUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MetaTag" Type="nvarchar" MaxLength="50" />
+    <Property Name="MetaKeyword" Type="nvarchar" MaxLength="50" />
+    <Property Name="UploadImage" Type="nvarchar(max)" />
+    <Property Name="SlugUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTENT_ATTACHMENT">
+    <Key>
+      <PropertyRef Name="ContentAttachmentId" />
+    </Key>
+    <Property Name="ContentAttachmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContentFileName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContentId" Type="int" Nullable="false" />
+    <Property Name="ContentDescription" Type="nvarchar(max)" />
+    <Property Name="UploadImage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsSlider" Type="bit" Nullable="false" />
+    <Property Name="IsCard" Type="bit" Nullable="false" />
+    <Property Name="CardUrl" Type="nvarchar(max)" />
+    <Property Name="SequenceOrder" Type="int" />
+    <Property Name="SlugUrl" Type="nvarchar(max)" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COUNTRY">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CUSTOMER_SETTING">
+    <Key>
+      <PropertyRef Name="CustomerSettingId" />
+    </Key>
+    <Property Name="CustomerSettingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SettingCategory" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SettingName" Type="int" Nullable="false" />
+    <Property Name="SettingValue" Type="datetime" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EVENT">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventHeading" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EventTypeId" Type="int" Nullable="false" />
+    <Property Name="Help" Type="nvarchar(max)" />
+    <Property Name="MenuCategoryId" Type="int" Nullable="false" />
+    <Property Name="EventDate" Type="datetime" Nullable="false" />
+    <Property Name="EventStartDate" Type="datetime" Nullable="false" />
+    <Property Name="EventEndDate" Type="datetime" Nullable="false" />
+    <Property Name="EventDescription" Type="nvarchar(max)" />
+    <Property Name="VideoUrl" Type="nvarchar(max)" />
+    <Property Name="MetaTag" Type="nvarchar" MaxLength="50" />
+    <Property Name="MetaKeyword" Type="nvarchar" MaxLength="50" />
+    <Property Name="UploadImage" Type="nvarchar(max)" />
+    <Property Name="SlugUrl" Type="nvarchar(max)" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EVENT_TYPE">
+    <Key>
+      <PropertyRef Name="EventTypeId" />
+    </Key>
+    <Property Name="EventTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventTypeName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GALLARY_TYPE">
+    <Key>
+      <PropertyRef Name="GallaryTypeId" />
+    </Key>
+    <Property Name="GallaryTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GallaryTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MENU">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MenuName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MenuParentId" Type="int" />
+    <Property Name="ControllerName" Type="nvarchar(max)" />
+    <Property Name="ActionName" Type="nvarchar(max)" />
+    <Property Name="Id" Type="nvarchar(max)" />
+    <Property Name="Icon" Type="nvarchar(max)" />
+    <Property Name="SequenceOrder" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MENU_CATEGORY">
+    <Key>
+      <PropertyRef Name="MenuCategoryId" />
+    </Key>
+    <Property Name="MenuCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MenuCategoryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PerentMenuCategoryId" Type="int" />
+    <Property Name="SequenceOrder" Type="int" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NEWS_TYPE">
+    <Key>
+      <PropertyRef Name="NewsTypeId" />
+    </Key>
+    <Property Name="NewsTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NewsTypeName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PIN_CODE">
+    <Key>
+      <PropertyRef Name="PinCodeId" />
+    </Key>
+    <Property Name="PinCodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PinCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City_d" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RECRUITMENT">
+    <Key>
+      <PropertyRef Name="RecruitmentId" />
+    </Key>
+    <Property Name="RecruitmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ContactNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="YearOfExpriance" Type="int" Nullable="false" />
+    <Property Name="AppliedForThePost" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AcademicLevelId" Type="int" Nullable="false" />
+    <Property Name="Attachment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ROLE">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleBit" Type="bigint" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsPublic" Type="bit" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ROLE_ACTION">
+    <Key>
+      <PropertyRef Name="RoleActionId" />
+    </Key>
+    <Property Name="RoleActionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="ControllerName" Type="nvarchar" MaxLength="500" />
+    <Property Name="ActionName" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ROLE_MENU">
+    <Key>
+      <PropertyRef Name="RoleMenuId" />
+    </Key>
+    <Property Name="RoleMenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="MenuId" Type="int" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SMS_TRACKING">
+    <Key>
+      <PropertyRef Name="SmsId" />
+    </Key>
+    <Property Name="SmsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SmsNumbers" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SmsMessage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ApiMessage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SmsCount" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="Smstype" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="STATE">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CountryId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TENURE">
+    <Key>
+      <PropertyRef Name="TenureId" />
+    </Key>
+    <Property Name="TenureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenureName" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="EmployeeCode" Type="nvarchar(max)" />
+    <Property Name="LoginId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="varbinary(max)" Nullable="false" />
+    <Property Name="EmailId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="Dob" Type="datetime" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="RoleBit" Type="int" Nullable="false" />
+    <Property Name="UserPhoto" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastLoginDate" Type="datetime" />
+    <Property Name="PasswordFailedAttempt" Type="int" />
+    <Property Name="IsAccountLocked" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WIDGET">
+    <Key>
+      <PropertyRef Name="WidgetId" />
+    </Key>
+    <Property Name="WidgetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WidgetHeading" Type="nvarchar(max)" />
+    <Property Name="WidgetDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UploadImage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ActiveTillDate" Type="datetime" />
+    <Property Name="Page" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WIDGET_BUTTON">
+    <Key>
+      <PropertyRef Name="WidgetButtonId" />
+    </Key>
+    <Property Name="WidgetButtonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WidgetId" Type="int" Nullable="false" />
+    <Property Name="WidgetButtonText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="WidgetButtonUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="WidgetSequenceOrder" Type="int" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ACADEMIC_LEVEL_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="ACADEMIC_LEVEL" Type="Self.ACADEMIC_LEVEL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="ACADEMIC_LEVEL">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_APP_ERROR_LOG_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="APP_ERROR_LOG" Type="Self.APP_ERROR_LOG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="APP_ERROR_LOG">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AREA_CITY">
+    <End Role="CITY" Type="Self.CITY" Multiplicity="1" />
+    <End Role="AREA" Type="Self.AREA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CITY">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="AREA">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BANNER_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="BANNER" Type="Self.BANNER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="BANNER">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BANNER_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="BANNER" Type="Self.BANNER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="BANNER">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BANNER_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="BANNER" Type="Self.BANNER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="BANNER">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CITY_STATE">
+    <End Role="STATE" Type="Self.STATE" Multiplicity="1" />
+    <End Role="CITY" Type="Self.CITY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STATE">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="CITY">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COMPANY_CITY">
+    <End Role="CITY" Type="Self.CITY" Multiplicity="1" />
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CITY">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="COMPANY">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COMPANY_COMPANY1">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="0..1" />
+    <End Role="COMPANY1" Type="Self.COMPANY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="COMPANY1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_ATTACHMENT_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="CONTENT_ATTACHMENT" Type="Self.CONTENT_ATTACHMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="CONTENT_ATTACHMENT">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_ATTACHMENT_CONTENT">
+    <End Role="CONTENT" Type="Self.CONTENT" Multiplicity="1" />
+    <End Role="CONTENT_ATTACHMENT" Type="Self.CONTENT_ATTACHMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONTENT">
+        <PropertyRef Name="ContentId" />
+      </Principal>
+      <Dependent Role="CONTENT_ATTACHMENT">
+        <PropertyRef Name="ContentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_ATTACHMENT_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="CONTENT_ATTACHMENT" Type="Self.CONTENT_ATTACHMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CONTENT_ATTACHMENT">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_ATTACHMENT_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="CONTENT_ATTACHMENT" Type="Self.CONTENT_ATTACHMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CONTENT_ATTACHMENT">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="CONTENT" Type="Self.CONTENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="CONTENT">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_MENU_CATEGORY">
+    <End Role="MENU_CATEGORY" Type="Self.MENU_CATEGORY" Multiplicity="1" />
+    <End Role="CONTENT" Type="Self.CONTENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MENU_CATEGORY">
+        <PropertyRef Name="MenuCategoryId" />
+      </Principal>
+      <Dependent Role="CONTENT">
+        <PropertyRef Name="MenuCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="CONTENT" Type="Self.CONTENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CONTENT">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONTENT_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="CONTENT" Type="Self.CONTENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CONTENT">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CUSTOMER_SETTING_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="CUSTOMER_SETTING" Type="Self.CUSTOMER_SETTING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="CUSTOMER_SETTING">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EVENT_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="EVENT" Type="Self.EVENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="EVENT">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EVENT_EVENT_TYPE">
+    <End Role="EVENT_TYPE" Type="Self.EVENT_TYPE" Multiplicity="1" />
+    <End Role="EVENT" Type="Self.EVENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EVENT_TYPE">
+        <PropertyRef Name="EventTypeId" />
+      </Principal>
+      <Dependent Role="EVENT">
+        <PropertyRef Name="EventTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EVENT_MENU_CATEGORY">
+    <End Role="MENU_CATEGORY" Type="Self.MENU_CATEGORY" Multiplicity="1" />
+    <End Role="EVENT" Type="Self.EVENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MENU_CATEGORY">
+        <PropertyRef Name="MenuCategoryId" />
+      </Principal>
+      <Dependent Role="EVENT">
+        <PropertyRef Name="MenuCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EVENT_TYPE_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="EVENT_TYPE" Type="Self.EVENT_TYPE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="EVENT_TYPE">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EVENT_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="EVENT" Type="Self.EVENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="EVENT">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EVENT_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="EVENT" Type="Self.EVENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="EVENT">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GALLARY_TYPE_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="GALLARY_TYPE" Type="Self.GALLARY_TYPE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="GALLARY_TYPE">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MENU_CATEGORY_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="MENU_CATEGORY" Type="Self.MENU_CATEGORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="MENU_CATEGORY">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MENU_CATEGORY_MENU_CATEGORY">
+    <End Role="MENU_CATEGORY" Type="Self.MENU_CATEGORY" Multiplicity="0..1" />
+    <End Role="MENU_CATEGORY1" Type="Self.MENU_CATEGORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MENU_CATEGORY">
+        <PropertyRef Name="MenuCategoryId" />
+      </Principal>
+      <Dependent Role="MENU_CATEGORY1">
+        <PropertyRef Name="PerentMenuCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MENU_MENU">
+    <End Role="MENU" Type="Self.MENU" Multiplicity="0..1" />
+    <End Role="MENU1" Type="Self.MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MENU">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="MENU1">
+        <PropertyRef Name="MenuParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NEWS_TYPE_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="NEWS_TYPE" Type="Self.NEWS_TYPE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="NEWS_TYPE">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PIN_CODE_CITY">
+    <End Role="CITY" Type="Self.CITY" Multiplicity="1" />
+    <End Role="PIN_CODE" Type="Self.PIN_CODE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CITY">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="PIN_CODE">
+        <PropertyRef Name="City_d" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RECRUITMENT_ACADEMIC_LEVEL">
+    <End Role="ACADEMIC_LEVEL" Type="Self.ACADEMIC_LEVEL" Multiplicity="1" />
+    <End Role="RECRUITMENT" Type="Self.RECRUITMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ACADEMIC_LEVEL">
+        <PropertyRef Name="AcademicLevelId" />
+      </Principal>
+      <Dependent Role="RECRUITMENT">
+        <PropertyRef Name="AcademicLevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RECRUITMENT_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="RECRUITMENT" Type="Self.RECRUITMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="RECRUITMENT">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RECRUITMENT_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="RECRUITMENT" Type="Self.RECRUITMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="RECRUITMENT">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RECRUITMENT_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="RECRUITMENT" Type="Self.RECRUITMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="RECRUITMENT">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_ACTION_ROLE">
+    <End Role="ROLE" Type="Self.ROLE" Multiplicity="1" />
+    <End Role="ROLE_ACTION" Type="Self.ROLE_ACTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLE">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="ROLE_ACTION">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="ROLE" Type="Self.ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="ROLE">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_MENU_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="ROLE_MENU" Type="Self.ROLE_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="ROLE_MENU">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_MENU_MENU">
+    <End Role="MENU" Type="Self.MENU" Multiplicity="1" />
+    <End Role="ROLE_MENU" Type="Self.ROLE_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MENU">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="ROLE_MENU">
+        <PropertyRef Name="MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_MENU_ROLE">
+    <End Role="ROLE" Type="Self.ROLE" Multiplicity="1" />
+    <End Role="ROLE_MENU" Type="Self.ROLE_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLE">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="ROLE_MENU">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="ROLE" Type="Self.ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ROLE">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ROLE_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="ROLE" Type="Self.ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ROLE">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMS_TRACKING_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="SMS_TRACKING" Type="Self.SMS_TRACKING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="SMS_TRACKING">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STATE_COUNTRY">
+    <End Role="COUNTRY" Type="Self.COUNTRY" Multiplicity="1" />
+    <End Role="STATE" Type="Self.STATE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COUNTRY">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="STATE">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TENURE_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="TENURE" Type="Self.TENURE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="TENURE">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_CITY">
+    <End Role="CITY" Type="Self.CITY" Multiplicity="0..1" />
+    <End Role="USER" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CITY">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="USER">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USER_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="USER" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="USER">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WIDGET_BUTTON_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="WIDGET_BUTTON" Type="Self.WIDGET_BUTTON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="WIDGET_BUTTON">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WIDGET_BUTTON_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="WIDGET_BUTTON" Type="Self.WIDGET_BUTTON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="WIDGET_BUTTON">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WIDGET_BUTTON_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="WIDGET_BUTTON" Type="Self.WIDGET_BUTTON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="WIDGET_BUTTON">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WIDGET_BUTTON_WIDGET">
+    <End Role="WIDGET" Type="Self.WIDGET" Multiplicity="1" />
+    <End Role="WIDGET_BUTTON" Type="Self.WIDGET_BUTTON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WIDGET">
+        <PropertyRef Name="WidgetId" />
+      </Principal>
+      <Dependent Role="WIDGET_BUTTON">
+        <PropertyRef Name="WidgetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WIDGET_COMPANY">
+    <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
+    <End Role="WIDGET" Type="Self.WIDGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPANY">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="WIDGET">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WIDGET_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="WIDGET" Type="Self.WIDGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="WIDGET">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WIDGET_USER1">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="WIDGET" Type="Self.WIDGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="WIDGET">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Decrypt_TEXT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
+    <Parameter Name="Cipher" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="Encrypt_TEXT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary(max)">
+    <Parameter Name="plaintext" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="GetMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="roleId" Type="int" Mode="In" />
+    <Parameter Name="companyid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="USP_CreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="USER_ID" Type="int" Mode="In" />
+    <Parameter Name="user_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="last_name" Type="nvarchar" Mode="In" />
+    <Parameter Name="login_id" Type="varchar" Mode="In" />
+    <Parameter Name="email_id" Type="varchar" Mode="In" />
+    <Parameter Name="mobile" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Address" Type="varchar(max)" Mode="In" />
+    <Parameter Name="cityId" Type="int" Mode="In" />
+    <Parameter Name="gender" Type="nchar" Mode="In" />
+    <Parameter Name="user_photo" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="role_bit" Type="int" Mode="In" />
+    <Parameter Name="company_id" Type="int" Mode="In" />
+    <Parameter Name="is_active" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="USP_Decrypt_TEXT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Cipher" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="USP_Encrypt_TEXT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="plaintext" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="USP_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoginID" Type="nvarchar" Mode="In" />
+    <Parameter Name="PWD" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsWeb" Type="bit" Mode="In" />
+  </Function>
+  <EntityContainer Name="ST_BASE_DATAModelStoreContainer">
+    <EntitySet Name="ACADEMIC_LEVEL" EntityType="Self.ACADEMIC_LEVEL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="APP_ERROR_LOG" EntityType="Self.APP_ERROR_LOG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="APPLICATION_CONFIGURATION" EntityType="Self.APPLICATION_CONFIGURATION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AREA" EntityType="Self.AREA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BANNER" EntityType="Self.BANNER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CITY" EntityType="Self.CITY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COMPANY" EntityType="Self.COMPANY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTENT" EntityType="Self.CONTENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CONTENT_ATTACHMENT" EntityType="Self.CONTENT_ATTACHMENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COUNTRY" EntityType="Self.COUNTRY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CUSTOMER_SETTING" EntityType="Self.CUSTOMER_SETTING" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EVENT" EntityType="Self.EVENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EVENT_TYPE" EntityType="Self.EVENT_TYPE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GALLARY_TYPE" EntityType="Self.GALLARY_TYPE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MENU" EntityType="Self.MENU" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MENU_CATEGORY" EntityType="Self.MENU_CATEGORY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NEWS_TYPE" EntityType="Self.NEWS_TYPE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PIN_CODE" EntityType="Self.PIN_CODE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RECRUITMENT" EntityType="Self.RECRUITMENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ROLE_ACTION" EntityType="Self.ROLE_ACTION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ROLE_MENU" EntityType="Self.ROLE_MENU" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SMS_TRACKING" EntityType="Self.SMS_TRACKING" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STATE" EntityType="Self.STATE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TENURE" EntityType="Self.TENURE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WIDGET" EntityType="Self.WIDGET" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WIDGET_BUTTON" EntityType="Self.WIDGET_BUTTON" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ACADEMIC_LEVEL_COMPANY" Association="Self.FK_ACADEMIC_LEVEL_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="ACADEMIC_LEVEL" EntitySet="ACADEMIC_LEVEL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_APP_ERROR_LOG_USER" Association="Self.FK_APP_ERROR_LOG_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="APP_ERROR_LOG" EntitySet="APP_ERROR_LOG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AREA_CITY" Association="Self.FK_AREA_CITY">
+      <End Role="CITY" EntitySet="CITY" />
+      <End Role="AREA" EntitySet="AREA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BANNER_COMPANY" Association="Self.FK_BANNER_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="BANNER" EntitySet="BANNER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BANNER_USER" Association="Self.FK_BANNER_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="BANNER" EntitySet="BANNER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BANNER_USER1" Association="Self.FK_BANNER_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="BANNER" EntitySet="BANNER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CITY_STATE" Association="Self.FK_CITY_STATE">
+      <End Role="STATE" EntitySet="STATE" />
+      <End Role="CITY" EntitySet="CITY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COMPANY_CITY" Association="Self.FK_COMPANY_CITY">
+      <End Role="CITY" EntitySet="CITY" />
+      <End Role="COMPANY" EntitySet="COMPANY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COMPANY_COMPANY1" Association="Self.FK_COMPANY_COMPANY1">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="COMPANY1" EntitySet="COMPANY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_ATTACHMENT_COMPANY" Association="Self.FK_CONTENT_ATTACHMENT_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="CONTENT_ATTACHMENT" EntitySet="CONTENT_ATTACHMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_ATTACHMENT_CONTENT" Association="Self.FK_CONTENT_ATTACHMENT_CONTENT">
+      <End Role="CONTENT" EntitySet="CONTENT" />
+      <End Role="CONTENT_ATTACHMENT" EntitySet="CONTENT_ATTACHMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_ATTACHMENT_USER" Association="Self.FK_CONTENT_ATTACHMENT_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="CONTENT_ATTACHMENT" EntitySet="CONTENT_ATTACHMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_ATTACHMENT_USER1" Association="Self.FK_CONTENT_ATTACHMENT_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="CONTENT_ATTACHMENT" EntitySet="CONTENT_ATTACHMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_COMPANY" Association="Self.FK_CONTENT_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="CONTENT" EntitySet="CONTENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_MENU_CATEGORY" Association="Self.FK_CONTENT_MENU_CATEGORY">
+      <End Role="MENU_CATEGORY" EntitySet="MENU_CATEGORY" />
+      <End Role="CONTENT" EntitySet="CONTENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_USER" Association="Self.FK_CONTENT_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="CONTENT" EntitySet="CONTENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONTENT_USER1" Association="Self.FK_CONTENT_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="CONTENT" EntitySet="CONTENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CUSTOMER_SETTING_COMPANY" Association="Self.FK_CUSTOMER_SETTING_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="CUSTOMER_SETTING" EntitySet="CUSTOMER_SETTING" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EVENT_COMPANY" Association="Self.FK_EVENT_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="EVENT" EntitySet="EVENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EVENT_EVENT_TYPE" Association="Self.FK_EVENT_EVENT_TYPE">
+      <End Role="EVENT_TYPE" EntitySet="EVENT_TYPE" />
+      <End Role="EVENT" EntitySet="EVENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EVENT_MENU_CATEGORY" Association="Self.FK_EVENT_MENU_CATEGORY">
+      <End Role="MENU_CATEGORY" EntitySet="MENU_CATEGORY" />
+      <End Role="EVENT" EntitySet="EVENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EVENT_TYPE_COMPANY" Association="Self.FK_EVENT_TYPE_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="EVENT_TYPE" EntitySet="EVENT_TYPE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EVENT_USER" Association="Self.FK_EVENT_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="EVENT" EntitySet="EVENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EVENT_USER1" Association="Self.FK_EVENT_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="EVENT" EntitySet="EVENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GALLARY_TYPE_COMPANY" Association="Self.FK_GALLARY_TYPE_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="GALLARY_TYPE" EntitySet="GALLARY_TYPE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MENU_CATEGORY_COMPANY" Association="Self.FK_MENU_CATEGORY_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="MENU_CATEGORY" EntitySet="MENU_CATEGORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MENU_CATEGORY_MENU_CATEGORY" Association="Self.FK_MENU_CATEGORY_MENU_CATEGORY">
+      <End Role="MENU_CATEGORY" EntitySet="MENU_CATEGORY" />
+      <End Role="MENU_CATEGORY1" EntitySet="MENU_CATEGORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MENU_MENU" Association="Self.FK_MENU_MENU">
+      <End Role="MENU" EntitySet="MENU" />
+      <End Role="MENU1" EntitySet="MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NEWS_TYPE_COMPANY" Association="Self.FK_NEWS_TYPE_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="NEWS_TYPE" EntitySet="NEWS_TYPE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PIN_CODE_CITY" Association="Self.FK_PIN_CODE_CITY">
+      <End Role="CITY" EntitySet="CITY" />
+      <End Role="PIN_CODE" EntitySet="PIN_CODE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RECRUITMENT_ACADEMIC_LEVEL" Association="Self.FK_RECRUITMENT_ACADEMIC_LEVEL">
+      <End Role="ACADEMIC_LEVEL" EntitySet="ACADEMIC_LEVEL" />
+      <End Role="RECRUITMENT" EntitySet="RECRUITMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RECRUITMENT_COMPANY" Association="Self.FK_RECRUITMENT_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="RECRUITMENT" EntitySet="RECRUITMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RECRUITMENT_USER" Association="Self.FK_RECRUITMENT_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="RECRUITMENT" EntitySet="RECRUITMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RECRUITMENT_USER1" Association="Self.FK_RECRUITMENT_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="RECRUITMENT" EntitySet="RECRUITMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_ACTION_ROLE" Association="Self.FK_ROLE_ACTION_ROLE">
+      <End Role="ROLE" EntitySet="ROLE" />
+      <End Role="ROLE_ACTION" EntitySet="ROLE_ACTION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_COMPANY" Association="Self.FK_ROLE_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="ROLE" EntitySet="ROLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_MENU_COMPANY" Association="Self.FK_ROLE_MENU_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="ROLE_MENU" EntitySet="ROLE_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_MENU_MENU" Association="Self.FK_ROLE_MENU_MENU">
+      <End Role="MENU" EntitySet="MENU" />
+      <End Role="ROLE_MENU" EntitySet="ROLE_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_MENU_ROLE" Association="Self.FK_ROLE_MENU_ROLE">
+      <End Role="ROLE" EntitySet="ROLE" />
+      <End Role="ROLE_MENU" EntitySet="ROLE_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_USER" Association="Self.FK_ROLE_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="ROLE" EntitySet="ROLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ROLE_USER1" Association="Self.FK_ROLE_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="ROLE" EntitySet="ROLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMS_TRACKING_COMPANY" Association="Self.FK_SMS_TRACKING_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="SMS_TRACKING" EntitySet="SMS_TRACKING" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STATE_COUNTRY" Association="Self.FK_STATE_COUNTRY">
+      <End Role="COUNTRY" EntitySet="COUNTRY" />
+      <End Role="STATE" EntitySet="STATE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TENURE_COMPANY" Association="Self.FK_TENURE_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="TENURE" EntitySet="TENURE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_CITY" Association="Self.FK_USER_CITY">
+      <End Role="CITY" EntitySet="CITY" />
+      <End Role="USER" EntitySet="USER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USER_COMPANY" Association="Self.FK_USER_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="USER" EntitySet="USER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WIDGET_BUTTON_COMPANY" Association="Self.FK_WIDGET_BUTTON_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="WIDGET_BUTTON" EntitySet="WIDGET_BUTTON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WIDGET_BUTTON_USER" Association="Self.FK_WIDGET_BUTTON_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="WIDGET_BUTTON" EntitySet="WIDGET_BUTTON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WIDGET_BUTTON_USER1" Association="Self.FK_WIDGET_BUTTON_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="WIDGET_BUTTON" EntitySet="WIDGET_BUTTON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WIDGET_BUTTON_WIDGET" Association="Self.FK_WIDGET_BUTTON_WIDGET">
+      <End Role="WIDGET" EntitySet="WIDGET" />
+      <End Role="WIDGET_BUTTON" EntitySet="WIDGET_BUTTON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WIDGET_COMPANY" Association="Self.FK_WIDGET_COMPANY">
+      <End Role="COMPANY" EntitySet="COMPANY" />
+      <End Role="WIDGET" EntitySet="WIDGET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WIDGET_USER" Association="Self.FK_WIDGET_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="WIDGET" EntitySet="WIDGET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WIDGET_USER1" Association="Self.FK_WIDGET_USER1">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="WIDGET" EntitySet="WIDGET" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

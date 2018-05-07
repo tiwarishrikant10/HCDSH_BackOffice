@@ -1,0 +1,496 @@
+﻿@using DeveloperCRM.Base.Models;
+<style>
+    #example1_paginate {
+    padding-top:0;
+        margin-top: 15px !important;
+    }
+    #example1 thead th {
+    color:#000;}
+     #example2 thead th  {
+    color:#000;}
+        #example2 tr  {
+    color:#000;}
+        .select2 {
+            border-bottom: 1px solid #d3d3d3;
+        }
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            padding-left: 0px;
+        }
+      .action-btn {
+   
+    text-align: left;
+    
+    right: auto;
+}
+    .width100 {
+    width:100% !important;}
+</style>
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <div class="col-md-2 floting padding-0">
+                <div class="form-group filter-search">
+                    <i class="fs-14 sl-user-follow"></i> <label>User</label>
+                </div>
+            </div>
+            @*<div class="row">
+                    <div class="col-md-12>
+                        <div class="pull-right">
+                            <div class="col-xs-12">
+                                <button id="show-modal" class="btn btn-primary btn-cons">
+                                    <i class="fa fa-plus"></i><a href="@Url.Action("CreateEdit", "User",new {id="", rolid = ViewBag.rol_id })" class="btn btn-primary btn-rounded w-md waves-effect waves-light">Add</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+@*<div class="pull-right">
+        <div class="col-xs-12">
+            <button id="show-modal" class="btn btn-primary btn-cons">
+                <i class="fa fa-plus"></i><a href="@Url.Action("CreateEdit", "User",new {id="", rolid = ViewBag.rol_id })" class="btn btn-primary btn-rounded w-md waves-effect waves-light">Add</a>
+            </button>
+        </div>
+    </div>*@
+<div class="view bg-wht">
+    <div class="buttonss">
+        <div class="col-md-12" style="margin-top:10px;">
+            @Html.ActionLink("Add", "CreateEdit", new { id = "", rolid = ViewBag.rol_id }, new { @class = "btn btn-complete add-btn" })
+            @*<button id="show-modal" class="btn btn-complete add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>*@
+            <div class="dropdown hidden-md-down edit-contact morre-btn" style="display:inline-block;">
+                <button class="profile-dropdown-toggle btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="view-port">
+    <div class="view bg-wht">
+        <div class="card card-default">
+            <div class="card-block sub-box table-responsive filtr-srch">
+                <div class="">
+                    <button id="exp_rt" class="btn btn-complete">
+                        Export
+                    </button>
+                    <table id="example" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Email Id</th>
+                                <th>Mobile No</th>
+                                <th>Gender</th>
+                                <th>Team</th>
+                                <th>Unit</th>
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div>
+                        @Html.Hidden("rol_id", (object)ViewBag.rol_id)
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+  </div>
+
+<div class="modal fade    slide-up disable-scroll show chose-up" id="teamlistmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <h5>Team List</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-17"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-l-15 p-r-15">
+                    <div class="view-port">
+                        <div class="view bg-wht">
+                            <div class="card card-default m-b-0">
+                                <form class="row" id="teamGroup">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="control-label">User</label>
+                                            <br>
+                                            @*@Html.DropDownList("User_id", ViewBag.user_id as List<SelectListItem>, "Please Select", new { @class = "form-control", required = "required" , data_init_plugin = "select2", multiple = "multiple" })*@
+                                            <select id="team_user_id" class="form-control" multiple="multiple" required="required" style="max-width: 179px;  min-width:150px; "></select>
+                                        </div>
+                                        @Html.Hidden("ownerId")
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" style="margin-top:38px;" onclick="AddUserTeam()" class="btn btn-success waves-effect waves-light m-l-10 btn-md">Save</button>
+                                    </div>
+                                </form>
+                                <div class="card-block sub-box table-responsive filtr-srch">
+                                    <table id="example1" class="table table-hover demo-table-dynamic table-responsive-block no-check width100" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>User Name</th>
+                                                <th>Role</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll show chose-up" id="assingunit" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <h5>Assign Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-17"></i>
+                    </button>
+                </div>
+                <div class="modal-body p-l-15 p-r-15">
+                    <div class="view-port">
+                        <div class="view bg-wht">
+                            <div class="card card-default m-b-0">
+                               
+                                <form class="row" >
+                       <div class="col-md-4">
+                                        <div class="form-group">
+                                        <label class="control-label">Project</label>
+                                            <br>
+                                        @Html.DropDownList("project_id", ViewBag.project_list as List<SelectListItem>, "Please Select", new { @class = "form-control", required = "required" })
+                                    </div>
+                                        </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Unit</label>
+                                            <br>
+                                            <select id="property_listing_id" class="form-control" data_init_plugin="select2" multiple="multiple" required="required" style="max-width: 179px;  min-width:150px; ">
+                                            </select>
+                                        </div>
+                                        </div>
+                                    <div class="col-md-2">
+                                       <button type="button" style="margin-top:16px;" onclick="AssignProject()" class="btn btn-success waves-effect waves-light m-l-10 btn-md">Save</button>
+                                        </div>
+                                        @Html.Hidden("user_id")
+
+</form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="view-port">
+                        <div class="view bg-wht">
+                            <div class="card card-default m-b-0">
+                                <div class="card-block sub-box table-responsive filtr-srch maxheight">
+                                    <table id="example2" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>User Name</th>
+                                                <th>Project Name</th>
+                                                <th>Unit</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#property_listing_id").select2();
+        $("#project_id").select2();
+        $("#team_user_id").select2();
+        
+    });
+</script>
+    <script type="text/javascript">
+
+        function BindDataTable() {
+
+            $('#example').DataTable({
+                "initComplete": function (settings, json) {
+                    $('#example_filter').children().children().attr('placeholder', 'Search')
+                },
+
+                dom: 'lBfrtip',
+                //dom: 'Blfrtip',
+                buttons: [
+               {
+                   extend: 'csv',
+                   // footer: true,
+
+               },
+                {
+                    extend: 'copy',
+                    // footer: true,
+
+                },
+               {
+                   extend: 'excel',
+
+
+               },
+               {
+                   extend: 'pdf',
+                   orientation: 'landscape',
+                   extend: 'pdfHtml5',
+                   pageSize: 'LEGAL',
+
+               }
+                ]
+       ,
+                "ajax": {
+                    type: "POST",
+                    url: '@Url.Action("UsersList", "Json")',
+                    datatype: "json",
+                    data: { id: "@ViewBag.rol_id" },
+                    dataSrc: ""
+                },
+                columns: [
+                    { data: "user_name", name: "user_name", autoWidth: true },
+                    { data: "email_id", name: "email_id", autoWidth: true },
+                    { data: "mobile", name: "mobile", autoWidth: true },
+                    { data: "gender", name: "gender", autoWidth: true },
+                    {
+                        data: "team_count",
+                        "render": function (data, type, row)
+                        {
+                            //return "<a href='/User/Teamlist?id=" + row.user_id + "' onclick='bindTeamList()'  data-parentid=" + row.user_id + " > " + row.team_count + "</a> "
+                            //<i class='fa fa-trademark fa-w-20'></i>
+                            return "<a href='#' data-toggle='modal' data-target='#teamlistmodal' data-ownerID='"+row.user_id+"' onclick='bindTeamList(" + row.user_id + ")' >" + row.team_count + "</a>"
+                        }
+                    },
+                     {
+                         data: "unit_count",
+                         "render": function (data, type, row) {
+                             return "<a href='#' data-toggle='modal' data-target='#assingunit' onclick='bindProjects("+row.user_id+")'  >" + row.unit_count + "</a>"
+                         }
+                     },
+                    {
+                        data: "is_active",
+                        "render": function (value) {
+                            return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                        }
+                    },
+                    {
+                        data: "user_id",
+                        "render": function (data, type, row) {
+                            return "<div class='action-btn'><a href='/User/CreateEdit?id=" + row.user_id + "&rolid=@ViewBag.rol_id' ><i class='fa fa-edit'></i>    </a> </div>"
+                        }
+                    }
+                ],
+            });
+        }
+        $(document).ready(function () {
+            BindDataTable();
+        });
+        $(function () {
+            $("#exp_rt").click(function () {
+                $(".dt-buttons").toggleClass('dis-none');
+            });
+        });
+        function GetGroupWiseUser(args) {
+            ////
+            //$.post("/Json/GetGroupWiseUser", { userId: args }, function (data) {
+            //    var $select = $('#team_user_id');
+            //    $.each(data, function (Group, Value) {
+            //        var group = $('<optgroup label="' + (this.Group.Name) + '" />');
+            //        $.each(group, function () {
+            //            ////
+            //            $('<option />').val(Value.Value).text(Value.Text).appendTo(group);
+            //        });
+            //        group.appendTo($select);
+            //    });
+            //});
+            $.post("/Json/GetGroupWiseUser", { userId: args }, function (data) {
+                $("#team_user_id").empty();
+                $("#team_user_id").append($("<option/>").val("").text("Please Select"));
+                $.each(data, function () {
+                    $('#team_user_id').append($("<option/>").val(this.Value).text(this.Text));
+                });
+            });
+        };
+        function bindTeamList(args)
+        {
+            GetGroupWiseUser(args);
+            $('#ownerId').val(args);
+            var table = $('#example1').DataTable();
+            table.destroy();
+            $('#example1').DataTable({
+            "initComplete": function (settings, json) {
+                $('#example_filter').children().children().attr('placeholder', 'Search')
+            },
+            dom: 'lBfrtip',
+            //dom: 'Blfrtip',
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("Teamlist", "Json")',
+                datatype: "json",
+                data: { id: args },
+                dataSrc: ""
+            },
+            columns: [
+                { data: "user_name", name: "user_name", autoWidth: true },
+                { data: "role", name: "role", autoWidth: true },
+                {
+                    data: "user_team_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn'><a href='#' onclick='RemoveUserFromTeam(" + row.user_team_id + ");'> <i class='fa fa-trash'></i> </a> </div>"
+                    }
+                }
+            ],
+        });
+        }
+
+        function bindProjects(args) {
+
+            $('#user_id').val(args);
+            var table = $('#example2').DataTable();
+            table.destroy();
+            $('#example2').DataTable({
+                "initComplete": function (settings, json) {
+                    $('#example_filter').children().children().attr('placeholder', 'Search')
+                },
+                dom: 'lBfrtip',
+                //dom: 'Blfrtip',
+                "ajax": {
+                    type: "POST",
+                    url: '@Url.Action("AssignedProjectList", "Json")',
+                    datatype: "json",
+                    data: { id: args },
+                    dataSrc: ""
+                },
+                columns: [
+                    { data: "user_name", name: "user_name", autoWidth: true },
+                    { data: "project_name", name: "project_name", autoWidth: true },
+                    { data: "unit_number", name: "unit_number", autoWidth: true },
+                  {
+                      data: "user_property_listing_id",
+                      "render": function (data, type, row) {
+                          return "<div class='action-btn'><a href='#'  onclick='RemoveData(" +row.user_property_listing_id +");'> <i class='fa fa-trash'></i> </a> </div>"
+                      }
+                  }
+                ],
+            });
+        }
+
+    </script>
+<script>
+    $('#project_id').on('change', function () {
+        ////
+        var projectid = $('#project_id').val();
+        var userid = $('#user_id').val();
+        if(projectid!='')
+        {
+            $.post("/Json/GetPropertyUnit", { id: projectid, userId: userid }, function (data) {
+                $("#property_listing_id").empty();
+                $("#property_listing_id").append($("<option/>").val("").text("Please Select"));
+                $("#property_listing_id").append($("<option/>").val("ALL").text("All Units"));
+                $.each(data, function () {
+                    // ////
+                    $('#property_listing_id').append($("<option/>").val(this.Value).text(this.Text));
+                });
+            });
+        }
+    });
+</script>
+<script>
+
+    $("#assingunit").on("hidden.bs.modal", function () {
+        $('#property_listing_id').val('');
+        $('#property_listing_id').select2('');
+        $('#user_id').val('');
+       
+        location.reload();
+    });
+
+    $("#teamlistmodal").on("hidden.bs.modal", function () {
+        $('#ownerId').val('');
+        //$('#teamGroup #User_id').select2('');
+        $('#team_user_id').select2("");
+        location.reload();
+    });
+
+    function AssignProject() {
+        $.post("/User/AssingProject", { property_listing_id: $('#property_listing_id').val(), user_id: $('#user_id').val(), project_id: $('#project_id').val() }, function (data) {
+            if (data.Message.indexOf("success") > -1) {
+                bindProjects($('#user_id').val());
+                $('#project_id').val("");
+                $('#property_listing_id').val("");
+                $('#project_id').select2("");
+                $('#property_listing_id').select2("");
+                base.showMessage(data.Message, "success", "", "", "");
+            }
+            else {
+                bindProjects($('#user_id').val());
+                base.showMessage(data.Message, "error", "", "", "");
+            }
+        });
+    };
+
+    function AddUserTeam() {
+        var ownerid = $('#ownerId').val();
+        $.post("/User/AddToUserTeam", { user_id: $('#team_user_id').val(), owner_id: ownerid }, function (data) {
+            if (data.Message.indexOf("success") > -1) {
+                $('#team_user_id').select2("");
+                base.showMessage(data.Message, "success", "", "", "");
+                bindTeamList(ownerid);
+            }
+            else {
+                bindTeamList(ownerid);
+                base.showMessage(data.Message, "error", "", "", "");
+            }
+        });
+    };
+</script>
+
+
+<script>
+    function RemoveData(user_properties_id) {
+        $.post("/Json/RemoveUserPropertiesListingId", { property_listing_id: user_properties_id }, function (data) {
+            if (data.Message.indexOf("success") > -1) {
+                bindProjects($('#user_id').val());
+            }
+            else {
+                bindProjects($('#user_id').val());
+            }
+        });
+    };
+
+    function RemoveUserFromTeam(user_team_id) {
+        ////
+        var ownerid = $('#ownerId').val();
+        $.post("/Json/RemoveUserFromTeam", { user_team_id: user_team_id }, function (data) {
+            if (data.Message.indexOf("success") > -1) {
+                bindTeamList(ownerid);
+            }
+            else {
+                bindTeamList(ownerid);
+            }
+        });
+    };
+    $(function () {
+        $('#property_listing_id').val(SelectedUserList.split(',').filter(Boolean));
+    });
+</script>
+
+

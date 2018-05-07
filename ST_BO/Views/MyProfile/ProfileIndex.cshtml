@@ -1,0 +1,180 @@
+﻿@using DeveloperCRM.Base.Models;
+@model DeveloperCRM.Models.user
+
+
+@{
+    var path = Model.user_photo.ToUpper() == BaseUtil.GetSessionValue(UserInfo.Gender.ToString()).ToUpper() + ".JPG"
+        ? BaseUtil.GetWebConfigValue("SNAG_AWS_S3")
+        : BaseUtil.GetWebConfigValue("SNAG_AWS_S3") + BaseUtil.GetSessionValue(UserInfo.CompanyFolderName.ToString());
+}
+<script>
+
+</script>
+<style>
+    .profile-bg-picture {
+        position: relative;
+        min-height: 300px;
+        margin: -19px -20px 0px -20px;
+        background-position: center;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+
+        .profile-bg-picture > .picture-bg-overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dâ€¦0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2xlc3NoYXQtZ2VuZXJhdGVkKSIgLz48L3N2Zz4=);
+            background-image: -webkit-linear-gradient(top,rgba(255,255,255,0) 0,rgba(0,0,0,.4) 100%);
+            background-image: -o-linear-gradient(top,rgba(255,255,255,0) 0,rgba(0,0,0,.4) 100%);
+            background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),to(rgba(0,0,0,.4)));
+            background-image: linear-gradient(to bottom,rgba(255,255,255,0) 0,rgba(0,0,0,.4) 100%);
+        }
+
+    .profile-user-box {
+        background-color: $white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid $light;
+        margin-top: -65px;
+        position: relative;
+        border-radius: 5px;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="profile-bg-picture" style="min-height:100px">
+            <span class="picture-bg-overlay"></span><!-- overlay -->
+        </div>
+        <!-- meta -->
+        <div class="profile-user-box">
+            <div class="row">
+                <div class="col-sm-6">
+                    <span class="pull-left m-r-15"><img src="@path@Model.user_photo" alt="" style="height:100px" class="thumb-lg rounded-circle"></span>
+                    <div class="media-body">
+                        <h4 class="m-t-5 m-b-5 font-18 ellipsis">@Model.user_name</h4>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-right">
+                        <button type="button" data-toggle="modal" data-target="#user-edit" class="btn btn-success waves-effect waves-light">
+                            <i class="mdi mdi-account-settings-variant m-r-5"></i> Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ meta -->
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <h4 class="header-title m-t-0 m-b-20">Information</h4>
+
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td width="35%">User Name</td>
+                        <td width="65%"><a id="inline-username">@Model.user_name</a></td>
+                    </tr>
+                    <tr>
+                        <td>Email Id</td>
+                        <td><a id="inline-email">@Model.email_id</a></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile</td>
+                        <td><a id="inline-mobile">@Model.mobile</a></td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>
+                            @if (Model.gender == "M")
+                            {
+                                <a id="inline-sex">Male</a>
+                            }
+                            else if (Model.gender == "F")
+                            {
+                                <a id="inline-sex">Female</a>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Last Login</td>
+                        <td><a id="inline-lastlogin">@Model.last_login_date.Value.ToString(@SessionUtil.GetDateFormatCSharp())</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div><!-- end col -->
+</div>
+<div id="user-edit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">EDIT  Profile</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="EditRow">
+                    <div class="col-12">
+                        <div class="card-box">
+                            @using (Html.BeginForm("EditProfile", "MyProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <table class="table table-bordered table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td width="35%">User Name</td>
+                                            <td width="65%">
+                                                <input id="user_name" name="user_name" type="text" class="form-control" value="@Model.user_name">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email Id</td>
+                                            <td><a id="email_id" name="email_id">@Model.email_id</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile</td>
+                                            <td><input id="mobile" name="mobile" type="text" pattern=@RegExConst.NumbersOnly maxlength=10  minlength=10  class="form-control" value="@Model.mobile"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    @Html.DropDownList("gender", new List<SelectListItem> { new SelectListItem { Text = "Male", Value = "M" }, new SelectListItem { Text = "Female", Value = "F" } }, "Please Select", new { @class = "form-control", required = "required" })
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Change Photo</td>
+                                            <td><input class="form-control" type="file" id="user_photo" data-file-ext="png,jpg,jpeg" name="user_photo" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-rounded w-md waves-effect waves-light">Save</button>
+                                            </td>
+                                        </tr>
+                                        @Html.HiddenFor(m => m.user_id)
+                                        @Html.HiddenFor(m => m.user_photo)
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div><!-- end col -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

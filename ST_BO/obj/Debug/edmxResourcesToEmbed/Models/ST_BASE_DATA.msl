@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ST_BASE_DATAModelStoreContainer" CdmEntityContainer="ST_BASE_DATAEntities">
+    <FunctionImportMapping FunctionImportName="USP_CreateUser" FunctionName="ST_BASE_DATAModel.Store.USP_CreateUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ST_BASE_DATAModel.USP_CreateUser_Result">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="MSG" ColumnName="MSG" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_Decrypt_TEXT" FunctionName="ST_BASE_DATAModel.Store.USP_Decrypt_TEXT" />
+    <FunctionImportMapping FunctionImportName="USP_Encrypt_TEXT" FunctionName="ST_BASE_DATAModel.Store.USP_Encrypt_TEXT" />
+    <FunctionImportMapping FunctionImportName="USP_Login" FunctionName="ST_BASE_DATAModel.Store.USP_Login">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ST_BASE_DATAModel.USP_Login_Result">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyActive" ColumnName="CompanyActive" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="RoleBit" ColumnName="RoleBit" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="UserPhoto" ColumnName="UserPhoto" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="PasswordFailedAttempt" ColumnName="PasswordFailedAttempt" />
+          <ScalarProperty Name="IsAccountLocked" ColumnName="IsAccountLocked" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="ACADEMIC_LEVEL">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.ACADEMIC_LEVEL">
+        <MappingFragment StoreEntitySet="ACADEMIC_LEVEL">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="AcademicLevelName" ColumnName="AcademicLevelName" />
+          <ScalarProperty Name="AcademicLevelId" ColumnName="AcademicLevelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="APP_ERROR_LOG">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.APP_ERROR_LOG">
+        <MappingFragment StoreEntitySet="APP_ERROR_LOG">
+          <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ErrorLogId" ColumnName="ErrorLogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="APPLICATION_CONFIGURATION">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.APPLICATION_CONFIGURATION">
+        <MappingFragment StoreEntitySet="APPLICATION_CONFIGURATION">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ApplicationConfigurationValue" ColumnName="ApplicationConfigurationValue" />
+          <ScalarProperty Name="ApplicationConfigurationName" ColumnName="ApplicationConfigurationName" />
+          <ScalarProperty Name="ApplicationConfigurationId" ColumnName="ApplicationConfigurationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AREAs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.AREA">
+        <MappingFragment StoreEntitySet="AREA">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BANNERs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.BANNER">
+        <MappingFragment StoreEntitySet="BANNER">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDefult" ColumnName="IsDefult" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Button2IsShow" ColumnName="Button2IsShow" />
+          <ScalarProperty Name="Button2Url" ColumnName="Button2Url" />
+          <ScalarProperty Name="Button2Text" ColumnName="Button2Text" />
+          <ScalarProperty Name="Button1IsShow" ColumnName="Button1IsShow" />
+          <ScalarProperty Name="Button1Url" ColumnName="Button1Url" />
+          <ScalarProperty Name="Button1Text" ColumnName="Button1Text" />
+          <ScalarProperty Name="BannerImage" ColumnName="BannerImage" />
+          <ScalarProperty Name="BannerText" ColumnName="BannerText" />
+          <ScalarProperty Name="BannerId" ColumnName="BannerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CITies">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.CITY">
+        <MappingFragment StoreEntitySet="CITY">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMPANies">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.COMPANY">
+        <MappingFragment StoreEntitySet="COMPANY">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+          <ScalarProperty Name="ComplaintNumber" ColumnName="ComplaintNumber" />
+          <ScalarProperty Name="CallCentreNumber" ColumnName="CallCentreNumber" />
+          <ScalarProperty Name="LogoImage" ColumnName="LogoImage" />
+          <ScalarProperty Name="PAN" ColumnName="PAN" />
+          <ScalarProperty Name="CTSNumber" ColumnName="CTSNumber" />
+          <ScalarProperty Name="GSTN" ColumnName="GSTN" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTENTs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.CONTENT">
+        <MappingFragment StoreEntitySet="CONTENT">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="SlugUrl" ColumnName="SlugUrl" />
+          <ScalarProperty Name="UploadImage" ColumnName="UploadImage" />
+          <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+          <ScalarProperty Name="MetaTag" ColumnName="MetaTag" />
+          <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+          <ScalarProperty Name="ContentDescription" ColumnName="ContentDescription" />
+          <ScalarProperty Name="MenuCategoryId" ColumnName="MenuCategoryId" />
+          <ScalarProperty Name="Help" ColumnName="Help" />
+          <ScalarProperty Name="ContentHeading" ColumnName="ContentHeading" />
+          <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTENT_ATTACHMENT">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.CONTENT_ATTACHMENT">
+        <MappingFragment StoreEntitySet="CONTENT_ATTACHMENT">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="SlugUrl" ColumnName="SlugUrl" />
+          <ScalarProperty Name="SequenceOrder" ColumnName="SequenceOrder" />
+          <ScalarProperty Name="CardUrl" ColumnName="CardUrl" />
+          <ScalarProperty Name="IsCard" ColumnName="IsCard" />
+          <ScalarProperty Name="IsSlider" ColumnName="IsSlider" />
+          <ScalarProperty Name="UploadImage" ColumnName="UploadImage" />
+          <ScalarProperty Name="ContentDescription" ColumnName="ContentDescription" />
+          <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+          <ScalarProperty Name="ContentFileName" ColumnName="ContentFileName" />
+          <ScalarProperty Name="ContentAttachmentId" ColumnName="ContentAttachmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COUNTRies">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.COUNTRY">
+        <MappingFragment StoreEntitySet="COUNTRY">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CUSTOMER_SETTING">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.CUSTOMER_SETTING">
+        <MappingFragment StoreEntitySet="CUSTOMER_SETTING">
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+          <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+          <ScalarProperty Name="SettingCategory" ColumnName="SettingCategory" />
+          <ScalarProperty Name="CustomerSettingId" ColumnName="CustomerSettingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EVENTs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.EVENT">
+        <MappingFragment StoreEntitySet="EVENT">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="SlugUrl" ColumnName="SlugUrl" />
+          <ScalarProperty Name="UploadImage" ColumnName="UploadImage" />
+          <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword" />
+          <ScalarProperty Name="MetaTag" ColumnName="MetaTag" />
+          <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+          <ScalarProperty Name="EventDescription" ColumnName="EventDescription" />
+          <ScalarProperty Name="EventEndDate" ColumnName="EventEndDate" />
+          <ScalarProperty Name="EventStartDate" ColumnName="EventStartDate" />
+          <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+          <ScalarProperty Name="MenuCategoryId" ColumnName="MenuCategoryId" />
+          <ScalarProperty Name="Help" ColumnName="Help" />
+          <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+          <ScalarProperty Name="EventHeading" ColumnName="EventHeading" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EVENT_TYPE">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.EVENT_TYPE">
+        <MappingFragment StoreEntitySet="EVENT_TYPE">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="EventTypeName" ColumnName="EventTypeName" />
+          <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GALLARY_TYPE">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.GALLARY_TYPE">
+        <MappingFragment StoreEntitySet="GALLARY_TYPE">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="GallaryTypeName" ColumnName="GallaryTypeName" />
+          <ScalarProperty Name="GallaryTypeId" ColumnName="GallaryTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MENUs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.MENU">
+        <MappingFragment StoreEntitySet="MENU">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="SequenceOrder" ColumnName="SequenceOrder" />
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="MenuParentId" ColumnName="MenuParentId" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MENU_CATEGORY">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.MENU_CATEGORY">
+        <MappingFragment StoreEntitySet="MENU_CATEGORY">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="SequenceOrder" ColumnName="SequenceOrder" />
+          <ScalarProperty Name="PerentMenuCategoryId" ColumnName="PerentMenuCategoryId" />
+          <ScalarProperty Name="MenuCategoryName" ColumnName="MenuCategoryName" />
+          <ScalarProperty Name="MenuCategoryId" ColumnName="MenuCategoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NEWS_TYPE">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.NEWS_TYPE">
+        <MappingFragment StoreEntitySet="NEWS_TYPE">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="NewsTypeName" ColumnName="NewsTypeName" />
+          <ScalarProperty Name="NewsTypeId" ColumnName="NewsTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PIN_CODE">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.PIN_CODE">
+        <MappingFragment StoreEntitySet="PIN_CODE">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="City_d" ColumnName="City_d" />
+          <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+          <ScalarProperty Name="PinCodeId" ColumnName="PinCodeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RECRUITMENTs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.RECRUITMENT">
+        <MappingFragment StoreEntitySet="RECRUITMENT">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+          <ScalarProperty Name="AcademicLevelId" ColumnName="AcademicLevelId" />
+          <ScalarProperty Name="AppliedForThePost" ColumnName="AppliedForThePost" />
+          <ScalarProperty Name="YearOfExpriance" ColumnName="YearOfExpriance" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="RecruitmentId" ColumnName="RecruitmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLEs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.ROLE">
+        <MappingFragment StoreEntitySet="ROLE">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleBit" ColumnName="RoleBit" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLE_ACTION">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.ROLE_ACTION">
+        <MappingFragment StoreEntitySet="ROLE_ACTION">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleActionId" ColumnName="RoleActionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLE_MENU">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.ROLE_MENU">
+        <MappingFragment StoreEntitySet="ROLE_MENU">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleMenuId" ColumnName="RoleMenuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMS_TRACKING">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.SMS_TRACKING">
+        <MappingFragment StoreEntitySet="SMS_TRACKING">
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Smstype" ColumnName="Smstype" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="SmsCount" ColumnName="SmsCount" />
+          <ScalarProperty Name="ApiMessage" ColumnName="ApiMessage" />
+          <ScalarProperty Name="SmsMessage" ColumnName="SmsMessage" />
+          <ScalarProperty Name="SmsNumbers" ColumnName="SmsNumbers" />
+          <ScalarProperty Name="SmsId" ColumnName="SmsId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STATEs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.STATE">
+        <MappingFragment StoreEntitySet="STATE">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TENUREs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.TENURE">
+        <MappingFragment StoreEntitySet="TENURE">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="TenureName" ColumnName="TenureName" />
+          <ScalarProperty Name="TenureId" ColumnName="TenureId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.USER">
+        <MappingFragment StoreEntitySet="USER">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsAccountLocked" ColumnName="IsAccountLocked" />
+          <ScalarProperty Name="PasswordFailedAttempt" ColumnName="PasswordFailedAttempt" />
+          <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+          <ScalarProperty Name="UserPhoto" ColumnName="UserPhoto" />
+          <ScalarProperty Name="RoleBit" ColumnName="RoleBit" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Dob" ColumnName="Dob" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WIDGETs">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.WIDGET">
+        <MappingFragment StoreEntitySet="WIDGET">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Page" ColumnName="Page" />
+          <ScalarProperty Name="ActiveTillDate" ColumnName="ActiveTillDate" />
+          <ScalarProperty Name="UploadImage" ColumnName="UploadImage" />
+          <ScalarProperty Name="WidgetDescription" ColumnName="WidgetDescription" />
+          <ScalarProperty Name="WidgetHeading" ColumnName="WidgetHeading" />
+          <ScalarProperty Name="WidgetId" ColumnName="WidgetId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WIDGET_BUTTON">
+      <EntityTypeMapping TypeName="ST_BASE_DATAModel.WIDGET_BUTTON">
+        <MappingFragment StoreEntitySet="WIDGET_BUTTON">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="WidgetSequenceOrder" ColumnName="WidgetSequenceOrder" />
+          <ScalarProperty Name="WidgetButtonUrl" ColumnName="WidgetButtonUrl" />
+          <ScalarProperty Name="WidgetButtonText" ColumnName="WidgetButtonText" />
+          <ScalarProperty Name="WidgetId" ColumnName="WidgetId" />
+          <ScalarProperty Name="WidgetButtonId" ColumnName="WidgetButtonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetMenu" FunctionName="ST_BASE_DATAModel.Store.GetMenu">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ST_BASE_DATAModel.GetMenu_Result">
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="MenuParentId" ColumnName="MenuParentId" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
+          <ScalarProperty Name="SequenceOrder" ColumnName="SequenceOrder" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

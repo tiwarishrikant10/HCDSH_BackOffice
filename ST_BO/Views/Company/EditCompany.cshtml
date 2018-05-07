@@ -1,0 +1,1663 @@
+﻿@using DeveloperCRM.Base.Models;
+@model DeveloperCRM.Models.company
+@{
+    string Is_view = Model.company_id > 0 ? "block" : "none";
+    var path = BaseUtil.GetWebConfigValue("SNAG_AWS_S3");
+    var img = Model.company_logo != "NA.JPG" ? path + Model.company_folder_name + Model.company_logo : path + Model.company_logo;
+}
+<style>
+
+    .select2-container {
+        z-index: 9999;
+    }
+    #modalAssignReport {
+    padding-left:0 !important;}
+    .jstree-container-ul li {
+        text-align: left;
+    }
+
+    .box-footer {
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    #createform {
+        padding: 8px 0 8px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+        #createform form {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            padding: 0 10px;
+        }
+
+    .enl {
+        position: relative;
+        top: -8px;
+    }
+    #basicTableReport {
+    width:100% !important;}
+    #RecordModule .card-box, #RecordSubModule .card-box {
+        border: 1px solid #ccc;
+        padding-top: 12px;
+    }
+    #RecordModule .action-btn {
+        text-align: left !important;
+        right: auto !important;
+    }
+</style>
+<script>
+    $(function () {
+        $('#frmAddCompany').validate(); $('#frmEditUser').validate();
+    })
+    $(document).ready(function () {
+        $('#country_id').select2();
+        $('#state_id').select2();
+        $('#time_zone').select2();
+        $('#gender').select2();
+        $('#packageid').select2();
+
+
+        $('#country_id').change(function () {
+            fillState('');
+        });
+    })
+    function fillState(SelectedMenuAction) {
+        var idVal = $('#country_id').val();
+        var controllerName = 'json';
+        var actionName = 'GetStateByCountry';
+        if (idVal != '') {
+            $.post(base.getUrl(controllerName, actionName), { id: idVal }, function (data) {
+                $('#state_id').empty();
+                $('#state_id').append($('<option />').val('').text('Please Select'));
+                $.each(data, function () {
+                    if (SelectedMenuAction == this.Value) {
+                        $('#state_id').append($('<option selected />').val(this.Value).text(this.Text));
+                    }
+                    else {
+                        $('#state_id').append($('<option />').val(this.Value).text(this.Text));
+                    }
+                });
+            });
+        }
+        else {
+            $('#state_id').empty();
+            $('#state_id').append($('<option />').val('').text('Please Select'));
+        }
+    }
+    function createeditform() {
+        $('#createform').show();
+    }
+    function createeditform2() {
+        $('#createform2').show();
+    }
+</script>
+<script type="text/javascript">
+    function hidepass() {
+        $('#passwordlnk').show();
+        $('#viewPassword').hide();
+        $('#hidePassword').hide();
+    }
+    function getpass() {
+        var UserId = $('#UserId').val();
+        $.ajax({
+            method: "POST",
+            url: "/Json/getRegPassword/",
+            data: { id: UserId }
+        })
+            .done(function (data) {
+                $('#passwordlnk').hide();
+                $('#viewPassword').show();
+                $('#hidePassword').show();
+                $('#viewPassword').text(data);
+            });
+    }
+    function login_id_isExist() {
+        StUtil.IsExist({
+            ctrlId: 'login_id',
+            controllerName: 'Json',
+            actionName: 'IsLoginIDExist',
+            parmVal: $('#login_id').val(),//saprated comma
+        });
+    }
+    function email_id_isExist() {
+        StUtil.IsExist({
+            ctrlId: 'email_id',
+            controllerName: 'Json',
+            actionName: 'IsEmailIdExist',
+            parmVal: $('#email_id').val() + ',' + $('#UserId').val(),//saprated comma
+        });
+    }
+</script>
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <div class="col-md-2 floting padding-0">
+                <div class="form-group filter-search">
+                    <label>   @ViewBag.Title</label>
+                </div>
+            </div>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+
+<div class="card-block p-0">
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <div class="card card-transparent ">
+                <ul class="nav nav-tabs nav-tabs-fillup tabbs" data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" class="active" aria-expanded="true" data-target="#CompanyDetails">
+                            <span> Company Details</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#AdminUser"><span>Admin User</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#Roles"><span>Roles</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#AssignReport"><span>User Reports</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#subscription"><span>Subscription</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#package"><span>Package</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#RecordModule"><span>Report Module</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#RecordSubModule"><span>Report</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" onclick="LoadDivOfAssignView();" data-target="#AssignViewModule"><span>Assign View</span></a>
+                    </li>
+                </ul>
+                <div class="tab-content sub-box">
+                    <div class="tab-pane slide-left active" id="CompanyDetails">
+                        @using (Html.BeginForm("CreateEdit", "Company", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmAddCompany", @class = "edit-contact p-l-0 p-r-0" }))
+                        {
+                        <div class="card card-transparent">
+                            <div class="card-block p-0">
+                                <form id="form-personal" role="form" autocomplete="off" class="edit-contact">
+                                    <div class="row">
+                                        <div class="col-md-4 p-l-10">
+                                            <div class="form-group">
+                                                @Html.HiddenFor(m => m.company_id)
+                                                <label>Business Name</label>
+                                                @Html.TextBoxFor(m => m.business_name, new { @class = "form-control", id = "business_name", placeholder = "Business Name", pattern = @RegExConst.General, required = "required", title = "Enter Business Name", @isExist = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Licence Number</label>
+                                                @Html.TextBoxFor(model => model.licence_no, new { @class = "form-control", required = "required" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Developer Registration Number</label>
+                                                @Html.TextBoxFor(model => model.developer_registration_no, new { @class = "form-control", required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Application Type</label>
+                                                @Html.TextBox("application_type_name", Model.application_type.application_type_name, new { @class = "form-control", @readonly = "readonly" })
+                                                @if (Model.company_id > 0)
+                                                {
+                                                @Html.TextBox("application_type_name", Model.application_type.application_type_name, new { @class = "form-control", @readonly = "readonly" })
+                                                @Html.HiddenFor(x => x.application_type_id)
+                                                }
+                                                else
+                                                {
+                                                @Html.DropDownList("application_type_id", ViewBag.application_type_id as List<SelectListItem>, "Please Select", new { @class = "form-control", required = "required", @readonly = "readonly" })
+
+                                                }
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Time Zone</label>
+                                                @Html.DropDownList("time_zone", ViewBag.TimeZone as List<SelectListItem>, "Please Select", new { id = "time_zone", @class = "form-control", required = "required" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Country Code</label>
+                                                @Html.TextBoxFor(m => m.country_code, new { @class = "form-control", id = "country_code", placeholder = "Country Code", required = "required", title = "Enter Country Code" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Phone No</label>
+                                                @Html.TextBoxFor(m => m.phone, new { @class = "form-control", id = "phone_number", placeholder = "Phone", pattern = @RegExConst.NumbersOnly, required = "required", title = "Enter Phone" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Country</label>
+                                                @Html.DropDownList("country_id", ViewBag.country_id as List<SelectListItem>, "Please Select", new { @class = "form-control", required = "required" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>State</label>
+                                                @Html.DropDownList("state_id", ViewBag.StateName as List<SelectListItem>, "Please Select", new { @class = "form-control", required = "required" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>City</label>
+                                                @Html.TextBoxFor(m => m.city, new { @class = "form-control", id = "city", placeholder = "City", pattern = @RegExConst.CharactersOnly, required = "required", title = "Enter City" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                @Html.TextBoxFor(m => m.address, new { @class = "form-control", id = "address", placeholder = "Address", pattern = @RegExConst.General, required = "required", title = "Enter Address" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Zip</label>
+                                                @Html.TextBoxFor(m => m.zip, new { @class = "form-control", id = "zip", placeholder = "Zip", pattern = @RegExConst.NumbersOnly, required = "required", title = "Enter Zip" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4" style="display:@Is_view">
+                                            <div class="form-group">
+                                                <label>@Html.CheckBoxFor(m => m.is_active, new { type = "checkbox" }) <span class="enl">Enable</span></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Company Logo</label>
+                                                <input class="form-control" type="file" id="company_logo" data-file-ext="png,jpg,jpeg" name="company_logo">
+                                                <input type="hidden" id="company_logo" name="company_logo" value="@Model.company_logo" />
+                                                <img src="@img" style='height:100px;width:100px;'>
+                                            </div>
+
+                                        </div>
+
+                                        @if (Model.company_id == 0)
+                                        {
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>>User Name</label>
+                                                @Html.TextBox("user_name", null, new { @class = "form-control", id = "user_name", placeholder = "User Name", pattern = @RegExConst.AlphaNumericAndSpaceOnly, required = "required", title = "Enter Name", @isExist = "false" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>>Gender</label>
+                                                @Html.DropDownList("gender", new List<SelectListItem> { new SelectListItem { Text = "Male", Value = "M" }, new SelectListItem { Text = "Female", Value = "F   " } }, "Please Select", new { id = "gender", @class = "form-control", required = "required" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>>Login Id</label>
+                                                @Html.TextBox("login_id", null, new { @class = "form-control", id = "login_id", placeholder = "Login Id", pattern = @RegExConst.AlphaNumericAndSpaceOnly, required = "required", title = "Enter Login Id", @isExist = "true" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input id="password" name="password" type="text" placeholder="Password" required class="form-control">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Mobile No</label>
+                                                @Html.TextBox("mobile", null, new { @class = "form-control", id = "mobile", placeholder = "Mobile", pattern = @RegExConst.NumbersOnly, maxlength = 10, minlength = 10, required = "required", title = "Enter Mobile No", @isExist = "false" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Email-Id</label>
+                                                @Html.TextBox("email_id", null, new { @class = "form-control", id = "email_id", Type = "email", placeholder = "Email Id", required = "required", title = "Enter Email-Id", @isExist = "true" })
+                                            </div>
+                                        </div>
+
+                                        }
+
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-complete">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    <div class="tab-pane slide-left" id="AdminUser">
+                        @using (Html.BeginForm("EditUser", "Company", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmEditUser", @class = "edit-contact p-l-0 p-r-0" }))
+                        {
+                        @Html.AntiForgeryToken()
+                        bool MaleSelected = @ViewBag.gender == "M" ? true : false;
+                        bool FemaleSelected = @ViewBag.gender == "F" ? true : false;
+                        <div class="card card-transparent">
+                            <div class="card-block p-0">
+                                <form id="form-personal" role="form" autocomplete="off">
+                                    <div class="row">
+
+                                        <div class="col-md-4 p-l-10">
+                                            <div class="form-group">
+                                                <label>User Name</label>
+                                                @Html.TextBox("user_name", (string)ViewBag.UserName, new { @class = "form-control", id = "user_name", placeholder = "User Name", pattern = @RegExConst.General, required = "required", title = "Enter User Name" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Login Id</label>
+                                                @Html.TextBox("login_id", (string)ViewBag.LoginId, new { @class = "form-control", id = "login_id", placeholder = "Login Id", required = "required", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        @if (ViewBag.UserId > 0)
+                                        {
+
+                                        <div class="shw-pass">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <a href="#" id="passwordlnk" onclick="getpass()"> <i class="fa fa-eye"></i> </a>
+                                                <b> <span id="viewPassword" style="display:none;"></span></b>
+                                                <a href="#" id="hidePassword" style="display:none;" onclick="hidepass()"> <i class="fa fa-eye-slash"></i></a>
+                                            </div>
+                                        </div>
+
+                                        }
+
+                                        else
+                                        {
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input id="hori-pass1" name="userpassword" type="text" placeholder="Password" required class="form-control">
+                                            </div>
+                                        </div>
+
+                                        }
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Email Id</label>
+                                                @Html.TextBox("email_id", (string)ViewBag.EmailId, new { @class = "form-control", id = "email_id", placeholder = "Email Id", Type = "email", required = "required", title = "Enter Email Id", @isExist = "true" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Mobile No</label>
+                                                @Html.TextBox("mobile", (string)ViewBag.Mobile, new { @class = "form-control", id = "mobile", placeholder = "Mobile", pattern = @RegExConst.NumbersOnly, maxlength = 10, minlength = 10, required = "required", title = "Enter Mobile No" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Gender</label>
+                                                @Html.DropDownList("gender", new List<SelectListItem> { new SelectListItem { Text = "Male", Value = "M", Selected = MaleSelected }, new SelectListItem { Text = "Female", Value = "F", Selected = FemaleSelected } }, "Please Select", new { @class = "form-control", required = "required" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="">
+                                            <div class="form-group check-shft">
+                                                <label>@Html.CheckBox("is_account_access", new { type = "checkbox", tabindex = "10" }) Is Account Access</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="">
+                                            <div class="form-group check-shft">
+                                                <label>@Html.CheckBox("is_account_add_payment", new { type = "checkbox", tabindex = "11" }) Is Account Add Payment</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="">
+                                            <div class="form-group check-shft">
+                                                <label>@Html.CheckBox("is_property_edit", new { type = "checkbox", tabindex = "11" }) Is Property Edit</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>User Photo</label>
+
+                                                <input class="form-control" type="file" id="user_photo" data-file-ext="png,jpg,jpeg" name="user_photo" />
+                                                @if (!string.IsNullOrEmpty(ViewBag.UserPhoto))
+                                                {
+                                                String UserImageUrl = @ViewBag.UserPhoto;
+                                                <div class="form-group">
+                                                    <img src="@UserImageUrl" class="profile-user-img  img-circle" style="height:100px;width:100px" alt="User Photo">
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-4">
+                                            <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
+                                            <button type="submit" class="btn btn-complete">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    <div class="tab-pane slide-left" id="Roles">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                    <div class="box-header m-b-15" style="float:right;">
+                                        <a href="#" data-toggle="modal" data-target="#modalRoleCreate" id="btnCreateRole" class="btn btn-complete w-md waves-effect waves-light" aria-hidden="true"><i class="fa fa-plus-circle"></i> Create</a>
+                                        @*<a href="#" data-toggle="modal" id="btnAddPlaceholder" class="btn btn-white btn-cons" data-target="#modalRoleCreate"><i class="fs-17 sl-user-follow" aria-hidden="true"></i>PLACEHOLDER</a>*@
+                                    </div>
+                                    @*@Html.HiddenFor(m => m.company_id, new { @id = "cmp" })*@
+                                    <div id="divRoleCreate" class="tabl-admn">
+                                        @*@{Html.RenderAction("Index", "Role", new { id = "-1" });}*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*------------------------------------------- AssignReport List ------------------------------------------*@
+                    <div class="tab-pane slide-left" id="AssignReport">
+                        <div class="row">
+                            <div class="col-12 p-l-0 p-r-0">
+                                <div class="card-box table-responsive">
+                                    @*<div class="box-header m-b-15" style="float:right;">
+                                    <a href="#" data-toggle="modal" data-target="#modalAssignReport" onclick="btnCreateRole()" class="btn btn-complete w-md waves-effect waves-light" aria-hidden="true"><i class="fa fa-plus-circle"></i> Create</a>
+                                    </div>*@
+                                    <div class="view-port">
+                                        <div class="view bg-wht">
+                                            <div class="card card-default">
+                                                <div class="card-block table-responsive sub-box p-l-0 p-r-0">
+                                                    <table id="AssignReportTable" class="table table-striped user-tabl table-bordered no-footer w-100 tabl-admn">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>User</th>
+                                                                <th>Role</th>
+                                                                <th>Login</th>
+                                                                <th>password</th>
+                                                                <th>mobile</th>
+                                                                <th>status</th>
+                                                                <th>Report list</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*-------------------------------------------user access list modal soumy----------------------------------------------------*@
+                    <div class="modal fade slide-up disable-scroll requir-modl show" id="UserAccessList" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content-wrapper">
+                                <div class="modal-content">
+                                    <div class="modal-header clearfix text-left">
+                                        <h5>User Report List</h5>
+                                        <button type="button" class="close" data-dismiss="modal" id="modalList" onclick="closeMyModal()" aria-hidden="true">
+                                            <i class="fa fa-times fs-14"></i>
+                                        </button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 p-l-0 p-r-0">
+                                            <div class="card-box">
+                                                <div class="box-header m-b-15 p-r-15" style="float:right;">
+                                                    <a href="#" data-toggle="modal" data-target="#modalAssignReport" onclick="btnCreateRole()" class="btn btn-complete w-md waves-effect waves-light" aria-hidden="true"><i class="fa fa-plus-circle"></i> Create</a>
+                                                </div>
+                                                <div class="view-port">
+                                                    <div class="view bg-wht">
+                                                        <div class="card card-default">
+                                                            <div class="card-block table-responsive sub-box p-l-0 p-r-0">
+                                                                <table id="UserAccessListTable" class="table table-striped user-tabl table-bordered no-footer w-100 tabl-admn">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>report</th>
+                                                                            <th>Report Action</th>
+                                                                            <th>report type</th>
+                                                                            <th>display order</th>
+                                                                            <th>is Report</th>
+                                                                            <th>is dashboard</th>
+                                                                            <th>status</th>
+                                                                            <th>Edit</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                       </div>
+                    <div class="modal fade slide-up disable-scroll requir-modl show" id="modalAssignReport" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content-wrapper">
+                                <div class="modal-content">
+                                    <div class="modal-header clearfix text-left">
+                                        <h5>Assign New Report</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            <i class="fa fa-times fs-14"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="modalAssignReportform" class="edit-contact p-l-0 p-r-0">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group usee">
+                                                        <label>report</label>
+                                                        @Html.DropDownList("report_id", ViewBag.ReportAssign as SelectList, "Please Select", new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    <div class="form-group usee">
+                                                        <label>is report</label><br>
+                                                        <input type="checkbox" class=" form-control" id="is_report" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group usee">
+                                                        <label>report action</label>
+                                                        @Html.DropDownList("report_action_id", ViewBag.report_action as SelectList, "Please Select", new { @class = "form-control", required = "required" })
+                                                    </div>
+                                                    <div class="form-group usee">
+                                                        <label>is dashboard</label><br>
+                                                        <input type="checkbox" class=" form-control" id="is_dashboard" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group usee">
+                                                        <label>dispaly order</label><br>
+                                                        @Html.TextBox("dispaly_order", null, new { name = "dispaly_order", @class = "form-control" })
+                                                    </div>
+
+
+                                                    <div class="form-group usee" style="display:none" id="AssignReportis_active">
+                                                        <label>is active</label><br>
+                                                        <input type="checkbox" class=" form-control" id="is_active" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" id="user_idfd" />
+                                                <input type="hidden" id="report_access_id" />
+                                                <input type="hidden" id="created_by" />
+                                                <input type="hidden" id="created_date" />
+                                                <input type="hidden" id="company_id" />
+                                                <br>
+                                                <div class="col-md-12 p-l-0">
+                                                    <div class="form-group">
+                                                        <button type="button" id="AssignReportSubmit" onclick="ARbtnSave()" class="btn btn-complete btn-cons">Submit</button>
+                                                        <button type="button" class="btn btn-default btn-cons" data-dismiss="modal">Cancle</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    @*------------------------------------------- AssignReport Create------------------------------------------*@
+                  
+                    <!--Assign View Module-->
+                    <div class="tab-pane slide-left" id="AssignViewModule">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                    <div class="box-header m-b-15" style="float:right;">
+                                    </div>
+                                    <div id="divAssignView" class="tabl-admn">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade slide-up disable-scroll requir-modl show" id="modalRoleCreate" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content-wrapper">
+                                <div class="modal-content">
+                                    <div class="modal-header clearfix text-left">
+                                        <h5>Create</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            <i class="fa fa-times fs-14"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="frmRoleCreatEDit">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group usee">
+                                                        <label>Role Name</label>
+                                                        @Html.TextBox("role_name", null, new { @class = "form-control", required = "required" })
+                                                        @Html.ValidationMessage("role_name")
+                                                    </div>
+                                                    <div class="form-group usee">
+                                                        @Html.CheckBox("is_public", new { id = "is_public", data_size = "small", data_color = "primary" }) @*data_init_plugin = "switchery",*@
+                                                        <label for="is_public">Public</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group usee">
+                                                        <label>Hierarchy Level</label>
+                                                        @Html.TextBox("hierarchy_level", null, new { @type = "number", @class = "form-control", required = "required" })
+                                                        @Html.ValidationMessage("hierarchy_level")
+                                                    </div>
+                                                    <div class="form-group usee" id="divIsActive">
+                                                        @Html.CheckBox("is_active", new { id = "is_active", data_size = "small", data_color = "primary" }) @*data_init_plugin = "switchery",*@
+                                                        <label for="is_active">Active</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group usee">
+                                                        <label>Parent</label>
+                                                        @Html.DropDownList("parent_id", ViewBag.parent_id as List<SelectListItem>, "Please Select", new { name = "parent_id", @class = "full-width", data_init_plugin = "select2" })
+                                                    </div>
+                                                    <div class="form-group text-right">
+                                                        <input type="hidden" id="role_id" />
+                                                        <button type="button" id="btnPostRole" onclick="btnSave()" class="btn btn-complete btn-cons">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade slide-right right-modal-cont" id="modalRoleMenu" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content-wrapper">
+                                <div class="modal-content">
+                                    <div class="padd10 grry">
+                                        <h4> Menu </h4>
+                                    </div>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <i class="pg-close fs-14"></i>
+                                    </button>
+                                    <div class="container-xs-height full-height">
+                                        <div class="row-xs-height">
+                                            <div class="modal-body col-xs-height col-middle text-center ">
+
+                                                @*<div class="col-md-12 no-padding">
+                                                ass
+                                                </div>
+                                                <div class="botm-fix">
+                                                sfsf
+                                                </div>*@
+                                                <div id="divRoleMenu"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade slide-right right-modal-cont" id="modalRoleAction" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content-wrapper">
+                                <div class="modal-content">
+                                    <div class="padd10 grry">
+                                        <h4>  </h4>
+                                    </div>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <i class="pg-close fs-14"></i>
+                                    </button>
+                                    <div class="container-xs-height full-height">
+                                        <div class="row-xs-height">
+                                            <div class="modal-body col-xs-height col-middle text-center ">
+
+                                                @*<div class="col-md-12 no-padding">
+                                                ass
+                                                </div>
+                                                <div class="botm-fix">
+                                                sfsf
+                                                </div>*@
+                                                <div id="divRoleAction"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade slide-right right-modal-cont" id="modalRoleView" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content-wrapper">
+                                <div class="modal-content">
+                                    <div class="padd10 grry">
+                                        <h4>ADD ACCOUNT </h4>
+                                    </div>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        <i class="pg-close fs-14"></i>
+                                    </button>
+                                    <div class="container-xs-height full-height">
+                                        <div class="row-xs-height">
+
+                                            <div class="modal-body col-xs-height col-middle text-center ">
+
+                                                <div class="form-group form-group-default">
+                                                    <input type="text" class="form-control" name="application_template_name" id="application_template_name" placeholder="Enter a template name">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <input type="text" class="form-control" name="application_template_subject" id="application_template_subject" placeholder="Enter a template subject">
+                                                </div>
+
+                                                <div class="col-md-12 no-padding">
+
+                                                </div>
+                                                <div class="botm-fix">
+                                                    <div class="pull-right">
+                                                        <a data-toggle="modal" id="btnAddPlaceholder" class="btn btn-primary btn-cons plac" data-target="#modalPlaceHolder"><i class="fs-17 sl-user-follow" aria-hidden="true"></i>PLACEHOLDER</a>
+                                                        <button type="submit" id="btnPostTemplate" class="btn btn-success btn-cons">Save</button>
+                                                        <button class="btn btn-default btn-cons">cancel</button>
+                                                    </div>
+                                                    <div class="pull-left">
+                                                        <div class="checkbox check-success  ">
+                                                            <input type="checkbox" checked="checked" value="1" id="is_public">
+                                                            <label for="checkbox2">Share Template with my Team</label>
+                                                        </div>
+                                                        <label class="custom-fil">
+                                                            <input type="file" />
+                                                            <i class="fa fa-file"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane slide-left" id="subscription">
+                        <div class="view-port">
+                            <div class="view bg-white">
+                                <div class="card-default card table-responsive m-b-0">
+                                    @Html.HiddenFor(m => m.company_id, new { @id = "cmp" })
+                                    <table id="example" class="table table-bordered user-tabl no-check m-t-0 tabl-admn">
+                                        <thead>
+                                            <tr>
+                                                <th>Package Name</th>
+                                                @*<
+                                                <th>Allow Unit</th>*@
+                                                <th>Subscription Start Date</th>
+                                                <th>Subscription End Date</th>
+
+                                                <th>Setup Price</th>
+                                                @*
+                                                <th>Base Price</th>*@
+                                                <th>Total Price</th>
+                                                <th>Payment Status</th>
+                                                <th>Invoice</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var li in ViewBag.packages)
+                                            {
+                                            string cssClass = "";
+                                            int statusID = li.payment_status_id;
+
+                                            switch (statusID)
+                                            {
+                                            case 1:
+                                            cssClass = "label-Invalid";
+                                            break;
+                                            case 2:
+                                            cssClass = "label-success";
+                                            break;
+                                            case 3:
+                                            cssClass = "label-danger";
+                                            break;
+                                            default:
+                                            cssClass = "label-danger";
+                                            break;
+                                            }
+                                            ///  var basepr = li.base_price;
+                                            var costpr = li.setup_cost;
+                                            var totalpricr = costpr;
+
+
+
+                                            <tr>
+                                                <td>@li.package.package_name</td>
+                                                @*
+                                                <td>@li.allow_unit</td>*@
+                                                <td>@li.subscription_start_date.ToString(DateFormat.DATE)</td>
+                                                <td>@li.subscription_end_date.ToString(DateFormat.DATE)</td>
+                                                <td>@li.setup_cost</td>
+                                                @*
+                                                <td>@li.base_price</td>*@
+                                                <td>@totalpricr</td>
+                                                <td>
+                                                    @if (li.payment_status_id == 1)
+                                                    {
+
+                                                    <a onclick="getdata(@li.package_subscription_id);" href="#" data-toggle="modal" data-target="#exampleModal" class="label @cssClass">@li.payment_status.payment_status_name</a>
+                                                    }
+                                                    else
+                                                    {
+                                                    <span class="label @cssClass">  @li.payment_status.payment_status_name </span>
+                                                    }
+
+                                                </td>
+
+
+                                                <td>
+                                                    <div class="action-btn"> <a href="@Url.Action("getinvoice", "Company" , new { id=@li.package_subscription_id })"><i class="fa fa-info"></i></a></div>
+                                                </td>
+                                            </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane slide-left" id="package">
+                        @using (Html.BeginForm("UpdatePackage", "Company", FormMethod.Post, new { @class = "edit-contact p-l-0 p-r-0" }))
+                        {
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Package<span class="text-danger">*</span></label>
+                                    @Html.DropDownList("packageid", ViewBag.packageid as List<SelectListItem>, "Please Select", new { id = "packageid", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="package_form">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Package Name</label>
+                                        <div class="reed">
+                                            <label id="Package_Name"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Package Type</label>
+                                        <div class="reed">
+                                            <label id="Package_Type"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Validity</label>
+                                        <div class="reed">
+                                            <label id="Validity"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    @*<div class="form-group row">
+                                    <label class="col-4 col-form-label">Min Unit</label>
+                                    <div class="col-8">
+                                    <label id="Min_Unit"></label>
+                                    </div>
+                                    </div>
+                                    <div class="form-group row">
+                                    <label class="col-4 col-form-label">Max Unit</label>
+                                    <div class="col-8">
+                                    <label id="Max_Unit"></label>
+                                    </div>
+                                    </div>*@
+                                    <div class="form-group">
+                                        <label class="col-form-label">Per User Price</label>
+                                        <div class="reed">
+                                            <label id="Price"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer p-l-0">
+                                @Html.HiddenFor(m => m.company_id)
+                                <button type="submit" onclick="return confirm('Are sure wants to add this package?');" class="btn btn-complete w-md waves-effect waves-light">Submit</button>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    @*-----------------------------------------------------NEW TABS------------------------------------------------------------------------------------*@
+                    <div class="tab-pane slide-left" id="RecordModule">
+                        <div class="box-header m-b-15" style="float:right;">
+                            <button type="button" class="btn btn-complete" onclick="createeditform()"> <i class="fa fa-plus-circle"></i> Create</button>
+                        </div>
+                        <div style="clear:both;"></div>
+                        <div id="createform" style="display:none" class="sub-box">
+
+                            @using (Html.BeginForm("ReportModule", "Company", FormMethod.Post, new { id = "formmy", @class = "edit-contact" }))
+
+                            {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("report_module_id")
+                            @Html.Hidden("created_date")
+                            @Html.Hidden("company_id")
+                            @Html.Hidden("created_date")
+                            @Html.HiddenFor(m => m.company_id, new { @id = "cmp" })
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Report Module Name</label>
+                                        @Html.TextBox("report_module_name", null, new { @id = "report_module_name", @class = "form-control", required = "required", placeholder = "Module Name" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group check-shft" style="display:none" id="isactivediv">
+                                        <label class="col-form-label">Active</label>
+                                        @Html.CheckBox("is_active")
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <button type="button" id="btnsave" class="btn btn-complete m-t-10" onclick="btnSaveroport()">Submit</button>
+                                </div>
+                            </div>
+
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-12 p-l-0 p-r-0">
+                                <div class="card-box table-responsive m-t-15">
+                                    <table id="basicTable" class="table table-bordered no-check user-tabl tabl-admn">
+                                        <thead>
+                                            <tr>
+                                                <th>Report Module Name</th>
+                                                <th>Status</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane slide-left" id="RecordSubModule">
+                        <div class="box-header m-b-15" style="float:right;">
+                            <button type="button" class="btn btn-complete w-md waves-effect waves-light" onclick="createeditform2()"><i class="fa fa-plus-circle"></i> Create</button>
+                        </div>
+                        <div style="clear:both;"></div>
+                        <div id="createform2" style="display:none" class="sub-box">
+
+                            @using (Html.BeginForm("Report", "Company", FormMethod.Post, new { id = "formmy2", @class = "edit-contact" }))
+
+                            {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("report_id")
+                            @Html.Hidden("created_date")
+                            @Html.Hidden("company_id")
+                            @Html.Hidden("created_by")
+                            @Html.HiddenFor(m => m.company_id, new { @id = "cmp" })
+                            <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Report Module Name</label>
+                                        @Html.DropDownList("report_module_id", ViewBag.ReportModulelist as SelectList, "Please Select", new { @id = "report_module_id", @class = "form-control", required = "required" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Application Type</label>
+                                        @Html.DropDownList("application_type_id", ViewBag.application_type_id as SelectList, "Please Select", new { @id = "application_type_id", @class = "form-control", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Report Name</label>
+
+                                        @Html.TextBox("report_name", null, new { @id = "report_name", @class = "form-control", required = "required", placeholder = "Report Name" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-form-label">icon</label>
+
+                                        @Html.TextBox("icon", null, new { @id = "icon", @class = "form-control", required = "required", placeholder = "icon" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group check-shft" style="display:none" id="isactivediv">
+                                        <label class="col-form-label">Active</label>
+                                        @Html.CheckBox("is_active")
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <button type="button" id="btnsave2" class="btn btn-complete" onclick="btnSaveroport2()" style="background-color:#0d94f6">Submit</button>
+                                </div>
+                            </div>
+
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box table-responsive">
+                                    <table id="basicTableReport" class="table table-bordered no-check tabl-admn">
+                                        <thead>
+                                            <tr>
+                                                <th>Report Name</th>
+                                                <th>Report Module Name</th>
+                                                <th>Status</th>
+                                                <th>Edit</th>
+                                                <th>Set Access</th>
+                                                <th>Set Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Payment Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="updatepaymentstatus" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Payment Remark:</label>
+                        <input type="hidden" id="package_subscription_id" name="package_subscription_id" />
+                        <textarea name="remark" required class="form-control" id="message-text"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="paid" value="2" class="btn btn-primary btn-rounded w-md waves-effect waves-light">Payment Recieved</button>
+                    <button type="submit" name="can" value="3" class="btn btn-primary btn-rounded w-md waves-effect waves-light">Invoice Cancelled</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        ////
+        $('#package_form').hide();
+        $('#default_contact_id').select2();
+        $('#report_module_id').select2();
+        $('#application_type_id').select2();
+        $('#packageid').change(function () {
+            if (haseValue($('#packageid').val())) {
+                $('#package_form').show();
+                $.getJSON("/Json/GetPackageById/" + $('#packageid').val(), function (data) {
+                    $("#Package_Name").text(data.package_name);
+                    $("#Package_Type").text(data.package_type_name);
+                    $("#Validity").text(data.duration_days);
+                    $("#Price").text(data.per_user_price);
+
+                })
+            }
+            else {
+                $('#package_form').hide();
+                $("#Package_Name").text('');
+                $("#Package_Type").text('');
+                $("#Validity").text('');
+                $("#Price").text('');
+            }
+
+        });
+    })
+</script>
+<script>
+    function getdata(id) {
+        $('#package_subscription_id').val(id);
+    }
+</script>
+
+<script>
+    function getdata(id) {
+        $('#package_subscription_id').val(id);
+    }
+    $(document).ready(function () {
+        $('#modalRoleCreate').hide();
+        $('#divIsActive').hide();
+        $("#modalRoleCreate").on("hidden.bs.modal", function () {
+            $('#role_id').val(null)
+            $('#role_name').val(null)
+            $('#hierarchy_level').val(null)
+            $('#divIsActive').hide();
+        });
+        /**/
+        var url = '@Url.Action("CompanyRoleIndex", "Role")';
+    /**/
+        $('#divRoleCreate').load(url, { id: "-1," + $('#company_id').val() });
+
+    });
+
+    function LoadDivOfAssignView()
+    {
+        ////
+        var url = '@Url.Action("AssignView", "Role")';
+        $('#divAssignView').load(url, { companyId: $('#company_id').val() });
+    }
+
+function btnPostRoleAfterCall() {
+    /**/
+    var url = '@Url.Action("CompanyRoleIndex", "Role")';
+    /**/
+    $('#divRoleCreate').load(url, { id: "-1," + $('#company_id').val() });
+    //$('#divRoleCreate').load(url, { id: "-1" });
+    $('#modalRoleCreate').modal('toggle');
+    $('#role_id').val(null)
+    $('#role_name').val(null)
+    $('#hierarchy_level').val(null)
+    $('#parent_id').val(null)
+    //$('#is_public').val(null)
+    $('#divIsActive').hide();
+}
+function btnSave() {
+    StUtil.PostFrom({
+        ctrlId: 'btnPostRole',
+        formId: 'frmRoleCreatEDit',
+        parmIds: 'role_id,role_name,hierarchy_level,is_active,company_id,is_public,parent_id',
+        parmVals: $('#role_id').val() + ',' + $('#role_name').val() + ',' + $('#hierarchy_level').val() + ',' + $('#frmRoleCreatEDit #is_active').is(':checked') + ',' + $('#company_id').val() + ',' + $('#frmRoleCreatEDit #is_public').is(':checked') + ',' + $('#frmRoleCreatEDit #parent_id').val(),
+        jsonObj: 'role',
+        controllerName: 'Role',
+        actionName: 'PostCreateEditRole',
+    })
+}
+
+function GetModalRoleCreate(p1, p2, p3, p4, p5, p6) {
+    $('#parent_id').find("option").each(function () {
+        //$(this).removeAttr('disabled');
+        $(this).prop('disabled', false);
+    });
+    $('#divIsActive').show();
+    $('#role_id').val(p1);
+    $('#role_name').val(p2);
+    $('#hierarchy_level').val(p3);
+    $('#btnCreateRole').trigger('click')
+    $('#frmRoleCreatEDit #is_active').val(p4);
+    var chk = true;
+    chk = p4 == "true" ? true : false;
+    $('#frmRoleCreatEDit #is_active').prop('checked', chk);
+    $('#frmRoleCreatEDit #is_public').val(p5);
+    var chkPublic = true;
+    chkPublic = p5 == "True" ? true : false;
+    $('#frmRoleCreatEDit #is_public').prop('checked', chkPublic);
+    $('#parent_id').val(p6);
+    $('#parent_id').trigger('change')
+
+    $(jQuery.validator.format("#parent_id option[value='{0}']", p1)).prop('disabled', true);
+    //$("#parent_id option[value= '2']").prop('disabled', true);
+}
+
+//function ToggleIsActive() {
+//    var role_id = parseInt($('#role_id').val());
+//    if (role_id > 0) {
+//        $('#divIsActive').show();
+//    }
+//    else {
+//        $('#divIsActive').hide();
+//    }
+//}
+</script>
+
+<script>
+    function CompanyRoleMenu(id, companyId) {
+        $('#modalRoleMenu').modal('toggle');
+        /**/
+        var url = '@Url.Action("CompanyRoleMenu", "Role")';
+    /**/
+    $('#divRoleMenu').load(url, { roleID: id, companyId: companyId });
+}
+function CompanyRoleAction(id, companyId) {
+    $('#modalRoleAction').modal('toggle');
+    /**/
+    var url = '@Url.Action("CompanyRoleAction", "Role")';
+    /**/
+    $('#divRoleAction').load(url, { id: id, companyId: companyId });
+}
+
+function btnSaveroport() {
+    StUtil.PostFrom({
+        ctrlId: 'btnsave',
+        formId: 'formmy',
+        parmIds: 'report_module_id,report_module_name,is_active,created_date,company_id,created_by',
+        parmVals: $('#report_module_id').val() + ',' + $('#report_module_name').val() + ',' + $('#formmy #is_active').is(':checked') + ',' + $('#created_date').val() + ',' + $('#company_id').val() + ',' + $('#created_by').val(),
+        jsonObj: 'report_moduleobj',
+        controllerName: 'Company',
+        actionName: 'ReportModule',
+    })
+    $('#createform').hide();
+    $('#isactivediv').hide();
+    $('#report_module_id').val('');
+    $('#report_module_name').val('');
+    $('#is_active').val('');
+    
+    BindDataTable();
+    }
+    function btnSaveroport2() {
+        if ($("#formmy2 #is_active").prop('checked')) {
+            $("#formmy2 #is_active").val(true);
+        } else {
+            $("#formmy2 #is_active").val(false);
+        }
+        var ReportModule = $("#formmy2 #report_module_id").val();
+        StUtil.PostFrom({
+            ctrlId: 'btnsave2',
+            formId: 'formmy2',
+            parmIds: 'report_id,report_module_id,application_type_id,report_name,icon,is_active,created_date,company_id,created_by', 
+            parmVals: $('#report_id').val() + ',' + ReportModule + ',' + $('#application_type_id').val() + ',' + $('#report_name').val() + ',' + $('#icon').val() + ',' + $('#formmy2 #is_active').val() + ',' + $('#created_date').val() + ',' + $('#company_id').val() + ',' + $('#created_by').val(),
+            jsonObj: 'reportobj',
+            controllerName: 'Company',
+            actionName: 'Report',
+        })
+        $('#createform2').hide();        
+        BindDataTableReport();
+        $('#formmy2 #report_id').val('');
+        $('#formmy2 #report_module_id').val('');
+        $('#formmy2 #application_type_id').val('');
+        $('#formmy2 #report_name').val('');
+        $('#formmy2 #icon').val('');
+        $('#formmy2 #is_active').val('');
+    }
+</script>
+<script>
+
+    function editReportModule(id)
+    {
+        StUtil.EditForm({            
+            ctrlId: 'postBtn',
+            formId: 'formmy',
+            parmVals: id,
+            controllerName: 'Json',
+            actionName: 'GetContentById',
+            loadList: "report_module_id,report_module_name,is_active,created_date,company_id,created_by",
+        })
+        $('#createform').show();
+        $('#isactivediv').show();
+    }
+    function editReportModule2(id) {
+        StUtil.EditForm({
+            ctrlId: 'postBtn2',
+            formId: 'formmy2',
+            parmVals: id,
+            controllerName: 'Json',
+            actionName: 'GetContentByIdReport',
+            loadList: "report_id,report_module_id,application_type_id,report_name,icon,is_active,created_date,company_id,created_by",
+        })
+        $('#formmy2').show();
+        $('#createform2').show();
+        $('#formmy2 #isactivediv').show();
+        $('#formmy2 #report_module_id').change();
+        $('#formmy2 #application_type_id').change();
+    }
+</script>
+<script>
+    function BindDataTable() {
+        var table = $('#basicTable').DataTable();
+        var cmp = $('#company_id').val();
+        table.destroy();
+        $('#basicTable').DataTable({
+            dom: 'lBfrtip',
+            "initComplete": function (settings, json) {
+
+                $('input[type="search"]').attr('placeholder', 'Search')
+            },
+
+            buttons: ['csv',
+                'copy',
+                'excel',
+                'print',
+            ],            
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("ReportModuleList", "Json")',
+                datatype: "json",
+                data: { id: cmp },
+                dataSrc: ""
+            },
+            columns: [
+                { data: "report_module_name", name: "report_module_name", autoWidth: true },
+                {
+                    data: "is_active",
+                    "render": function (value) {
+                        return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                    }
+                },
+                {
+                    data: "report_module_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn '> <a style='cursor:pointer' onclick='editReportModule(" + row.report_module_id + ")' ><i class='fa fa-pencil'></i> </a></div> "
+                    }
+                },
+            ],
+        });
+    }
+    $(document).ready(function () {
+        BindDataTable();
+    });
+</script>
+<script>
+    function BindDataTableReport() {
+        ////
+        var table = $('#basicTableReport').DataTable();
+        var cmp = $('#company_id').val();
+        table.destroy();
+        $('#basicTableReport').DataTable({
+            dom: 'lBfrtip',
+            "initComplete": function (settings, json) {
+
+                $('input[type="search"]').attr('placeholder', 'Search')
+            },
+
+            buttons: ['csv',
+                'copy',
+                'excel',
+                'print',
+            ],
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("ReportList", "Json")',
+                datatype: "json",
+                data: { id: cmp },
+                dataSrc: ""
+            },
+            columns: [
+                { data: "report_name", name: "report_name", autoWidth: true },
+                { data: "report_module_name", name: "report_module_name", autoWidth: true },
+                {
+                    data: "is_active",
+                    "render": function (value) {
+                        return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                    }
+                },
+                {
+                    data: "report_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn '> <a style='cursor:pointer' onclick='editReportModule2(" + row.report_id + ")' ><i class='fa fa-edit'></i> </a></div> "
+                    }
+                },
+                {
+                    data: "report_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn'> <a style='cursor:pointer' target='_blank' href='/Company/ReportAccess?id=" + row.report_id + "&companyid=" + cmp +"' ><i class='fa fa-edit'></i> </a></div> "
+                    }
+                },
+                {
+                    data: "report_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn '> <a style='cursor:pointer' target='_blank' href='/Company/ReportAction?id=" + row.report_id + "&companyid=" + cmp +"'><i class='fa fa-edit'></i> </a></div> "
+                    }
+                },
+            ],
+        });
+    }
+    $(document).ready(function () {
+        $("#application_type_id").select2();
+        $("#report_module_id").select2();
+        BindDataTableReport();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#report_id").select2();
+        $("#user_id").select2();
+        $("#report_action_id").select2();
+        AssignReportBindDataTable();
+    });
+    function btnCreateRole(id) {
+        debugger;
+        $('#modalAssignReport').show();
+        $('#modalAssignReport #report_access_id').val('');
+        $('#modalAssignReport #report_id').val('');
+        $('#modalAssignReport #report_action_id').val('');
+        $('#modalAssignReport #report_id').trigger('change');
+        $('#modalAssignReport #report_action_id').trigger('change');
+        $('#modalAssignReport #dispaly_order').val('');
+        $('#modalAssignReport #created_by').val('');
+        $('#modalAssignReport #is_dashboard').val(true);
+        $('#modalAssignReport #is_report').val(true);
+        $('#AssignReportis_active').hide();
+        $('#modalAssignReport #created_date').val('');
+    }
+    function AssignReportBindDataTable() {
+        debugger;
+        var cmpval = $('#company_id').val();
+        $("#AssignReportTable").dataTable().fnDestroy();
+        $('#AssignReportTable').DataTable({
+            "initComplete": function (settings, json) {
+                $('#AssignReportTable_filter').children().children().attr('placeholder', 'Search')
+            },
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true,
+            dom: 'lBfrtip',
+            buttons: ['csv', 'copy', 'excel', 'pdf'],
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("GetUserAccessReport", "Json")',
+                datatype: "json",
+                data: { id: cmpval },
+                dataSrc: ""
+            },
+            columns: [
+                { data: "user_name", name: "user_name", autoWidth: true },
+                { data: "role_name", name: "role_name", autoWidth: true },
+                { data: "login_id", name: "login_id", autoWidth: true },
+                { data: "password", name: "password", autoWidth: true },
+                { data: "mobile", name: "mobile", autoWidth: true },
+                {
+                    data: "is_active",
+                    "render": function (value) {
+                        return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                    }
+                },
+                {
+                    data: "user_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn'><a onclick='ShowList(" + row.user_id + ")' data-toggle='modal' data-target='#UserAccessList'><i class='fa fa-edit'></i> </a></div> "
+                    }
+                },
+            ],
+        });
+    }
+    function EditUserReport(id) {
+        StUtil.EditForm({
+            ctrlId: 'AssignReportSubmit',
+            formId: 'modalAssignReportform',
+            parmVals: id,
+            controllerName: 'Json',
+            actionName: 'GetEditReportUser',
+        })
+        $('#AssignReportis_active').show();
+        $('#modalAssignReport').show();
+        $('#modalAssignReport #report_id').trigger('change');
+        $('#modalAssignReport #report_action_id').trigger('change');
+    }
+    function ShowList(id) {
+        debugger;
+        $('#UserAccessList').show();
+        $('#modalAssignReport #user_idfd').val(id);
+        UserReportBindDataTable(id);
+    }
+    function UserReportBindDataTable(ownerid) {
+        debugger;
+        $('#modalAssignReport #user_idfd').val(ownerid);
+        $("#UserAccessListTable").dataTable().fnDestroy();
+        $('#UserAccessListTable').DataTable({
+                    "initComplete": function (settings, json) {
+                        $('#UserAccessListTable_filter').children().children().attr('placeholder', 'Search')
+                    },
+                    'paging': true,
+                    'lengthChange': true,
+                    'searching': true,
+                    'ordering': true,
+                    'info': true,
+                    'autoWidth': true,
+                    dom: 'lBfrtip',
+                    buttons: ['csv', 'copy', 'excel', 'pdf'],
+                    "ajax": {
+                        type: "POST",
+                        url: '@Url.Action("UserReportList", "Json")',
+                        datatype: "json",
+                        data: { id: ownerid },
+                        dataSrc: ""
+                    },
+                    columns: [
+                        { data: "report_name", name: "report_name", autoWidth: true },
+                        { data: "report_action1", name: "report_action1", autoWidth: true },
+                        { data: "report_type_name", name: "report_type_name", autoWidth: true },
+                        { data: "dispaly_order", name: "dispaly_order", autoWidth: true },
+                        {
+                            data: "is_report",
+                            "render": function (data, type, row) {
+                                var actionhtml = "<div class='action-btn togg-slid'>";
+                                debugger;
+                                var checked = row.is_report ? 'checked' : '';
+
+                                actionhtml += "<label class='switch' ><input onClick=Editis_report(this," + row.report_access_id + ") type='checkbox' id='allDays' " + checked + "><span class='slider round'></span></label>";
+                                  ///  actionhtml += "<label class='switch' ><input onClick=Editis_report(" + true + "," + row.report_access_id + ") type='checkbox' id='allDays'><span class='slider round'></span></label>";
+
+                                actionhtml += "";
+                                actionhtml += "</div>";
+                                return actionhtml;
+                            }
+                        },
+                          {
+                              data: "is_dashboard",
+                    "render": function (data, type, row) {
+                        var actionhtml = "<div class='action-btn togg-slid'>";
+                        debugger;
+                        var checked = row.is_dashboard ? 'checked' : '';
+                        actionhtml += "<label class='switch' ><input onClick=Editis_dashboard(this," + row.report_access_id + ") type='checkbox' id='allDays' " + checked + "><span class='slider round'></span></label>";
+                      
+
+                        actionhtml += " ";
+                        actionhtml += "</div>";
+                        return actionhtml;
+                             }
+                        },
+                        {
+                            data: "is_active",
+                            "render": function (value) {
+                                return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                            }
+                        },
+                        {
+                            data: "user_id",
+                            "render": function (data, type, row) {
+                                return "<div class='action-btn'><a onclick='EditUserReport(" + row.report_access_id + ")' data-toggle='modal' data-target='#modalAssignReport'><i class='fa fa-edit'></i> </a></div> "
+                            }
+                        },
+                    ],
+                });
+    }
+    function ARbtnSave() {
+        debugger;
+        var userid = $('#modalAssignReportform #user_idfd').val();
+        StUtil.PostFrom({
+            ctrlId: 'AssignReportSubmit',
+            formId: 'modalAssignReportform',
+            parmIds: 'report_access_id,report_id,user_id,report_action_id,dispaly_order,is_dashboard,is_report,company_id,created_by,created_date,is_active',
+            parmVals: $('#modalAssignReportform #report_access_id').val() + ',' + $('#modalAssignReportform #report_id').val() + ',' + $('#modalAssignReportform #user_idfd').val() + ',' + $('#report_action_id').val() + ',' + $('#dispaly_order').val() + ',' + $('#is_dashboard').is(':checked') + ',' + $('#is_report').is(':checked') + ',' + $('#company_id').val() + ',' + $('#modalAssignReportform #created_by').val() + ',' + $('#modalAssignReportform #created_date').val() + ',' + $('#modalAssignReport #is_active').is(':checked'),
+            jsonObj: 'reportaccess',
+            controllerName: 'Json', 
+            actionName: 'AssignReportToUser',
+        })
+        $('#modalAssignReportform #report_access_id').val('');
+        $('#modalAssignReportform #report_id').val('');
+        $('#modalAssignReportform #report_action_id').val('');
+        $('#modalAssignReport #report_id').trigger('change');
+        $('#modalAssignReport #report_action_id').trigger('change');
+        $('#modalAssignReportform #dispaly_order').val('');
+        $('#modalAssignReportform #is_dashboard').val('');
+        $('#modalAssignReportform #is_report').val('');
+      //  $('#modalAssignReportform #is_active').val('');
+       // $('#modalAssignReport').hide();
+        UserReportBindDataTable(userid);
+    }
+    function closeMyModal() {
+        $('#UserAccessList').hide();
+    }
+    function Editis_report(p,q) {
+        debugger;
+        var checked = $(p).is(':checked');
+        $.ajaxSetup({ async: false });
+        $.getJSON(base.getUrl("Json", "EditIsReport"), { id: checked, report_access_id:q }, function (data) {
+        });
+    }
+    function Editis_dashboard(p, q) {
+        debugger;
+        var checked = $(p).is(':checked');
+        $.ajaxSetup({ async: false });
+        $.getJSON(base.getUrl("Json", "EditIsDashboard"), { id: checked, report_access_id: q }, function (data) {
+        });
+    }
+</script>

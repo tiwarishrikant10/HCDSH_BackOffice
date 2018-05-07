@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DeveloperCRM.Models.role>
+    @{
+    int count = 0;
+    var modelArray = Model.ToArray();
+    }
+    <div class="jumbotron" data-pages="parallax">
+        <div class="container-fixed-lg sm-p-l-0 sm-p-r-0">
+            <div class="inner">
+                <!-- START BREADCRUMB -->
+
+                <div class="col-md-2 floting padding-0">
+                    <div class="form-group filter-search">
+                        <label> USER</label>
+                    </div>
+                </div>
+
+                <!-- END BREADCRUMB -->
+            </div>
+        </div>
+    </div>
+    <div class="view-port">
+        <!-- BEGIN Note List !-->
+        <div class="bg-wht p-t-15 p-b-15 p-l-15 p-r-15">
+            <div class="">
+                <div class="container-fixed-lg">
+                    <div class="row">
+                    <div class="col-md-12">
+
+                        <ul class="settings-list orangee">
+                            @*@foreach (var item in Model)
+                            {
+                            <li class="settings-list-item">
+                                <a id="ember3171" href="/User/Index/@item.role_id" class="ember-view">
+                                    <span>
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <p>@item.role_name</p>
+                                </a>
+                            </li>
+                            }*@
+
+                        </ul>
+                        @for (int i = 0; i < Model.Count();)
+                        {
+                        int j = i;
+                        <ul class="settings-list orangee">
+                            @for (j = i; j < i + 5 && j < Model.Count(); j++)
+                            {
+                            <li class="settings-list-item">
+                                <a id="ember3171" href="/User/Index/@modelArray[j].role_id" class="ember-view">
+                                    <span>
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <p>@modelArray[j].role_name</p>
+                                </a>
+                            </li>
+                            }
+                            @{
+                            i = j;
+                            }
+                        </ul>
+                        }
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

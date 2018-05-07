@@ -1,0 +1,92 @@
+﻿@model IList<DeveloperCRM.Base.Models.AssignController>
+@using Newtonsoft.Json;
+
+@{
+    Layout = null;
+}
+<script>
+    $(document).ready(function () {
+        $('input[id^="chkCtrl_"]').each(function () {
+            var roleName = this.id.split('_')[1];
+        })
+    })
+    var changes = '';
+    function checkChanged(ctrl)
+    {
+        var info = ctrl.id.split('_'); //chk_CityController_Create_False
+        processChanges(ctrl);
+        $.post(base.getUrl('Role', 'PostAssignViewAction'), { id: changes, companyID: '@ViewBag.CompanyId' },
+        function (data) {
+            base.showMessage('Action Submitted Successfully', 'success', 'Bar', 'top', 3000);
+        });
+    }
+    function processChanges(ctrl)
+    {
+        var info = ctrl.id.split('_'); //chk_CityController_Create_False
+        var item = changes.indexOf(ctrl.id + ',') == -1 ? ctrl.id : (ctrl.id + ',');
+        changes = item;
+    }
+</script>
+<div class="row">
+    <div class="">
+        <div class="card-box table-responsive">
+
+            <div class="box box-primary">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.Hidden("hdnCompanyID", ViewBag.CompanyId as object)
+
+
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @{
+                                    string oldRoleName = "";
+                                }
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    string uniqueID = string.Format("chk_{0}_{1}_{2}", Model[i].RoleName, Model[i].ControllerName, Model[i].IsAssigned);
+                                    string fs = string.Format("<div class='row'> <div class='col-sm-12 col-xs-12'><div class='card m-b-20 sub-box blu-head p-t-0 p-b-0'><div class='card-header'> <b>{0}</b></div>", Model[i].RoleName);
+                                    @Html.Raw(oldRoleName != Model[i].RoleName ? fs + String.Format(" <div class='row' id='hddenfld_{0}'>", i) : "")
+
+                                    <div class="card-block">
+                                        <div class="card-blockquote text-left">
+                                            <input type="checkbox" checked="@Model[i].IsAssigned" onchange="checkChanged(this);"
+                                                   id="@uniqueID"
+                                                   name="@uniqueID" /> @Model[i].ControllerName
+                                            </div>
+                                        </div>
+
+                                        @Html.Raw(i == Model.Count - 1 || Model[i].RoleName != Model[i + 1].RoleName ? "</div></div></div></div>" : "")
+                                    oldRoleName = Model[i].RoleName;
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                        @*<div class="box-footer p-b-10">
+                            <input name="btnSave" id="btnSave" type="button" class="btn btn-complete w-md waves-effect waves-light" value="Save" disabled onclick="return submitClicked();">
+
+                        </div>*@
+                                    }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function togg_div(i) {
+        //var x = document.getElementById("hddenfld_" + i);
+        var x = $("#hddenfld_" + i);
+        if (x.style.display === "none") {
+            x.style.display = "inline-flex";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+</script>

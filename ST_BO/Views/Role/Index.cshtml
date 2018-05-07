@@ -1,0 +1,122 @@
+﻿
+<div class="card-block">
+    <h4 class="card-title">Role</h4>
+</div>
+           
+<!-- END JUMBOTRON -->
+<!-- START CONTAINER FLUID -->
+ 
+
+
+
+   
+
+    <div class="view-port">
+        <div class="view bg-white">
+    <div class="card card-default">
+        @*<div class="card-header  d-flex justify-content-between">
+            <div class="export-options-container"></div>
+        </div>*@
+        <div class="card-block sub-box table-responsive filtr-srch">
+            <div>
+            <table class="table table-striped user-tabl tabl-admn" id="tableWithExportOptions">
+                <thead>
+                    <tr>
+                        <th>Role ID</th>
+                        <th>Role Bit</th>
+                        <th>Role Name</th>
+                        <th>Assigned Menu Tree</th>
+                        <th>Assigned View</th>
+                    </tr>
+                </thead>
+               </table>
+                </div>
+        </div>
+    </div>
+</div>
+        </div>
+
+
+    <script type="text/javascript">
+
+    function BindRoleList() {
+        //var table = $('#example').DataTable();
+        //table.destroy();
+        $('#tableWithExportOptions').DataTable({
+            "initComplete": function (settings, json) {
+
+                $('input[type="search"]').attr('placeholder', 'Search')
+            },
+            dom: 'lBfrtip',
+            buttons: [
+{
+    extend: 'csv',
+    footer: true,
+    
+},
+{
+    extend: 'excel',
+    footer: true,
+   
+
+},
+{
+    extend: 'pdf',
+    footer: true,
+    
+},
+{
+    extend: 'print',
+    footer: true,
+}
+            ],
+
+            //'paging': true,
+            //'lengthChange': true,
+            //'searching': true,
+            //'ordering': true,
+            //'info': true,
+            //'autoWidth': true,
+            //buttons: ['copy', 'excel', 'pdf'],
+
+
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("ListRoles", "Role")',
+                datatype: "json",
+                data: { id: "" },
+                dataSrc: ""
+            },
+
+            columns: [
+               { data: "role_id", name: "role_id", autoWidth: true },
+                { data: "role_bit", name: "role_bit", autoWidth: true },
+                { data: "role_name", name: "role_name", autoWidth: true },
+                //{ data: "contact_us", name: "contact_us", autoWidth: true },
+                //{ data: "is_active", name: "is_active", autoWidth: true },
+                {
+                    data: "role_id",
+                    "render": function (value) {
+                        return "<div class='action-btn'><a href='/Role/RoleMenu/" + value + "' ><i class='fa fa-sitemap'></i> Assigned Menu   </a></div> "
+                    }
+                },
+                {
+                    data: "role_id",
+                    "render": function (value) {
+                        return "<div class='action-btn'><a href='/Role/RoleAction/" + value + "'> <i class='fa fa-eye'></i> Assigned View </a></div>"
+                    }
+                },
+            ],
+
+        });
+    }
+    $(document).ready(function () {
+        BindRoleList();
+    });
+    $(function () {
+        $("#exp_rt").click(function () {
+            $(".dt-buttons").toggleClass('dis-none');
+        });
+    });
+
+    </script>

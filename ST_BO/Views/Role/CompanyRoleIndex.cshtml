@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="view-port">
+    <div class="view bg-wht">
+        <div class="card card-default">
+            <div class="card-block table-responsive filtr-srch sub-box">
+                <button id="exp_rt" class="btn btn-complete">
+                    Export
+                </button>
+                <table class="table table-striped user-tabl" id="tableWithExportOptions" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Role Bit</th>
+                            <th>Role Name</th>
+                            <th>Parent</th>
+                            <th>Public</th>
+                            <th>Hierarchy Level</th>
+                            <th>Assigned Menu Tree</th>
+                            <th>Assigned View</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+            <script type="text/javascript">
+
+                function BindRoleList() {
+                    //var table = $('#example').DataTable();
+                    //table.destroy();
+                    $('#tableWithExportOptions').DataTable({
+
+                        "initComplete": function (settings, json) {
+
+                            $('input[type="search"]').attr('placeholder', 'Search')
+                        },
+                        dom: 'lBfrtip',
+                        buttons: [
+            {
+                extend: 'csv',
+                footer: true,
+
+            },
+            {
+                extend: 'excel',
+                footer: true,
+
+
+            },
+            {
+                extend: 'pdf',
+                footer: true,
+
+            },
+            {
+                extend: 'print',
+                footer: true,
+            }
+                        ],
+
+                        "ajax": {
+                            type: "POST",
+                            url: '@Url.Action("ListRoles", "Role")',
+                            datatype: "json",
+                            data: { id: "@ViewBag.Id" },
+                            dataSrc: ""
+                        },
+
+                        columns: [
+                              {
+                                  data: "role_bit",
+                                  "render": function (data, type, row) {
+                                      var p = '';
+                                      return "<a href='#' id='btnTest' onclick='GetModalRoleCreate(" + '"' + row.role_id + '",' + '"' + row.role_name + '",' + '"' + row.hierarchy_level + '",' + '"' + row.is_active + '' + '",' + '"' + row.is_public + '"' + ',' + '"' + row.parent_id + '"' + ',' + '"' + row.company_id + '"' + ")'> " + data + "</a>"
+                                  }
+                              },
+                            { data: "role_name", name: "role_name", autoWidth: true },
+                            { data: "Parent", name: "Parent", autoWidth: true },
+                            { data: "is_public", name: "is_public", autoWidth: true },
+                            { data: "hierarchy_level", name: "hierarchy_level", autoWidth: true },
+                            {
+                                data: "role_id",
+                                "render": function (data, type, row) {
+                                    //return "<a href='/Role/CompanyRoleMenu/" + value + "' ><i class='fa fa-edit'></i> Assigned Menu   </a> "
+                                    return "<div class='action-btn'><a href='#' id='btnTesta' onclick='CompanyRoleMenu(" + '"' + data + '",' + '"' + row.company_id + '"' + ")'> <i class='fa fa-sitemap'></i> Assigned Menu   </a> </div>"
+                                }
+                            },
+                            {
+                                data: "role_id",
+                                "render": function (data, type, row) {
+                                    //return "<a href='/Role/RoleAction/" + value + "'> <i class='fa fa-edit'></i> Assigned View </a>"
+                                    return "<div class='action-btn'><a href='#' id='btnTesta' onclick='CompanyRoleAction(" + '"' + data + '",' + '"' + row.company_id + '"' + ")'> <i class='fa fa-eye'></i> Assigned View   </a></div> "
+                                }
+                            },
+                        ],
+                    });
+                }
+                $(document).ready(function () {
+                    BindRoleList();
+                });
+                $(function () {
+                    $("#exp_rt").click(function () {
+                        $(".dt-buttons").toggleClass('dis-none');
+                    });
+                });
+            </script>

@@ -1,0 +1,156 @@
+﻿@using DeveloperCRM.Base.Models;
+@model DeveloperCRM.Models.package_subscription
+@{
+    var t = ViewBag.admincompany as DeveloperCRM.Models.company;
+    var path = BaseUtil.GetWebConfigValue("SNAG_AWS_S3") + BaseUtil.GetSessionValue(UserInfo.CompanyFolderName.ToString());
+    string cssClass = "";
+    switch (Model.payment_status.payment_status_id)
+    {
+        case 1:
+            cssClass = "label-Invalid";
+            break;
+        case 2:
+            cssClass = "label-success";
+            break;
+        case 3:
+            cssClass = "label-danger";
+            break;
+
+        default:
+            cssClass = "label-danger";
+            break;
+    }
+    var setup_cost = Model.setup_cost;
+    var total = setup_cost ;
+    var subscription_tax = Model.subscription_tax;
+    var Grandtotal = total + subscription_tax;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-box">
+            <div class="clearfix">
+                <div class="pull-left">
+                    <img src="~/Content/assets/img/logo.png"   alt="" alt="" height="30"/>
+                </div>
+                <div class="pull-right">
+                    <h3 class="m-0 hidden-print">Invoice</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="pull-left m-t-30">
+                        <p><b>Hello, @Model.company.business_name</b></p>
+                        <p class="text-muted">
+                            Thanks a lot because you keep purchasing our products. Our company
+                            promises to provide high quality products for you as well as outstanding
+                            customer service for every transaction.
+                        </p>
+                    </div>
+
+                </div><!-- end col -->
+                <div class="col-4 offset-2">
+                    <div class="m-t-30 pull-right">
+                        <p class="m-b-10"><small><strong>Order Date: </strong></small> @Model.created_date.ToString(DateFormat.DATE)</p>
+                        <p class="m-b-10"><small><strong>Order Status: </strong></small> <span class="label @cssClass">@Model.payment_status.payment_status_name</span></p>
+                        <p class="m-b-10"><small><strong>Order ID: </strong></small> #@Model.package_subscription_id</p>
+                    </div>
+                </div><!-- end col -->
+            </div>
+            <div class="row m-t-30">
+                <div class="col-6">
+                    <h5>Billing Address</h5>
+                    <address class="line-h-24">
+                        @t.address
+                        @t.city<br />
+                        @if (t.state != null)
+                        {
+                            @t.state.state_name<br />
+                            @t.state.country.country_name<br />
+                        }
+                        <abbr title="Phone">P:</abbr> @t.phone
+                    </address>
+                </div>
+                <div class="col-6">
+                    <h5>Shipping Address</h5>
+
+                    <address class="line-h-24">
+                        @Model.company.address<br />
+                        @Model.company.city<br />
+                        @if (Model.company.state != null)
+                        {
+                            @Model.company.state.state_name<br />
+                            @Model.company.state.country.country_name<br />
+                        }
+                        <abbr title="Phone">P:</abbr> @Model.company.phone
+                    </address>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table m-t-30">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Cost</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <b>Application Setup Cost</b> <br />
+                                    </td>
+                                    <td>1</td>
+                                    <td>@Model.setup_cost</td>
+                                    <td class="text-right">@Model.setup_cost</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>
+                                        <b>Unit Price</b> <br />
+                                    </td>
+                                    <td>1</td>
+                                    <td>0.00</td>
+                                    <td class="text-right">0.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="clearfix p-t-50">
+                        <h5 class="text-muted">Notes:</h5>
+                        <small>
+                            All accounts are to be paid within 7 days from receipt of
+                            invoice. To be paid by cheque or credit card or direct payment
+                            online. If account is not paid within 7 days the credits details
+                            supplied as confirmation of work undertaken will be charged the
+                            agreed quoted fee noted above.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="float-right">
+                        <p><b>Sub-total:</b>  @total</p>
+                        <p><b>VAT :</b> @subscription_tax</p>
+                        <h3> @Grandtotal</h3>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="hidden-print m-t-30 m-b-30">
+                <div class="text-right">
+                    <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i class="fa fa-print m-r-5"></i> Print</a>
+                    <a href="javascript:window.history.back()" class="btn btn-info waves-effect waves-light">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->

@@ -1,0 +1,170 @@
+﻿@using ST_BO.Models
+@{
+    
+    String ImageUrl = "/Files/UsersPhoto/" + ST_BO.Models.BaseUtil.GetSessionValue(ST_BO.Models.UserInfo.UserPhoto.ToString()).ToString();
+    string name = BaseUtil.GetSessionValue(UserInfo.FullName.ToString()).ToString();
+    string CompanyName = BaseUtil.GetSessionValue(UserInfo.CompanyName.ToString()).ToString();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@CompanyName - BACK OFFICE</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/assets/css/core.css">
+    <link rel="stylesheet" href="~/Content/assets/css/components.css">
+    <link rel="stylesheet" href="~/Content/assets/icons/fontawesome/styles.min.css">
+    <link rel="stylesheet" href="~/Content/lib/css/chartist.min.css">
+    <script type="text/javascript" src="~/Content/lib/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/lib/js/tether.min.js"></script>
+    <script type="text/javascript" src="~/Content/lib/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="~/Content/lib/js/chartist.min.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/app.min.js"></script>
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
+    <script src="~/Scripts/sweet-alert/sweetalert.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+@*<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+    </head>*@
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-toggleable-md">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav">
+            <span>
+                <i class="fa fa-code-fork"></i>
+            </span>
+        </button>
+        <button class="navbar-toggler navbar-toggler-left" type="button" id="toggle-sidebar">
+            <span>
+                <i class="fa fa-align-justify"></i>
+            </span>
+        </button>
+        <a class="navbar-brand logo" href="#">
+           <img src="~/Content/assets/img/logo.png" alt="">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <button class="sidebar-toggle btn btn-flat" id="toggle-sidebar-desktop">
+                <span>
+                    <i class="fa fa-align-justify"></i>
+                </span>
+            </button>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle nav-icon" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="hidden-lg-up position-right">Notifications</span>
+                        <span class="badge bg-danger-4">8</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right width-300 list-notifications">
+                        <ul class="list-unstyled">
+                            <li class="media notif-unread">
+                                You have 3 unread notifications!
+                            </li>
+                            <li class="media">
+                                <div class="notif-icon bg-primary-4">
+                                    <i class="fa fa-bell-o"></i>
+                                </div>
+                                <div class="media-body notif-text">
+                                    You may want to check this!
+                                </div>
+                            </li>
+                            <li class="media mr-2">
+                                <div class="notif-icon bg-danger-4">
+                                    <i class="fa fa-exclamation"></i>
+                                </div>
+                                <div class="media-body notif-text text-danger-4">
+                                    Server Banshee is not responding.
+                                </div>
+                            </li>
+                            <li class="media">
+                                <div class="notif-icon bg-success-4">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                <div class="media-body notif-text text-success-4">
+                                    Backup completed successfully.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle dropdown-has-after" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <img src="@ImageUrl" alt="" class="user-img"> 
+                        @name
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-user"></i> <span>Profile</span>
+                        </a>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-comment"></i> <span>Messages</span>
+                        </a>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-cog"></i> <span>Settings</span>
+                        </a>
+                        </a>
+                        <a class="dropdown-item" href="/Account/LogOut/">
+                            <i class="fa fa-sign-out"></i> <span>Logout</span>
+                        </a>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /NAVBAR -->
+    <div class="page-container">
+        <div class="page-content">
+            @Html.Partial("~/Views/Shared/_menuBar.cshtml")
+            <div class="content-wrapper">
+                <div class="content">
+                    @RenderBody()
+                  
+                </div>
+            </div>
+            <!-- /PAGE CONTENT -->
+        </div>
+    </div>
+
+
+    <link href="~/Content/jsTree/themes/default/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jsTree3/jstree.js"></script>
+
+    <script src="~/Content/assets/js/jquery-validation/js/jquery.validate.min.js"></script>
+    <!--ST  Custom JS -->
+    <script src="~/Base/Content/js/BO_Base.js"></script>
+    <script src="~/Base/Content/js/STBase.js"></script>
+
+
+
+    <link href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/scroller/1.4.2/css/scroller.dataTables.min.css" rel="stylesheet" />
+    @*<link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <link href="~/Scripts/DataTables/DataTable.mine.css" rel="stylesheet" />
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
+</body>
+</html>

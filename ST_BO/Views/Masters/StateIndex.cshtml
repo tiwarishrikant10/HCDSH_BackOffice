@@ -1,0 +1,235 @@
+﻿@using DeveloperCRM.Base.Models;
+@model DeveloperCRM.Models.state
+
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+
+            <div class="col-md-2 floting padding-0">
+                <div class="form-group filter-search">
+
+                    <label>   @ViewBag.Title</label>
+
+                </div>
+            </div>
+
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class="container-fixed-lg">
+    <div class="view bg-white">
+        <div class="buttonss">
+            <div class="col-md-12" style="margin-top:10px;">
+                <button id="editCourseModal" data-target="#modalSlideLeft" data-toggle="modal" class="btn btn-complete add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+                <div class="dropdown hidden-md-down edit-contact morre-btn" style="display:inline-block;">
+                    <button class="profile-dropdown-toggle btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </button>
+                    @*<div class="dropdown-menu profile-dropdown drop-right-icon" role="menu">
+                            <a href="#" class="dropdown-item"> Add Lead</a>
+                            <a href="#" class="dropdown-item">Import Leads</a>
+                        </div>*@
+                </div>
+                @*<button class="btn btn-complete m-l-3" id="filtr" data-toggle="quickview" data-toggle-element="#quickview"><i class="fs-14 pg-centeralign"></i></button>*@
+            </div>
+        </div>
+    </div>
+    <div class="view-port">
+        <div class="view bg-white">
+            <div class="card card-default">
+                <div class="card-block sub-box table-responsive filtr-srch">
+                    <button id="exp_rt" class="btn btn-complete">
+                        Export
+                    </button>
+                    <table id="example" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>Emirate</th>
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+            </div>
+        </div>
+            <div class="modal fade slide-right sta-ts" id="modalSlideLeft" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content-wrapper">
+                        <div class="modal-content">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                <i class="pg-close fs-14"></i>
+                            </button>
+                            <div class="container-xs-height full-height">
+                                <div class="row-xs-height">
+                                    <div class="modal-body col-xs-height col-middle">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-box">
+
+                                                    @using (Html.BeginForm("StateCreateEdit", "Masters", FormMethod.Post, new { id = "frmStateEdit", @class = "edit-contact" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+                                                        <h5 class="text-primary "> <span class="semi-bold">Country</span></h5>
+                                                        <br>
+                                                        <div class="card card-transparent">
+                                                            <div class="">
+                                                                <form id="form-personal" role="form" autocomplete="off">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Country name</label>
+                                                                                @Html.DropDownList("country_id", ViewBag.country_id as List<SelectListItem>, "Please Select", new { @class = "form-control", required = "required" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Emirate</label>
+                                                                                @Html.TextBoxFor(m => m.state_name, new { @class = "form-control", id = "state_name", placeholder = "Emirate Name", pattern = @RegExConst.General, required = "required", title = "Enter State Name", @isExist = "true" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row" id="DivIsActive" style="display:none">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label>Enable</label>
+                                                                                <input type="checkbox" class=" form-control" name="is_active" id="is_active" data-init-plugin="switchery" data-size="small" data-color="primary" checked="checked" data-switchery="true" style="display: none;">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="clearfix"></div>
+                                                                    @Html.HiddenFor(m => m.state_id)
+                                                                    <button type="button" id="postBtn" onclick="btnSave()" class="btn btn-complete">Submit</button>
+                                                                    <button class="btn btn-white btn-cons " data-dismiss="modal" data-toggle="quickview" aria-hidden="true">cancel</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+        <!-- BEGIN VENDOR JS -->
+        <!-- END VENDOR JS -->
+        <!-- END PAGE LEVEL JS -->
+        <script type="text/javascript">
+    $(function () {
+        $('#frmStateEdit').validate();
+        $('#country_id').select2();
+        
+        $("#modalSlideLeft").on("hidden.bs.modal", function () {
+            $('#state_name').val('')
+            $('#country_id').val('')
+            $('#state_id').val('')
+        });
+    })
+    function state_name_isExist() {
+        StUtil.IsExist({
+            ctrlId: 'state_name',
+            controllerName: 'Json',
+            actionName: 'IsStateExist',
+            parmVal: $('#state_name').val() + ',' + $('#state_id').val() + ',' + $('#country_id').val(),//saprated comma
+        });
+    }
+    function postBtnAfterCall() {
+        $('#DivIsActive').hide();
+        BindDataTable();
+        $('#modalSlideLeft').modal('toggle');
+        $('#state_name').val('')
+        $('#country_id').val('')
+        $('#state_id').val('')
+    }
+
+    function btnSave() {
+        StUtil.PostFrom({
+            ctrlId: 'postBtn',
+            formId: 'frmStateEdit',
+            parmIds: 'country_id,state_id,state_name,is_active',
+            parmVals: $('#country_id').val() + ',' + $('#state_id').val() + ',' + $('#state_name').val() + ',' + $('#is_active').is(':checked'),
+            jsonObj : 'state',
+            controllerName: 'Masters',
+            actionName: 'StateCreateEdit',
+
+        })
+    }
+
+    function editState(id) {
+        StUtil.EditForm({
+            ctrlId: 'postBtn',
+            formId: 'frmStateEdit',
+            parmVals: id,
+            controllerName: 'Masters',
+            actionName: 'StateEdit',
+        })
+        $('#modalSlideLeft').modal('toggle');
+        $('#DivIsActive').show();
+    }
+
+    function BindDataTable() {
+        var table = $('#example').DataTable();
+        table.destroy();
+        $('#example').DataTable({
+            dom: 'lBfrtip',
+            "initComplete": function (settings, json) {
+
+                $('input[type="search"]').attr('placeholder', 'Search')
+            },
+
+            buttons: ['csv',
+               'copy',
+               'excel',
+               'print',
+            ],
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("StateList", "Masters")',
+                datatype: "json",
+                data: { id: "0" },
+                dataSrc: ""
+            },
+            columns: [
+               { data: "country_name", name: "country_name", autoWidth: true },
+               { data: "state_name", name: "state_name", autoWidth: true },
+                {
+                    data: "is_active",
+                    "render": function (value) {
+                        return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                    }
+                },
+                {
+                    data: "state_id",
+                    "render": function (data, type, row) {
+                        return "<div class='action-btn '><a style='cursor:pointer' onclick='editState(" + row.state_id + ")' ><i class='fa fa-pencil'></i>    </a> </div>"
+                    }
+                },
+            ],
+        });
+    }
+    $(document).ready(function () {
+        BindDataTable();
+    });
+    $(function () {
+        $("#exp_rt").click(function () {
+            $(".dt-buttons").toggleClass('dis-none');
+        });
+    });
+        </script>
+
+
+

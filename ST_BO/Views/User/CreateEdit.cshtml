@@ -1,0 +1,222 @@
+﻿@using DeveloperCRM.Base.Models;
+@model DeveloperCRM.Models.user
+
+@{
+    string Is_view = Model.user_id > 0 ? "block" : "none";
+}
+
+<script type="text/javascript">
+    $(function () {
+          $('#gender').select2();
+        $('#parent_user_id').select2();
+        $('#gender').select2();
+        $('#frmUser').validate();
+    })
+    function hidepass() {
+        $('#passwordlnk').show();
+        $('#viewPassword').hide();
+        $('#hidePassword').hide();
+    }
+    function getpass() {
+        var userid = $('#user_id').val();
+        $.ajax({
+            method: "POST",
+            url: "/Json/getPassword/",
+            data: { id: userid }
+        })
+            .done(function (data) {
+
+                $('#passwordlnk').hide();
+                $('#viewPassword').show();
+                $('#hidePassword').show();
+                $('#viewPassword').text(data);
+
+            });
+    }
+    function login_id_isExist() {
+        StUtil.IsExist({
+            ctrlId: 'login_id',
+            controllerName: 'Json',
+            actionName: 'IsLoginIDExist',
+            parmVal: $('#login_id').val(),//saprated comma
+        });
+    }
+    function email_id_isExist() {
+        StUtil.IsExist({
+            ctrlId: 'email_id',
+            controllerName: 'Json',
+            actionName: 'IsEmailIdExist',
+            parmVal: $('#email_id').val() + ',' + $('#user_id').val(),//saprated comma
+        });
+    }
+</script>
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fixed-lg sm-p-l-0 sm-p-r-0">
+        <div class="inner">
+            <!-- START BREADCRUMB -->
+            <div class="col-md-2 floting padding-0">
+                <div class="form-group filter-search">
+                    <label>User Details</label>
+                </div>
+            </div>
+            <!-- END BREADCRUMB -->
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 p-0">
+        <div class="card-box bg-wht ss-box">
+            @using (Html.BeginForm("CreateEdit", "User", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmUser", @class = "edit-contact  p-l-5 p-r-5" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="card card-transparent sub-box m-b-0">
+                    <div class="card-block">
+                        <form id="form-personal" role="form" autocomplete="off" class="edit-contact">
+                            <div class="row">
+                                <div class="col-md-3 p-l-5">
+                                    <div class="form-group">
+                                        <label>User Name</label>
+                                        @Html.TextBoxFor(m => m.user_name, new { @class = "form-control", id = "user_name", placeholder = "User Name", pattern = @RegExConst.General, required = "required", title = "Enter User Id", tabindex = "1", autocomplete = "off" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Email Id</label>
+                                        @Html.TextBoxFor(m => m.email_id, new { @class = "form-control", id = "email_id", placeholder = "Email Id", pattern = @RegExConst.EmailAddress, required = "required", title = "Enter Email Id", @isExist = "true", tabindex = "3" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        @Html.DropDownList("gender", new List<SelectListItem> { new SelectListItem { Text = "Male", Value = "M" }, new SelectListItem { Text = "Female", Value = "F" } }, "Please Select", new { @id = "gender", @class = "form-control", required = "required", tabindex = "5" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Parent User</label>
+                                        @Html.DropDownList("parent_user_id", ViewBag.parent_user_id as List<SelectListItem>, "Please Select", new { @class = "form-control", tabindex = "7", required = "required" })
+                                        @*@Html.DropDownListFor(m => m.parent_user_id, ViewBag.parent_user_id, "Select", new { @class = "full-width", required = "required" })*@
+                                    </div>
+                                </div>
+                                @if (Model.user_id > 0)
+    {
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Login Id</label>
+                                    @Html.TextBoxFor(m => m.login_id, Model.login_id, new { @class = "form-control", id = "login_id", placeholder = "Login Id", required = "required", title = "Enter Login Id", @isExist = "true", tabindex = "2", pattern = @RegExConst.GeneralWithOutSpace, @disabled = "disabled" })
+                                </div>
+                            </div>
+
+}
+else
+{
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Login Id</label>
+                                    @Html.TextBoxFor(m => m.login_id, new { @class = "form-control", id = "login_id", placeholder = "Login Id", pattern = @RegExConst.GeneralWithOutSpace, required = "required", title = "Enter Login Id", @isExist = "true", tabindex = "2" })
+                                </div>
+                            </div>
+}
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Mobile No</label>
+                                        @Html.TextBoxFor(m => m.mobile, new { @class = "form-control", id = "mobile", placeholder = "Mobile", pattern = @RegExConst.NumbersOnly, required = "required", title = "Enter Mobile No", tabindex = "4" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group m-t-10">
+                                        <label class="contai" disabled="disabled">
+                                           @Html.CheckBoxFor(m => m.is_account_access, new { type = "checkbox", tabindex = "10" })
+                                            <span class="checkmark" disabled="disabled"></span>
+                                            <span class="shifft2" disabled="disabled">Is Account Access</span>
+                                        </label>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group m-t-10"><!--------- check-shft---------->
+                                        <label class="contai" disabled="disabled">
+                                          @Html.CheckBoxFor(m => m.is_account_add_payment, new { type = "checkbox", tabindex = "11" })
+                                            <span class="checkmark" disabled="disabled"></span>
+                                            <span class="shifft2" disabled="disabled">Is Account Add Payment</span>
+                                        </label>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group m-t-10">
+                                        <label class="contai" disabled="disabled">
+                                        @Html.CheckBoxFor(m => m.is_property_edit, new { type = "checkbox", tabindex = "11" })
+                                            <span class="checkmark" disabled="disabled"></span>
+                                            <span class="shifft2" disabled="disabled">Is Property Edit</span>
+                                        </label>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="display:@Is_view">
+                                    <div class="form-group m-t-10">
+                                        <label class="contai" disabled="disabled">
+                                           @Html.CheckBoxFor(m => m.is_active, new { type = "checkbox", tabindex = "9" }) 
+                                            <span class="checkmark" disabled="disabled"></span>
+                                            <span class="shifft2" disabled="disabled">Enable</span>
+                                        </label>
+                                 
+                                    </div>
+                                </div>
+                                @if (Model.user_id > 0)
+    {
+                            <div class="col-md-2">
+                                <div class="form-group p-t-10">
+                                    <label>Password</label>
+                                    <a href="#" id="passwordlnk" onclick="getpass()" class="text-success">Show</a>
+                                    <b> <span id="viewPassword" style="display:none;"></span></b>
+                                    <a href="#" id="hidePassword" style="display:none;" onclick="hidepass()" class="text-success">Hide</a>
+                                </div>
+                            </div>
+}
+else
+{
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input id="hori-pass1" name="userpassword" minlength="4" type="password" placeholder="Password" required class="form-control" tabindex="6">
+                                </div>
+                            </div>
+}
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>User Photo</label>
+                                        <input class="form-control" type="file" id="user_photo" data-file-ext="png,jpg,jpeg" name="user_photo" tabindex="8" />
+                                        @if (!string.IsNullOrEmpty(Model.user_photo))
+            {
+                String ImageUrl = Model.user_photo.ToUpper() == Model.gender.ToUpper() + ".JPG"
+    ? BaseUtil.GetWebConfigValue("SNAG_AWS_S3") + Model.user_photo
+    : BaseUtil.GetWebConfigValue("SNAG_AWS_S3") + BaseUtil.GetSessionValue(UserInfo.CompanyFolderName.ToString()).ToString() + Model.user_photo;
+
+
+                            <div class="form-group">
+                                <img src="@ImageUrl" class="profile-user-img  img-circle" style="height:100px;width:100px" alt="User Photo">
+                            </div>
+}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                @Html.HiddenFor(m => m.user_id)
+                                @Html.HiddenFor(m => m.user_photo)
+                                @Html.HiddenFor(m => m.created_by)
+                                @Html.HiddenFor(m => m.created_date)
+                                @Html.HiddenFor(m => m.role_bit)
+                                <input type="hidden" id="rol_id" name="rol_id" value="@ViewBag.rol_id" />
+                                <button type="submit" class="btn btn-complete w-md waves-effect waves-light">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

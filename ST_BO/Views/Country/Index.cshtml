@@ -1,0 +1,66 @@
+﻿<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+            <div class="box-header">
+                <a href="@Url.Action("CreateEdit", "Country")" class="btn btn-primary btn-rounded w-md waves-effect waves-light"><i class="fa fa-plus-circle"></i> Create</a>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Country Name</th>
+                        <th>Active</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="box-header">
+                <a href="@Url.Action("CreateEdit", "Country")" class="btn btn-primary btn-rounded w-md waves-effect waves-light"><i class="fa fa-plus-circle"></i> Create</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function BindDataTable() {
+        $('#example').DataTable({
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true,
+           /// dom: 'lBrtip',
+            buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+            "ajax": {
+                type: "POST",
+                url: '@Url.Action("CountryList", "Country")',
+                datatype: "json",
+                data: { id: "" },
+                dataSrc: ""
+            },
+            columns: [
+               { data: "country_name", name: "country_name", autoWidth: true },
+                {
+                    data: "is_active",
+                    "render": function (value) {
+                        return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                    }
+                },
+                {
+                    data: "country_id",
+                    "render": function (data, type, row) {
+                        return "<a href='/Country/CreateEdit?id=" + row.country_id + "' ><i class='fa fa-edit'></i>    </a> "
+                    }
+                },
+            ],
+        });
+    }
+    $(document).ready(function () {
+        BindDataTable();
+    });
+</script>
+
+
+
+
+

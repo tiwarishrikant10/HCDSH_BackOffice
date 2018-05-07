@@ -1,0 +1,158 @@
+﻿@model IList<DeveloperCRM.Base.Models.ControllerAction>
+@using Newtonsoft.Json;
+
+@{
+    Layout = null;
+}
+<style>
+    #modalRoleAction .card .card-header {
+       background: #efefef;
+    padding: 7px 10px 7px 20px;
+    min-height: 37px;
+    color: #000;
+    text-align: left;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('input[id^="chkCtrl_"]').each(function () {
+            var controllerName = this.id.split('_')[1];
+            toggleControllerSelectAll(controllerName);
+        })
+    })
+
+    function toggleControllerSelectAll(controllerName) {
+        var controller = 'chkCtrl' + '_' + controllerName;
+        var action = controller.replace('Ctrl', '');
+        var totalActions = $('input[id^="' + action + '_"]').length;
+        var totalActionsChecked = $('input[id^="' + action + '_"]:checked').length;
+        $('#' + controller).prop('checked', totalActions == totalActionsChecked);
+
+        var selection = '';
+        if (!base.isNullOrEmpty(changes)) {
+            selection = changes.split(',').length > 0 ? ('(' + changes.split(',').length + ')') : '';
+        }
+        $('#btnSave').val('Save' + selection);
+        $('#btnSave').attr('disabled', base.isNullOrEmpty(changes));
+
+    }
+    var changes = '';
+    function checkChanged(ctrl) {
+        ////
+        var info = ctrl.id.split('_'); //chk_CityController_Create_False
+        processChanges(ctrl);
+        toggleControllerSelectAll(info[1]);
+        //alert(changes);
+    }
+    function processChanges(ctrl) {
+        var info = ctrl.id.split('_'); //chk_CityController_Create_False
+        if (ctrl.checked.toString().toUpperCase() == info[3].toUpperCase()) { //unchecked=unchecked, see if already added previously
+            var item = changes.indexOf(ctrl.id + ',') == -1 ? ctrl.id : (ctrl.id + ',');
+            changes = changes.replace(item, '');
+        } else {
+            changes += (base.isNullOrEmpty(changes) ? '' : ',') + ctrl.id;
+        }
+    }
+    function submitClicked() {
+        ////
+        if (changes.length > 0) {
+            $.post(base.getUrl('Role', 'PostCompanyRoleAction'), { id: changes, roleID: '@ViewBag.role_id' },
+            function (data) {
+                ////
+                base.showMessage('Action Saved Successfully', 'success', 'Bar', 'top', 5000);
+                // base.showMessage('Action Saved Successfully', 'Success');
+                //alert('');
+            });
+        } else {
+            base.showMessage('there is no change !', 'info', 'Bar', 'top', 5000);
+            // base.showMessage('there is no change !!', 'Info');
+            // alert('there is no change !!');
+        }
+        return false;
+    }
+    function onchangeController(s) {
+        ////
+        var ctrlId = s.id;
+        var selectAll = $('#' + ctrlId).is(":checked");
+        var actionName = ctrlId.replace('Ctrl', ''); //'chkCtrl_CityController' ==>chk_CityController_Index_True
+        $('input[id^="' + actionName + '_"]').each(function () {
+            ////
+            $(this).prop('checked', selectAll);
+            processChanges(this);
+        });
+        var selection = '';
+        if (!base.isNullOrEmpty(changes)) {
+            selection = changes.split(',').length > 0 ? ('(' + changes.split(',').length + ')') : '';
+        }
+        $('#btnSave').val('Save' + selection);
+        $('#btnSave').attr('disabled', base.isNullOrEmpty(changes));
+    }
+</script>
+<div class="row">
+    <div class="">
+        <div class="card-box table-responsive">
+           
+                <div class="box box-primary">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.Hidden("hdnRoleID", ViewBag.role_id as object)
+
+
+
+                        <div class="box-body">
+                            <div class="row">
+                            <div class="col-md-12">
+                                @{
+                                    string oldControllerName = "";
+                                }
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    string uniqueID = string.Format("chk_{0}_{1}_{2}", Model[i].ControllerName, Model[i].ActionName, Model[i].IsAssigned);
+                                    // string fs = string.Format(" <h4 class='page-header'><input type='checkbox' id='chkCtrl_{0}' onchange='onchangeController(this);' />{0}&nbsp;</h4>", Model[i].ControllerName);
+                                    string fs = string.Format("<div class='row'> <div class='col-sm-12 col-xs-12'><div class='card m-b-20'><div class='card-header user-tabl' onclick='togg_div({1})'> <input type='checkbox' id='chkCtrl_{0}' onchange='onchangeController(this);' /> <b>{0}&nbsp;</b></div>", Model[i].ControllerName, i);
+
+
+
+                                    @Html.Raw(oldControllerName != Model[i].ControllerName ? fs + String.Format(" <div class='row' id='hddenfld_{0}'>", i) : "")
+
+                                    <div class="card-block">
+                                        <div class="card-blockquote text-left">
+                                            <input type="checkbox" checked="@Model[i].IsAssigned" onchange="checkChanged(this);"
+                                                   id="@uniqueID"
+                                                   name="@uniqueID" /> @Model[i].ActionName
+                                            </div>
+                                        </div>
+
+                                        @Html.Raw(i == Model.Count - 1 || Model[i].ControllerName != Model[i + 1].ControllerName ? "</div></div></div></div>" : "")
+                                    oldControllerName = Model[i].ControllerName;
+                                }
+
+                            </div>
+                                </div>
+
+                        </div>
+                        <div class="box-footer p-b-10">
+                            <input name="btnSave" id="btnSave" type="button" class="btn btn-complete w-md waves-effect waves-light" value="Save" disabled onclick="return submitClicked();">
+
+                        </div>
+                                    }
+                </div>
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    function togg_div(i) {
+        //var x = document.getElementById("hddenfld_" + i);
+        var x = $("#hddenfld_" + i);
+        if (x.style.display === "none") {
+            x.style.display = "inline-flex";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+</script>

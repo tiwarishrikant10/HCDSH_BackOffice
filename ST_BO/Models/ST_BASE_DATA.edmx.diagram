@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5e15adbd246348c297a33ebbfd9c55e4" Name="Diagram1">
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.ACADEMIC_LEVEL" Width="1.5" PointX="9.75" PointY="35" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.APP_ERROR_LOG" Width="1.5" PointX="15" PointY="52.125" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.APPLICATION_CONFIGURATION" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.AREA" Width="1.5" PointX="7.5" PointY="51.125" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.BANNER" Width="1.5" PointX="14.75" PointY="36.25" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.CITY" Width="1.5" PointX="5.25" PointY="40" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.COMPANY" Width="1.5" PointX="7.5" PointY="34.5" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.CONTENT" Width="1.5" PointX="15" PointY="55.25" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.CONTENT_ATTACHMENT" Width="1.5" PointX="15" PointY="42.25" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.COUNTRY" Width="1.5" PointX="0.75" PointY="40.375" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.CUSTOMER_SETTING" Width="1.5" PointX="9.75" PointY="81.875" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.EVENT" Width="1.5" PointX="18" PointY="51.875" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.EVENT_TYPE" Width="1.5" PointX="9.75" PointY="43.375" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.GALLARY_TYPE" Width="1.5" PointX="9.75" PointY="32.25" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.MENU" Width="1.5" PointX="14.75" PointY="31.875" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.MENU_CATEGORY" Width="1.5" PointX="9.75" PointY="78" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.NEWS_TYPE" Width="1.5" PointX="9.75" PointY="26.75" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.PIN_CODE" Width="1.5" PointX="7.5" PointY="53.875" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.RECRUITMENT" Width="1.5" PointX="12" PointY="36.125" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.ROLE" Width="1.5" PointX="9.75" PointY="38.625" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.ROLE_ACTION" Width="1.5" PointX="12" PointY="32.5" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.ROLE_MENU" Width="1.5" PointX="17" PointY="37.25" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.SMS_TRACKING" Width="1.5" PointX="9.75" PointY="84.75" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.STATE" Width="1.5" PointX="3" PointY="40.25" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.TENURE" Width="1.5" PointX="9.75" PointY="29.5" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.USER" Width="1.5" PointX="12.75" PointY="42.5" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.WIDGET" Width="1.5" PointX="18" PointY="40.625" />
+        <EntityTypeShape EntityType="ST_BASE_DATAModel.WIDGET_BUTTON" Width="1.5" PointX="20.25" PointY="40.75" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ACADEMIC_LEVEL_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_RECRUITMENT_ACADEMIC_LEVEL" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_APP_ERROR_LOG_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_AREA_CITY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_BANNER_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_BANNER_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_BANNER_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CITY_STATE" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_COMPANY_CITY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_PIN_CODE_CITY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_USER_CITY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_COMPANY_COMPANY1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_ATTACHMENT_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CUSTOMER_SETTING_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_EVENT_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_EVENT_TYPE_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_GALLARY_TYPE_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_MENU_CATEGORY_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_NEWS_TYPE_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_RECRUITMENT_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ROLE_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ROLE_MENU_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_SMS_TRACKING_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_TENURE_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_USER_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_WIDGET_BUTTON_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_WIDGET_COMPANY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_ATTACHMENT_CONTENT" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_MENU_CATEGORY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_ATTACHMENT_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_CONTENT_ATTACHMENT_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_STATE_COUNTRY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_EVENT_EVENT_TYPE" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_EVENT_MENU_CATEGORY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_EVENT_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_EVENT_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_MENU_MENU" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ROLE_MENU_MENU" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_MENU_CATEGORY_MENU_CATEGORY" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_RECRUITMENT_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_RECRUITMENT_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ROLE_ACTION_ROLE" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ROLE_MENU_ROLE" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ROLE_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_ROLE_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_WIDGET_BUTTON_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_WIDGET_BUTTON_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_WIDGET_USER" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_WIDGET_USER1" />
+        <AssociationConnector Association="ST_BASE_DATAModel.FK_WIDGET_BUTTON_WIDGET" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

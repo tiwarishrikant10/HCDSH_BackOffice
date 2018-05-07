@@ -1,0 +1,62 @@
+﻿@using Newtonsoft.Json;
+
+
+ 
+<script>
+    $(document).ready(function () {
+
+        bindJSTree();
+    });
+
+    function bindJSTree() {
+        // $.jstree
+        var idVal = '@ViewBag.role_id';
+        var controllerName = 'Role';
+        var actionName = 'GetAllMenuByRoleId';
+        $.ajaxSetup({ async: false });
+        $.post(base.getUrl(controllerName, actionName), { id: idVal }, function (data) {
+            treeUtil.processTree({ ctrlId: 'divTreeMenus', data: data, isPlugins: true });
+        });
+    }
+
+    function submitClicked() {
+        ////
+        debugger;
+        var changes = treeUtil.getValue('divTreeMenus');
+        var len = base.getLength(changes);
+        if (len > 0) {
+            $.post(base.getUrl('Role', 'SaveRoleMenu'), { id: changes, roleID: '@ViewBag.role_id' },
+            function (data) {
+                base.showMessage('Menu assigned successfully', 'success', 'Bar', 'top', 5000);
+             //   base.showMessage('Menu assigned successfully', 'Success');
+
+                bindJSTree();
+            });
+        } else {
+            alert('there is no change !!');
+        }
+        return false;
+    }
+</script>
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive bg-wht p-l-10 p-r-10 p-t-10 p-b-10">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.Hidden("hdnRoleID", ViewBag.role_id as object)
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <div id="divTreeMenus"></div>
+                    </div>
+                </div>
+                <div class="box-footer p-l-10">
+                    <input name="btnSave" id="btnSave" type="button" class="btn btn-complete w-md waves-effect waves-light" value="Save" onclick="return submitClicked();" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

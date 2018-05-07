@@ -1,0 +1,94 @@
+﻿@using ST_BO.Models;
+@model ST_BO.Models.CITY
+<div class="card-block">
+    <h4 class="card-title">Company Index</h4>
+</div>
+    <div class="view-port">
+        <div class="view bg-white">
+            <div class="card card-default">
+                <div class="card-block table-responsive filtr-srch sub-box">
+                    <table id="example" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Logo</th>
+                                <th>Company Name</th>
+                                <th>Address</th>
+                                <th>Email Id</th>
+                                @*<th>Address</th>*@
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function BindDataTable() {
+            $('#example').DataTable({
+                "initComplete": function (settings, json) {
+
+                    $('input[type="search"]').attr('placeholder', 'Search')
+                },
+                dom: 'lBfrtip',
+                buttons: [
+              'copy',
+               {
+                   text: 'Excel',
+                 
+               },
+              'print',
+                  {
+                      text: 'Create New',
+                      action: function (e, dt, node, config) {
+                          window.location.href = '/Company/Create/'
+                      }
+                  },
+                 
+                ],
+                "ajax": {
+                    type: "POST",
+                    url: '@Url.Action("CompanyList", "Company")',
+                    datatype: "json",
+                    data: { id: "" },
+                    dataSrc: ""
+                },
+                columns: [
+                  {
+                      data: "image",
+                      "render": function (value) {
+                          return "<div class='llogo'style='background-image:url(" + value + ")'><img style='width:66px' src='/Files/"+value+"' /></div>"
+                      }
+                  },
+                  { data: "CompanyName", name: "CompanyName", autoWidth: true },
+                   { data: "address", name: "address", autoWidth: true },
+                   { data: "EmailId", name: "EmailId", autoWidth: true },
+                    {
+                        data: "is_active",
+                        "render": function (value) {
+                            return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                        }
+                    },
+                    {
+                        data: "company_id",
+                        "render": function (data, type, row) {
+                            return "<div class='action-btn'><a href='/Company/Create?id=" + row.company_id + "' ><i class='fa fa-edit'></i>    </a></div> "
+                        }
+                    },
+                ],
+            });
+        }
+        $(document).ready(function () {
+            ////
+            BindDataTable();
+        });
+        $(function () {
+            $("#exp_rt").click(function () {
+                $(".dt-buttons").toggleClass('dis-none');
+            });
+        });
+    </script>
+
+
+

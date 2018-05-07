@@ -1,0 +1,174 @@
+﻿<script type="text/javascript">
+    var values = [];
+    var nodes = [];
+    var loop = 0;
+    $(document).ready(function () {
+        BindTree();
+        $("#sam").on("click", function () {
+            $('#MenuCategoryTree').jstree().create_node('#', { "id": "#", "text": "newly added" }, "last", function () {
+                $.post(base.getUrl("Json", "CategoryCreateNewParent"), {}, function (data) {
+                    if (data == 'Success') {
+                        base.showMessage('Create', 'Success');
+                        window.location.reload(true);
+                    }
+                    else {
+                        base.showMessage(data, 'Error');
+                        data.instance.refresh();
+                    }
+
+                });
+            });
+        });
+    });
+
+    function BindTree() {
+        $.post(base.getUrl("Json", "GetMenuCategory"), { id: "" }, function (data) {
+            $.each(data, function () {
+                var node = { "id": '' + this.id + '', "parent": '' + this.parent + '', "text": '' + this.text + '', "state": { "selected": '' } }
+                if (this.selected) {
+                    values.push(this.id);
+                }
+                nodes.push(node);
+            });
+            $('#MenuCategoryTree').jstree({
+                "types": {
+                    "default": {
+                        "icon": "glyphicon glyphicon-flash"
+                    },
+                    "demo": {
+                        "icon": "glyphicon glyphicon-ok"
+                    }
+                },
+                'core': {
+                    'data': nodes,
+
+                    "check_callback": function (operation, node, node_parent, node_position, more) {
+                        debugger;
+                        if ((operation == "delete_node" && node.parent == '#' && node.children.length == 0)) {
+                            base.showMessage('Main folder will not be deleted ', 'Error');
+                            return false;
+                        }
+                        else if (operation == "delete_node") {
+
+                            if (node.children.length != 0) {
+                                base.showMessage('Please first delete childe ', 'Error'); return false;
+                            }
+                            else {
+                                var ret = true;
+                                //$.ajaxSetup({ async: false });
+                                //$.post(base.getUrl("Json", "CheckUnitTypeInUsed"), { id: node.id }, function (data) {
+                                //    ret = data
+                                //    if (!data) {
+                                //        base.showMessage('Unit type in used ', 'Error'); return false;
+                                //    }
+                                //});
+                                return ret;
+                            }
+
+                        }
+                        else if (operation == "create_node") {
+
+                            if (node_parent.parents.length == 3 || node_parent.parents.length > 3) {
+                                base.showMessage('fourth level node will be not created ', 'Error')
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                },
+                "plugins": ["contextmenu", "dnd", "types"],
+                ui: { theme_name: "classic" },
+            });
+            $('#MenuCategoryTree').on('move_node.jstree', function (e, data) {
+                debugger;
+                $.post(base.getUrl("Json", "MenuCategoryMoveNode"), { menuCategoryId: data.node.id, text: data.node.text, parentId: data.node.parent, old_parent: data.old_parent }, function (data) {
+                    if (data == 'Success') {
+                        base.showMessage('Create', 'Success');
+                        window.location.reload(true);
+                    }
+                    else {
+                        base.showMessage(data, 'Error');
+                        data.instance.refresh();
+                    }
+
+                });
+
+            }).bind('create_node.jstree', function (e, data) {
+
+                $.post(base.getUrl("Json", "MenuCategoryCreateNew"), { parent_Id: data.node.parent, text: data.node.text }, function (data) {
+                    if (data == 'Success') {
+                        base.showMessage('Create', 'Success');
+                        window.location.reload(true);
+                    }
+                    else {
+                        base.showMessage(data, 'Error');
+                        data.instance.refresh();
+                    }
+
+                });
+
+            }).on('rename_node.jstree', function (e, data) {
+                $.post(base.getUrl("Json", "MenuCategoryNodeRename"), { id: data.node.id, text: data.text }, function (data) {
+                    if (data == 'Success') {
+                        base.showMessage('Rename', 'Success');
+                    }
+                    else {
+                        base.showMessage(data, 'Error');
+                        data.instance.refresh();
+                    }
+
+                });
+
+            }).on('delete_node.jstree', function (e, data) {
+                debugger;
+                if (data.node.children.length == 0) {
+                    $.post(base.getUrl("Json", "MenuCategoryDelete"), { id: data.node.id }, function (data) {
+                        if (data == 'Success') {
+                            base.showMessage('Delete', 'Success');
+                        }
+                        else {
+                            base.showMessage(data, 'Error');
+                            data.instance.refresh();
+                        }
+
+                    });
+                }
+                else {
+                    base.showMessage('Please first delete childe ', 'Error');
+                }
+
+            }).bind("copy_node.jstree", function (event, data) {
+                var id = data.node.id;
+                if (id != undefined) {
+                    $.post(base.getUrl("Json", "MenuCategoryCreateNew"), { parent_Id: data.node.parent, text: data.node.text }, function (data) {
+                        if (data == 'Success') {
+                            base.showMessage('COPY', 'Success');
+                            window.location.reload(true);
+                        }
+                        else {
+                            base.showMessage(data, 'Error');
+                            data.instance.refresh();
+                        }
+
+                    });
+                }
+            });
+        });
+    }
+</script>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box table-responsive">
+            <div class="box-header">
+                <button type="button" id="sam" class="btn btn-primary btn-rounded w-md waves-effect waves-light"><i class="fa fa-plus-circle"></i> Create Parent Node</button>
+            </div>
+            <div class="box-header">
+                &nbsp;
+            </div>
+            <div class="demo" id="MenuCategoryTree">
+            </div>
+            @*<button type="button" id="sam" class="btn btn-primary btn-rounded w-md waves-effect waves-light">create node</button>*@
+        </div>
+    </div>
+</div>

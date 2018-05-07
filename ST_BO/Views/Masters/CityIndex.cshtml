@@ -1,0 +1,233 @@
+﻿@using ST_BO.Models;
+@model ST_BO.Models.CITY
+<div class="card-block">
+    <h4 class="card-title"><label>   @ViewBag.Title</label></h4>
+</div>
+<div class="container-fixed-lg">
+    <div class="view bg-white">
+        <div class="buttonss">
+            <div class="col-md-12" style="margin-top:10px;">
+                <button id="editCourseModal" data-target="#modalSlideLeft" data-toggle="modal" class="btn btn-complete add-btn"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+               
+                @*<button class="btn btn-complete m-l-3" id="filtr" data-toggle="quickview" data-toggle-element="#quickview"><i class="fs-14 pg-centeralign"></i></button>*@
+            </div>
+        </div>
+    </div>
+    <div class="view-port">
+        <div class="view bg-white">
+            <div class="card card-default">
+                <div class="card-block sub-box table-responsive filtr-srch">
+                    <table id="example" class="table table-hover demo-table-dynamic table-responsive-block no-check" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>Emirate</th>
+                                <th>Community</th>
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                </div>
+            </div>
+            </div>
+
+    <div class="modal fade slide-up disable-scroll chose-up show" id="modalSlideLeft" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content-wrapper">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <div class="container-xs-height full-height">
+                        <div class="row-xs-height">
+                            <div class="modal-body col-xs-height col-middle ">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card-box">
+
+                                            @using (Html.BeginForm("StateCreateEdit", "Masters", FormMethod.Post, new { id = "frmCityEdit", @class = "edit-contact" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <h5 class="text-primary "> <span class="semi-bold">City</span></h5>
+                                                <br>
+                                                <div >
+                                                    <div class="">
+                                                        <form id="form-personal" role="form" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Country name</label>
+                                                                        @Html.DropDownList("country_id", ViewBag.country_id as List<SelectListItem>, "Please Select", new { @class = "form-control", onchange = "GetStateByCountry()", required = "required" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>State Name</label>
+                                                                        @Html.DropDownList("state_id", Enumerable.Empty<SelectListItem>(), "Please Select", new { @class = "form-control", required = "required" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>City Name</label>
+                                                                        @Html.TextBoxFor(m => m.CityName, new { @class = "form-control", id = "city_name", placeholder = "City Name", pattern = ST_BO.Models.RegExConst.General, required = "required", title = "Enter City Name", @isExist = "true" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" id="DivIsActive" style="display:none">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Enabled</label>
+                                                                        <input type="checkbox"  name="is_active" id="is_active">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="clearfix"></div>
+                                                            @Html.HiddenFor(m => m.CityId)
+                                                            <button type="button" id="postBtn" onclick="btnSave()" class="btn btn-complete">Submit</button>
+                                                            <button class="btn btn-white btn-cons " data-dismiss="modal" data-toggle="quickview" aria-hidden="true">cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+        </div>
+        <!-- BEGIN VENDOR JS -->
+        <!-- END VENDOR JS -->
+        <!-- END PAGE LEVEL JS -->
+        <script type="text/javascript">
+            $("#modalSlideLeft").on("hidden.bs.modal", function () {
+                $('#country_id').val('')
+                $('#state_id').val('')
+                $('#CityId').val('')
+                $('#city_name').val('')
+            });
+            function GetStateByCountry() {
+                StUtil.Cascading({
+                    ctrlId: 'state_id',
+                    clearId: '',
+                    clearCaption: 'Please Select',
+                    controllerName: 'Json',//saprated comma
+                    actionName: 'GetStateByCountry',//saprated comma
+                    parmVal: $('#country_id').val(),
+                });
+            }
+
+            function city_name_isExist() {
+                debugger;
+                StUtil.IsExist({
+                    ctrlId: 'city_name',
+                    controllerName: 'Json',
+                    actionName: 'IsCityExist',
+                    parmVal: $('#city_name').val() + ',' + $('#state_id').val() + ',' + $('#country_id').val() + ',' + $('#CityId').val(),//saprated comma
+                });
+            }
+
+            function postBtnAfterCall() {
+                $('#DivIsActive').hide();
+                BindDataTable();
+                $('#modalSlideLeft').modal('toggle');
+                $('#country_id').val('')
+                $('#state_id').val('')
+                $('#CityId').val('')
+                $('#city_name').val('')
+            }
+
+            function btnSave() {
+                StUtil.PostFrom({
+                    ctrlId: 'postBtn',
+                    formId: 'frmCityEdit',
+                    parmIds: 'CountryId,StateId,CityId,CityName,IsActive',
+                    parmVals: $('#country_id').val() + ',' + $('#state_id').val() + ',' + $('#CityId').val() + ',' + $('#city_name').val() + ',' + $('#is_active').is(':checked'),
+                    jsonObj: 'city',
+                    controllerName: 'Masters',
+                    actionName: 'CityCreateEdit',
+
+                })
+            }
+
+            function editCity(id) {
+                StUtil.EditForm({
+                    ctrlId: 'postBtn',
+                    formId: 'frmCityEdit',
+                    parmVals: id,
+                    controllerName: 'Masters',
+                    actionName: 'CityEdit',
+                    loadList: 'state_id'
+
+                })
+                $('#modalSlideLeft').modal('toggle');
+                $('#DivIsActive').show();
+            }
+
+            function BindDataTable() {
+                var table = $('#example').DataTable();
+                table.destroy();
+                $('#example').DataTable({
+                    dom: 'lBfrtip',
+                    "initComplete": function (settings, json) {
+
+                        $('input[type="search"]').attr('placeholder', 'Search')
+                    },
+
+                    buttons: ['csv',
+                       'copy',
+                       'excel',
+                       'print',
+                    ],
+                    "ajax": {
+                        type: "POST",
+                        url: '@Url.Action("CityList", "Masters")',
+                        datatype: "json",
+                        data: { id: "0" },
+                        dataSrc: ""
+                    },
+                    columns: [
+                       { data: "country_name", name: "country_name", autoWidth: true },
+                       { data: "state_name", name: "state_name", autoWidth: true },
+                       { data: "city_name", name: "city_name", autoWidth: true },
+                        {
+                            data: "is_active",
+                            "render": function (value) {
+                                return value ? "<span class='label label-success'>Enable</span>" : "<span class='label label-danger'>Disable</span>"
+                            }
+                        },
+                        {
+                            data: "city_id",
+                            "render": function (data, type, row) {
+                                return "<div class='action-btn '><a style='cursor:pointer' onclick='editCity(" + row.city_id + ")' ><i class='fa fa-pencil'></i>    </a> </div>"
+                            }
+                        },
+                    ],
+                });
+            }
+            $(document).ready(function () {
+                BindDataTable();
+            });
+            $(function () {
+                $("#exp_rt").click(function () {
+                    $(".dt-buttons").toggleClass('dis-none');
+                });
+            });
+        </script>
+
+
+

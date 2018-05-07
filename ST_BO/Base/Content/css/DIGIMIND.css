@@ -1,0 +1,162 @@
+﻿.loadingGlobalVisiable {
+    padding: 8px 2px 8px 2px;
+    text-align: center;
+    display: block;
+    font-size: 11px;
+    z-index: 1000000;
+    position: fixed;
+     top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+    border: 0px;
+    background-image: url("../images/trans.png");
+    background-position: center;
+    background-repeat: repeat;
+   
+}
+
+.loadingImg {
+    padding: 8px 30px 8px 30px;
+    text-align: center;
+    font-size: 11px;
+    z-index: 1000000;
+    position: fixed;
+    top: 40%;
+    left: 45%;
+    margin-right: -50%;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.alert {
+    border-radius: 15px;
+     
+}
+
+.alertDivPosition {
+    z-index: 1000000;
+    position: fixed;
+    top: 1%;
+    left: 25%;
+     width: 50%;
+}
+
+
+ 
+.bodyLogin {
+     
+    background-image: url(../images/workforce_management_banner.png);
+     
+}
+
+
+
+
+/*.account-box-logo{
+  position: relative;
+  max-width: 460px;
+  margin: 0px auto;
+  border-radius: 5px; }
+  .account-box-logo .account-content-logo {
+    padding: 0px; }
+  .account-box-logo .account-btn-logo {
+    position: absolute;
+    left: 0;
+    right: 0; }
+
+.error {
+color:#ff0000;
+}
+
+.snagImage {
+width: 300px;
+height: 300px;
+border:1px solid #e1e1e1;
+padding: 5px;
+float: left;
+
+}
+
+.snagCaptureImage {
+width: 300px;
+ 
+border:1px solid #e1e1e1;
+padding: 5px;
+float: left;
+
+}
+.snagImage {
+width: 100px;
+height: 100px;
+ 
+border:1px solid #e1e1e1;
+padding: 5px;
+float: left;
+
+}
+
+.point {
+    display: block;
+    
+    width: 15px;
+    height: 15px;
+    position: absolute;
+}
+
+.label-Open {
+  background-color: #4489e4; }
+
+.label-Assigned {
+  background-color: #34d3eb; }
+
+.label-WorkProgress {
+  background-color: #5553ce; }
+
+.label-Completed {
+  background-color: #32c861; }
+
+
+.label-Closed {
+  background-color: #98a6ad; }
+
+.label-ReAssigned {
+  background-color: #ffa91c; }
+ 
+.label-Invalid {
+  background-color: #f96a74; }
+
+.label-default {
+  background-color: #64c5b1; }
+
+ 
+.label-inverse {
+  background-color: #36404c; }
+
+.foo-red{
+    background-repeat:no-repeat;
+    display:inline-block;
+    position:absolute;
+    font-size :33pt;
+    color : #ff0000;
+}
+.foo-create{
+    background-repeat:no-repeat;
+    display:inline-block;
+    position:absolute;
+    font-size :33pt;
+    color : #126cfa;
+}
+.foo-green{
+    background-repeat:no-repeat;
+    display:inline-block;
+    position:absolute;
+    font-size :33pt;
+    color : #00b700;
+}*/
+
+ 
+ 

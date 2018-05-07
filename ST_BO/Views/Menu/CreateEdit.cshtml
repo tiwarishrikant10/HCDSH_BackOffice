@@ -1,0 +1,115 @@
+﻿
+@using ST_BO.Models;
+@model ST_BO.Models.MENU
+<!-- Main content -->
+<div class="bg-wht p-l-15 p-r-15 p-t-15 p-b-15 ss-box">
+    <div class="card-box edit-contact sub-box p-l-15 p-r-15">
+       
+           
+
+              @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-lg-3 p-l-5">
+                        <div class="form-group">
+                            <label>Menu Name<span class="text-danger">*</span></label>
+
+                            @Html.TextBoxFor(m => m.MenuName, new { @class = "form-control", id = "menu_name", placeholder = "Enter Menu Name", pattern = @RegExConst.General, required = "required", title = "Enter Menu Name" })
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Menu Parent</label>
+
+
+                            @Html.DropDownListFor(m => m.MenuParentId, ViewBag.MenuParentId as List<SelectListItem>, "Please Select", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Controller Name</label>
+
+                            @Html.DropDownListFor(m => m.ControllerName, ViewBag.controller_name as List<SelectListItem>, "Please Select", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Action Name</label>
+
+                            @Html.DropDownListFor(m => m.ActionName, ViewBag.ActionName as List<SelectListItem>, "Please Select", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Param Id</label>
+                            @Html.TextBoxFor(m => m.Id, new { @class = "form-control", placeholder = "Enter Param Id", pattern = @RegExConst.NumbersOnly, title = "Enter Param Id", type = "number" })
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Icon</label>
+                            @Html.TextBoxFor(m => m.Icon, new { @class = "form-control", placeholder = "Enter icon", pattern = @RegExConst.General, title = "Enter icon" })
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Sequence Order</label>
+                            @Html.TextBoxFor(m => m.SequenceOrder, new { @class = "form-control", placeholder = "Enter Sequence Order", pattern = @RegExConst.NumbersOnly, required = "required", title = "Enter Sequence Order", type = "number" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group check-shft">
+                            @if (Model != null)
+                            {
+                                <label>@Html.CheckBoxFor(m => m.IsActive, new { type = "checkbox" }) Enable</label>
+                            }
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        @Html.HiddenFor(m => m.MenuId)
+                        <button type="submit" class="btn btn-complete w-md waves-effect waves-light">Submit</button>
+                    </div>
+                </div>
+              }
+
+              
+    </div>
+<!-- /.row -->
+</div>
+<script>
+    $(document).ready(function () {
+      
+        if ($('#MenuId').val() > 0) {
+
+            var SelectedMenuAction = '@ViewBag.SelectedMenuAction'
+            fillAction(SelectedMenuAction);
+        }
+        $('#ControllerName').change(function () {
+            fillAction('');
+        });
+    });
+
+    function fillAction(SelectedMenuAction) {
+        var idVal = $('#ControllerName').val();
+        var controllerName = 'Menu';
+        var actionName = 'GetActionNameByController';
+        $.post(base.getUrl(controllerName, actionName), { id: idVal }, function (data) {
+            $('#ActionName').empty();
+            $('#ActionName').append($('<option />').val('').text('Please Select'));
+            $.each(data, function () {
+                if (SelectedMenuAction == this.Value) {
+                    $('#ActionName').append($('<option selected />').val(this.Value).text(this.Text));
+                }
+                else {
+                    $('#ActionName').append($('<option />').val(this.Value).text(this.Text));
+                }
+            });
+        });
+    }
+
+</script>
